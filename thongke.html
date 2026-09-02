@@ -253,15 +253,162 @@
 
   <!-- JAVASCRIPT XỬ LÝ DỮ LIỆU & RENDER DASHBOARD -->
   <script>
+    // 1. Cấu hình nguồn dữ liệu Google Sheets & Apps Script
+    const SPREADSHEET_ID = "1z6ODucOvR1tdE5iYdJF7mLjeK2YV1Qqqdb47hHxNoJQ";
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZVPc2KGoVfOjxw_0zihIg-RINlXF5mhy2EWpsrvjWNmzAbj4LWyoHSgqtUJIznI7XFg/exec";
+
+    const fieldMeta = [
+      { id: "hs_si_so", name: "1. Duy trì sĩ số (Giảm ≤2%, bỏ học ≤1%, lưu ban <1%)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_tot_nghiep", name: "2. Đầu ra tốt nghiệp (100% đỗ tốt nghiệp THPT)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_dh_cd", name: "3. Đầu ra ĐH - CĐ (≥80% trúng tuyển ĐH, CĐ)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_len_lop", name: "4. Tỷ lệ lên lớp thẳng (≥99% trở lên)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_hoc_luc", name: "5. Kết quả học tập (Tốt ≥45.12%, Khá ≥48.47%)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_hanh_kiem", name: "6. Kết quả rèn luyện (Tốt ≥90.84%, Khá ≥6.64%)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_giai_tinh", name: "7. Phong trào mũi nhọn (≥1 giải HSG, ≥3 giải PT)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_bao_hiem", name: "8. Bảo hiểm & Tiện ích (100% BHYT, VNEDU, Wifi)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+      { id: "hs_an_ninh", name: "9. An ninh học đường (An toàn ATGT, không TNXH)", group: "a", groupName: "Chỉ tiêu Học sinh" },
+
+      { id: "mon_toan", name: "Toán học (Yếu <2.0%, Giỏi ≥31.30%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_van", name: "Ngữ văn (Yếu <1.0%, Giỏi ≥50.31%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_ly", name: "Vật lí (Yếu <1.0%, Giỏi ≥48.01%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_hoa", name: "Hóa học (Yếu <2.0%, Giỏi ≥21.83%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_sinh", name: "Sinh học (Yếu <1.0%, Giỏi ≥40.44%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_tin", name: "Tin học (Yếu <1.0%, Giỏi ≥58.51%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_su", name: "Lịch sử (Yếu <1.0%, Giỏi ≥90.00%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_dia", name: "Địa lí (Yếu <1.0%, Giỏi ≥83.29%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_anh", name: "Ngoại ngữ - Tiếng Anh (Yếu <1.0%, Giỏi ≥27.94%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_cn", name: "Công nghệ (Yếu <1.0%, Giỏi ≥78.57%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_gdqp", name: "GDQP & AN (Yếu 0.0%, Giỏi ≥87.48%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_gdktpl", name: "GD Kinh tế & Pháp luật (Yếu <1.0%, Giỏi ≥64.95%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_thechat", name: "GD Thể chất (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_diaphuong", name: "Nội dung GD Địa phương (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_hdtn", name: "Hoạt động TN - HN (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
+
+      { id: "muc_c_tn", name: "Điểm TB thi tốt nghiệp THPT so với tỉnh", group: "c", groupName: "Điểm thi & Cán bộ GV" },
+
+      { id: "cb_thi_dua", name: "1. Danh hiệu thi đua cá nhân (100% LĐTT, ≥20% CSTĐCS)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
+      { id: "cb_xep_loai", name: "2. Xếp loại chất lượng viên chức (100% HTNV, ≥80% Tốt)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
+      { id: "cb_bgh", name: "3. Ban Giám hiệu (100% Hoàn thành tốt NV trở lên)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
+      { id: "cb_skkn", name: "4. Nghiên cứu KH & SKKN (≥30% GV tổ, ≥10 cấp cơ sở)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
+      { id: "cb_chuyen_mon", name: "5. Chuyên môn & Đổi mới (Dự giờ, CNTT, STEM, trực tuyến)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
+
+      { id: "ai_thoi_luong", name: "1. Thời lượng giáo dục AI (100% HS, ≥12 tiết/lớp/năm)", group: "e", groupName: "Giáo dục AI & Tập thể" },
+      { id: "ai_tap_huan", name: "2. Tập huấn & Bồi dưỡng GV về AI (100% GV tham gia)", group: "e", groupName: "Giáo dục AI & Tập thể" },
+      { id: "ai_yeu_cau", name: "3. Yêu cầu cần đạt về AI (100% HS nắm vững nền tảng, đạo đức)", group: "e", groupName: "Giáo dục AI & Tập thể" },
+      { id: "ai_danh_gia", name: "4. Kiểm tra, đánh giá & Báo cáo Sở GD&ĐT (trước 15/6/2027)", group: "e", groupName: "Giáo dục AI & Tập thể" },
+
+      { id: "tt_danh_hieu", name: "1. Danh hiệu thi đua trường (Tập thể Lao động xuất sắc)", group: "f", groupName: "Giáo dục AI & Tập thể" },
+      { id: "tt_doan_the", name: "2. Xếp loại đoàn thể (Đảng bộ, Đoàn Thanh niên)", group: "f", groupName: "Giáo dục AI & Tập thể" },
+      { id: "tt_do_dau", name: "3. Công tác nhân văn (Nhận đỡ đầu ≥2 học sinh khó khăn/tổ)", group: "f", groupName: "Giáo dục AI & Tập thể" }
+    ];
+
     let currentFilter = 'all';
     let globalData = null;
     let autoRefreshTimer = null;
 
-    function fetchData() {
+    // HÀM LẤY DỮ LIỆU ĐA TẦNG (GViz API Siêu Tốc + Apps Script Fallback)
+    async function fetchData() {
       const refreshIcon = document.getElementById('refreshIcon');
       if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
+      // CHIẾN LƯỢC 1: Sử dụng Google Visualization API (Siêu tốc < 0.1s, hỗ trợ JSONP trực tiếp từ Google)
+      try {
+        const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
+        const res = await fetch(gvizUrl);
+        const text = await res.text();
+        
+        // Phân tích cú pháp phản hồi GViz: /*O_o*/ google.visualization.Query.setResponse({...});
+        const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/);
+        if (jsonMatch && jsonMatch[1]) {
+          const gvizData = JSON.parse(jsonMatch[1]);
+          if (gvizData && gvizData.table) {
+            const parsedData = processGvizData(gvizData.table);
+            globalData = parsedData;
+            renderDashboard(parsedData);
+            if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 300);
+            return;
+          }
+        }
+      } catch (err) {
+        console.warn("GViz fetch thử nghiệm tiếp Apps Script:", err);
+      }
+
+      // CHIẾN LƯỢC 2: Gọi qua Apps Script bằng JSONP
+      fetchAppsScriptJSONP();
+    }
+
+    // Xử lý dữ liệu từ bảng Google Sheet GViz Table
+    function processGvizData(table) {
+      const rows = table.rows || [];
+      const totalSubmissions = rows.length;
+      const stats = [];
+      const feedbacks = [];
+      let lastSubmitted = "";
+
+      if (totalSubmissions > 0) {
+        const lastRow = rows[totalSubmissions - 1];
+        lastSubmitted = lastRow.c && lastRow.c[0] ? (lastRow.c[0].f || lastRow.c[0].v || "") : "";
+      }
+
+      // Duyệt qua 37 chỉ tiêu
+      for (let i = 0; i < fieldMeta.length; i++) {
+        const colIndex = i + 1; // Cột 0: Thời gian, Cột 1..37: Chỉ tiêu
+        let agreeCount = 0;
+        let disagreeCount = 0;
+
+        for (let r = 0; r < totalSubmissions; r++) {
+          const row = rows[r];
+          if (row.c && row.c[colIndex]) {
+            const val = String(row.c[colIndex].v || row.c[colIndex].f || "").trim().toLowerCase();
+            if (val.includes("đồng ý") && !val.includes("không")) {
+              agreeCount++;
+            } else if (val.includes("không")) {
+              disagreeCount++;
+            }
+          }
+        }
+
+        const agreePercent = totalSubmissions > 0 ? Math.round((agreeCount / totalSubmissions) * 1000) / 10 : 0;
+        const disagreePercent = totalSubmissions > 0 ? Math.round((disagreeCount / totalSubmissions) * 1000) / 10 : 0;
+
+        stats.push({
+          id: fieldMeta[i].id,
+          name: fieldMeta[i].name,
+          group: fieldMeta[i].group,
+          groupName: fieldMeta[i].groupName,
+          agree: agreeCount,
+          disagree: disagreeCount,
+          agreePercent: agreePercent,
+          disagreePercent: disagreePercent
+        });
+      }
+
+      // Ý kiến đóng góp khác (Cột index 37)
+      for (let r = 0; r < totalSubmissions; r++) {
+        const row = rows[r];
+        if (row.c && row.c[37]) {
+          const fb = String(row.c[37].v || row.c[37].f || "").trim();
+          const time = row.c[0] ? String(row.c[0].f || row.c[0].v || "") : "";
+          if (fb && fb !== "" && fb !== "null" && fb !== "undefined") {
+            feedbacks.push({ time: time, content: fb });
+          }
+        }
+      }
+
+      return {
+        status: "success",
+        totalSubmissions: totalSubmissions,
+        expectedTotal: 80,
+        completionRate: Math.round((totalSubmissions / 80) * 1000) / 10,
+        lastSubmitted: lastSubmitted,
+        lastUpdated: new Date().toLocaleTimeString('vi-VN') + " " + new Date().toLocaleDateString('vi-VN'),
+        stats: stats,
+        feedbacks: feedbacks
+      };
+    }
+
+    function fetchAppsScriptJSONP() {
+      const refreshIcon = document.getElementById('refreshIcon');
       const callbackName = 'cb_' + Date.now();
       const script = document.createElement('script');
       
@@ -271,19 +418,17 @@
           script.remove();
           if (refreshIcon) refreshIcon.classList.remove('fa-spin');
         }
-      }, 10000);
+      }, 8000);
 
       window[callbackName] = function(data) {
         clearTimeout(timeoutId);
         if (data && data.status === 'success') {
           globalData = data;
           renderDashboard(data);
-        } else {
-          console.error("Dữ liệu lỗi:", data);
         }
         delete window[callbackName];
         script.remove();
-        if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 400);
+        if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 300);
       };
 
       script.onerror = function() {
@@ -298,7 +443,9 @@
     }
 
     function renderDashboard(data) {
-      document.getElementById('loadingBox')?.remove();
+      // Ẩn loading box
+      const loading = document.getElementById('loadingBox');
+      if (loading) loading.style.display = 'none';
 
       // 1. Cập nhật các thẻ KPI
       const total = data.totalSubmissions || 0;
@@ -320,7 +467,7 @@
       document.getElementById('kpiUnanimous').innerText = unanimousCount;
       document.getElementById('kpiFeedbackCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
       document.getElementById('fbTabCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
-      document.getElementById('kpiLastUpdated').innerText = `Cập nhật lúc: ${data.lastUpdated || new Date().toLocaleTimeString('vi-VN')}`;
+      document.getElementById('kpiLastUpdated').innerText = `Cập nhật: ${data.lastUpdated || new Date().toLocaleTimeString('vi-VN')}`;
       
       const printTime = document.getElementById('printTimestamp');
       if (printTime) printTime.innerText = `Thời điểm lập báo cáo: ${data.lastUpdated || new Date().toLocaleString('vi-VN')}`;
@@ -366,6 +513,7 @@
 
       let html = '';
       let currentGroup = '';
+      const totalSub = globalData ? (globalData.totalSubmissions || 0) : 0;
 
       filtered.forEach((st, idx) => {
         // Nhóm tiêu đề phụ
@@ -381,7 +529,7 @@
           `;
         }
 
-        const isUnanimous = globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
+        const isUnanimous = totalSub > 0 && st.agree === totalSub;
         const badge = isUnanimous 
           ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50 flex-shrink-0">
               <i class="fa-solid fa-crown mr-1"></i> 100% Đồng ý
