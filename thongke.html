@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bảng Thống Kê Kết Quả Biểu Quyết 2026 - 2027 | THPT Nguyễn Sinh Sắc</title>
+  
+  <!-- Favicon Logo -->
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    * {
+      font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+    }
+    body {
+      background-color: #0f172a;
+      color: #f8fafc;
+      min-height: 100vh;
+    }
+    .kpi-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #334155;
+    }
+    .stat-card {
+      background: #1e293b;
+      border: 1px solid #334155;
+      transition: all 0.2s ease;
+    }
+    .stat-card:hover {
+      border-color: #06b6d4;
+      transform: translateY(-2px);
+    }
+    .pulse-dot {
+      animation: pulseAnimation 2s infinite;
+    }
+    @keyframes pulseAnimation {
+      0% { transform: scale(0.95); opacity: 0.8; }
+      50% { transform: scale(1.15); opacity: 1; }
+      100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    /* Chế độ In Ấn Báo Cáo */
+    @media print {
+      body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+      .stat-card, .kpi-card {
+        background: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        color: #000000 !important;
+        page-break-inside: avoid;
+      }
+      .text-slate-100, .text-slate-200, .text-slate-300, .text-white {
+        color: #0f172a !important;
+      }
+      .bg-slate-900, .bg-slate-800 {
+        background-color: #f8fafc !important;
+      }
+    }
+  </style>
+</head>
+<body class="pb-16 antialiased">
+
+  <!-- TOP BAR TRÌNH CHIẾU -->
+  <header class="bg-gradient-to-r from-slate-950 via-cyan-950 to-slate-950 border-b border-cyan-800/60 sticky top-0 z-50 shadow-xl no-print">
+    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <img src="logo.jpg" alt="Logo THPT NSS" class="w-10 h-10 rounded-full object-cover border-2 border-amber-400 shadow-md bg-white flex-shrink-0" />
+        <div>
+          <p class="text-[11px] uppercase tracking-wider text-cyan-300 font-bold leading-tight">SỞ GD-ĐT AN GIANG — THPT NGUYỄN SINH SẮC</p>
+          <h1 class="text-xs sm:text-base font-bold text-white tracking-wide uppercase">
+            BẢNG THỐNG KÊ KẾT QUẢ BIỂU QUYẾT CHỈ TIÊU NGHỊ QUYẾT 2026 - 2027
+          </h1>
+        </div>
+      </div>
+
+      <!-- Live Badge & Điều khiển -->
+      <div class="flex items-center space-x-2 sm:space-x-3 text-xs">
+        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-inner">
+          <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 pulse-dot"></span>
+          <span>DỮ LIỆU TRỰC TIẾP</span>
+        </span>
+        
+        <button onclick="fetchData()" id="refreshBtn"
+          class="py-1.5 px-3 bg-cyan-800 hover:bg-cyan-700 text-white font-bold rounded-lg transition flex items-center space-x-1.5 shadow">
+          <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i>
+          <span class="hidden sm:inline">Làm mới</span>
+        </button>
+
+        <button onclick="window.print()"
+          class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition flex items-center space-x-1.5 border border-slate-600 shadow">
+          <i class="fa-solid fa-print"></i>
+          <span class="hidden sm:inline">In báo cáo</span>
+        </button>
+
+        <a href="index.html" target="_blank"
+          class="py-1.5 px-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg transition flex items-center space-x-1.5 shadow">
+          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+          <span class="hidden sm:inline">Trang biểu quyết</span>
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 space-y-6">
+
+    <!-- HEADER IN ẤN (Chỉ hiển thị khi bấm Print) -->
+    <div class="hidden print:block text-center border-b pb-4 mb-4">
+      <p class="text-xs uppercase font-bold text-slate-600">SỞ GD&ĐT AN GIANG — TRƯỜNG THPT NGUYỄN SINH SẮC</p>
+      <h2 class="text-lg font-bold uppercase text-slate-900 mt-1">BÁO CÁO TỔNG HỢP KẾT QUẢ BIỂU QUYẾT CHỈ TIÊU NGHỊ QUYẾT</h2>
+      <h3 class="text-sm font-bold text-slate-800 uppercase">HỘI NGHỊ VIÊN CHỨC – NGƯỜI LAO ĐỘNG NĂM HỌC 2026 – 2027</h3>
+      <p class="text-xs italic text-slate-600 mt-0.5" id="printTimestamp"></p>
+    </div>
+
+    <!-- 4 THẺ KPI TỔNG QUAN -->
+    <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      
+      <!-- KPI 1: Tổng số phiếu -->
+      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Phiếu Đã Nộp</span>
+          <i class="fa-solid fa-check-to-slot text-cyan-400 text-base"></i>
+        </div>
+        <div class="flex items-baseline space-x-2">
+          <span id="kpiTotal" class="text-2xl sm:text-4xl font-bold text-white tracking-tight">0</span>
+          <span class="text-xs sm:text-sm text-slate-400 font-bold">/ 80 GV</span>
+        </div>
+        <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2.5 overflow-hidden">
+          <div id="kpiProgressBar" class="bg-cyan-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-1.5" id="kpiCompletionText">Đang tải dữ liệu...</p>
+      </div>
+
+      <!-- KPI 2: Tỷ lệ hoàn thành -->
+      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tham Gia</span>
+          <i class="fa-solid fa-chart-pie text-emerald-400 text-base"></i>
+        </div>
+        <div class="flex items-baseline space-x-1">
+          <span id="kpiPercent" class="text-2xl sm:text-4xl font-bold text-emerald-400 tracking-tight">0%</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-3" id="kpiExpectedText">Chỉ tiêu quy mô: 80 Đại biểu</p>
+      </div>
+
+      <!-- KPI 3: Chỉ tiêu 100% Đồng ý -->
+      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">100% Đồng Thuận</span>
+          <i class="fa-solid fa-award text-amber-400 text-base"></i>
+        </div>
+        <div class="flex items-baseline space-x-1">
+          <span id="kpiUnanimous" class="text-2xl sm:text-4xl font-bold text-amber-400 tracking-tight">0</span>
+          <span class="text-xs sm:text-sm text-slate-400 font-bold">/ 37 chỉ tiêu</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-3">Đạt tỷ lệ đồng thuận tuyệt đối</p>
+      </div>
+
+      <!-- KPI 4: Ý kiến đóng góp -->
+      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+        <div class="flex items-center justify-between mb-1">
+          <span class="text-xs font-bold text-rose-300 uppercase tracking-wider">Ý Kiến Đề Xuất</span>
+          <i class="fa-solid fa-comments text-rose-400 text-base"></i>
+        </div>
+        <div class="flex items-baseline space-x-1">
+          <span id="kpiFeedbackCount" class="text-2xl sm:text-4xl font-bold text-rose-400 tracking-tight">0</span>
+          <span class="text-xs sm:text-sm text-slate-400 font-bold">ý kiến</span>
+        </div>
+        <p class="text-[11px] text-slate-400 mt-3" id="kpiLastUpdated">Cập nhật lúc: --:--</p>
+      </div>
+
+    </section>
+
+    <!-- THANH ĐIỀU HƯỚNG BỘ LỌC TỔ / NHÓM CHỈ TIÊU -->
+    <div class="flex items-center justify-between flex-wrap gap-2 no-print border-b border-slate-700 pb-3">
+      <div class="flex items-center flex-wrap gap-1.5 text-xs sm:text-sm">
+        <button onclick="filterGroup('all')" id="btnFilterAll" class="filter-btn active py-1.5 px-3 rounded-xl bg-cyan-700 text-white font-bold border border-cyan-500 shadow">
+          Tất cả (37 Chỉ tiêu)
+        </button>
+        <button onclick="filterGroup('a')" id="btnFilterA" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
+          1. Học sinh (9)
+        </button>
+        <button onclick="filterGroup('b')" id="btnFilterB" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
+          2. 15 Bộ môn (15)
+        </button>
+        <button onclick="filterGroup('cd')" id="btnFilterCD" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
+          3. Điểm TN & CB-GV (6)
+        </button>
+        <button onclick="filterGroup('ef')" id="btnFilterEF" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
+          4. AI & Tập thể (7)
+        </button>
+        <button onclick="filterGroup('feedbacks')" id="btnFilterFB" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
+          💬 Ý kiến đóng góp (<span id="fbTabCount">0</span>)
+        </button>
+      </div>
+
+      <div class="flex items-center space-x-2 text-xs text-slate-400">
+        <label class="inline-flex items-center cursor-pointer">
+          <input type="checkbox" id="autoRefreshToggle" checked class="sr-only peer">
+          <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-600"></div>
+          <span class="ml-2 font-medium text-slate-300">Tự động cập nhật (5s)</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- KHUNG HIỂN THỊ DANH SÁCH CHỈ TIÊU & TIẾN ĐỘ -->
+    <div id="statsContainer" class="space-y-4">
+      <!-- Loading Skeleton -->
+      <div class="text-center py-16 stat-card rounded-2xl" id="loadingBox">
+        <i class="fa-solid fa-spinner fa-spin text-4xl text-cyan-400 mb-3"></i>
+        <h3 class="text-lg font-bold text-white">Đang tải kết quả biểu quyết thời gian thực...</h3>
+        <p class="text-sm text-slate-400 mt-1">Đang kết nối cơ sở dữ liệu Google Sheets...</p>
+      </div>
+    </div>
+
+    <!-- KHUNG HIỂN THỊ DANH SÁCH Ý KIẾN ĐÓNG GÓP KHÁC -->
+    <div id="feedbacksContainer" class="hidden space-y-4">
+      <div class="stat-card p-4 sm:p-6 rounded-2xl shadow-xl">
+        <h3 class="text-base sm:text-lg font-bold text-amber-300 uppercase flex items-center mb-4">
+          <i class="fa-solid fa-comments mr-2 text-amber-400"></i>
+          TỔNG HỢP Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA ĐẠI BIỂU HỘI NGHỊ
+        </h3>
+        <div id="feedbackList" class="space-y-3 divide-y divide-slate-700/60">
+          <p class="text-sm text-slate-400 italic py-4 text-center">Chưa có ý kiến đóng góp nào được gửi về.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- KHUNG CHỮ KÝ BIÊN BẢN (Chỉ hiển thị khi In) -->
+    <div class="hidden print:grid grid-cols-2 gap-8 text-center pt-8 text-xs text-slate-900">
+      <div>
+        <p class="font-bold uppercase">TM. ĐOÀN CHỦ TỊCH</p>
+        <p class="italic text-slate-500 mt-1">(Ký và ghi rõ họ tên)</p>
+        <div class="h-20"></div>
+      </div>
+      <div>
+        <p class="font-bold uppercase">BAN THƯ KÝ HỘI NGHỊ</p>
+        <p class="italic text-slate-500 mt-1">(Ký và ghi rõ họ tên)</p>
+        <div class="h-20"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT XỬ LÝ DỮ LIỆU & RENDER DASHBOARD -->
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAn5hgT4I-gjM13mbr5AYqoBi228Pf9fEQSSp82Q3TagDbcQj6GvDnRCAoHcdsBGphmQ/exec";
+    let currentFilter = 'all';
+    let globalData = null;
+    let autoRefreshTimer = null;
+
+    async function fetchData() {
+      const refreshIcon = document.getElementById('refreshIcon');
+      refreshIcon.classList.add('fa-spin');
+
+      try {
+        // Gọi API Google Apps Script
+        const response = await fetch(GOOGLE_SCRIPT_URL);
+        const data = await response.json();
+
+        if (data.status === 'success') {
+          globalData = data;
+          renderDashboard(data);
+        } else {
+          console.error("Lỗi từ Apps Script:", data.message);
+        }
+      } catch (err) {
+        console.warn("Thử phương thức dự phòng hoặc kết nối:", err);
+        // Nếu fetch trực tiếp bị CORS, hỗ trợ JSONP
+        fetchJSONP();
+      } finally {
+        setTimeout(() => refreshIcon.classList.remove('fa-spin'), 600);
+      }
+    }
+
+    // Dự phòng JSONP nếu trình duyệt chặn CORS
+    function fetchJSONP() {
+      const script = document.createElement('script');
+      const callbackName = 'handleDataCallback_' + Math.floor(Math.random() * 10000);
+      window[callbackName] = function(data) {
+        globalData = data;
+        renderDashboard(data);
+        delete window[callbackName];
+        script.remove();
+      };
+      script.src = `${GOOGLE_SCRIPT_URL}?callback=${callbackName}`;
+      document.body.appendChild(script);
+    }
+
+    function renderDashboard(data) {
+      document.getElementById('loadingBox')?.remove();
+
+      // 1. Cập nhật các thẻ KPI
+      const total = data.totalSubmissions || 0;
+      const expected = data.expectedTotal || 80;
+      const percent = Math.round((total / expected) * 1000) / 10;
+
+      document.getElementById('kpiTotal').innerText = total;
+      document.getElementById('kpiProgressBar').style.width = `${Math.min(percent, 100)}%`;
+      document.getElementById('kpiCompletionText').innerText = `Đã hoàn thành ${percent}% tổng số giáo viên`;
+      document.getElementById('kpiPercent').innerText = `${percent}%`;
+
+      // Đếm số chỉ tiêu đạt 100% Đồng ý
+      let unanimousCount = 0;
+      if (data.stats && data.stats.length > 0) {
+        data.stats.forEach(st => {
+          if (total > 0 && st.agree === total) unanimousCount++;
+        });
+      }
+      document.getElementById('kpiUnanimous').innerText = unanimousCount;
+      document.getElementById('kpiFeedbackCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
+      document.getElementById('fbTabCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
+      document.getElementById('kpiLastUpdated').innerText = `Cập nhật lúc: ${data.lastUpdated || new Date().toLocaleTimeString('vi-VN')}`;
+      
+      const printTime = document.getElementById('printTimestamp');
+      if (printTime) printTime.innerText = `Thời điểm lập báo cáo: ${data.lastUpdated || new Date().toLocaleString('vi-VN')}`;
+
+      // 2. Render danh sách các chỉ tiêu theo bộ lọc
+      renderStatsList(data.stats || []);
+
+      // 3. Render danh sách ý kiến đóng góp
+      renderFeedbackList(data.feedbacks || []);
+    }
+
+    function renderStatsList(stats) {
+      const container = document.getElementById('statsContainer');
+      if (currentFilter === 'feedbacks') {
+        container.classList.add('hidden');
+        document.getElementById('feedbacksContainer').classList.remove('hidden');
+        return;
+      }
+
+      container.classList.remove('hidden');
+      document.getElementById('feedbacksContainer').classList.add('hidden');
+
+      let filtered = stats;
+      if (currentFilter === 'a') {
+        filtered = stats.filter(s => s.group === 'a');
+      } else if (currentFilter === 'b') {
+        filtered = stats.filter(s => s.group === 'b');
+      } else if (currentFilter === 'cd') {
+        filtered = stats.filter(s => s.group === 'c' || s.group === 'd');
+      } else if (currentFilter === 'ef') {
+        filtered = stats.filter(s => s.group === 'e' || s.group === 'f');
+      }
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 stat-card rounded-2xl text-slate-400">
+            <i class="fa-solid fa-inbox text-3xl mb-2 text-slate-500"></i>
+            <p>Chưa có dữ liệu biểu quyết nào được ghi nhận.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      let currentGroup = '';
+
+      filtered.forEach((st, idx) => {
+        // Nhóm tiêu đề phụ
+        if (currentFilter === 'all' && st.groupName !== currentGroup) {
+          currentGroup = st.groupName;
+          html += `
+            <div class="pt-4 first:pt-0">
+              <h3 class="text-sm sm:text-base font-bold text-cyan-300 uppercase tracking-wider flex items-center border-b border-cyan-800/60 pb-2">
+                <i class="fa-solid fa-layer-group mr-2 text-cyan-400"></i>
+                ${currentGroup}
+              </h3>
+            </div>
+          `;
+        }
+
+        const isUnanimous = globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
+        const badge = isUnanimous 
+          ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50 flex-shrink-0">
+              <i class="fa-solid fa-crown mr-1"></i> 100% Đồng ý
+             </span>`
+          : (st.agreePercent >= 90 
+              ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex-shrink-0">
+                  <i class="fa-solid fa-circle-check mr-1"></i> ${st.agreePercent}% Tán thành
+                 </span>`
+              : `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40 flex-shrink-0">
+                  ${st.agreePercent}% Tán thành
+                 </span>`);
+
+        html += `
+          <div class="stat-card p-4 rounded-2xl shadow-md space-y-2.5">
+            <div class="flex items-start justify-between gap-3">
+              <h4 class="text-xs sm:text-sm font-bold text-white leading-snug">
+                ${st.name}
+              </h4>
+              ${badge}
+            </div>
+
+            <!-- Thanh Progress Song Song (Đồng ý vs Không đồng ý) -->
+            <div class="w-full bg-slate-800 rounded-xl h-3.5 flex overflow-hidden p-0.5 border border-slate-700">
+              <div class="bg-gradient-to-r from-emerald-600 to-teal-500 h-full rounded-lg transition-all duration-500" style="width: ${st.agreePercent}%"></div>
+              <div class="bg-gradient-to-r from-rose-600 to-red-600 h-full rounded-lg transition-all duration-500" style="width: ${st.disagreePercent}%"></div>
+            </div>
+
+            <!-- Số lượng chi tiết -->
+            <div class="flex items-center justify-between text-xs pt-0.5">
+              <div class="flex items-center space-x-1 text-emerald-400 font-bold">
+                <i class="fa-solid fa-check text-[10px]"></i>
+                <span>Đồng ý: <b>${st.agree}</b> phiếu (${st.agreePercent}%)</span>
+              </div>
+              <div class="flex items-center space-x-1 text-rose-400 font-bold">
+                <i class="fa-solid fa-xmark text-[10px]"></i>
+                <span>Không đồng ý: <b>${st.disagree}</b> phiếu (${st.disagreePercent}%)</span>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+    }
+
+    function renderFeedbackList(feedbacks) {
+      const container = document.getElementById('feedbackList');
+      if (!feedbacks || feedbacks.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-8 text-slate-400 text-xs sm:text-sm italic">
+            <i class="fa-regular fa-comment-dots text-2xl mb-2 text-slate-500"></i>
+            <p>Hiện tại chưa có ý kiến đóng góp hoặc đề xuất bổ sung nào.</p>
+          </div>
+        `;
+        return;
+      }
+
+      let html = '';
+      feedbacks.forEach((fb, idx) => {
+        html += `
+          <div class="pt-3.5 first:pt-0 space-y-1">
+            <div class="flex items-center justify-between text-xs text-slate-400">
+              <span class="font-bold text-cyan-300">Ý kiến #${idx + 1}</span>
+              <span><i class="fa-regular fa-clock mr-1"></i>${fb.time || 'Vừa xong'}</span>
+            </div>
+            <p class="text-xs sm:text-sm text-slate-100 bg-slate-900/80 p-3 rounded-xl border border-slate-700/60 leading-relaxed">
+              "${fb.content}"
+            </p>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
+    }
+
+    function filterGroup(group) {
+      currentFilter = group;
+      document.querySelectorAll('.filter-btn').forEach(btn => {
+        btn.classList.remove('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
+        btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+      });
+
+      const activeMap = {
+        'all': 'btnFilterAll',
+        'a': 'btnFilterA',
+        'b': 'btnFilterB',
+        'cd': 'btnFilterCD',
+        'ef': 'btnFilterEF',
+        'feedbacks': 'btnFilterFB'
+      };
+      const activeBtn = document.getElementById(activeMap[group]);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        activeBtn.classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
+      }
+
+      if (globalData) {
+        renderDashboard(globalData);
+      }
+    }
+
+    // Thiết lập tự động cập nhật mỗi 5 giây
+    function setupAutoRefresh() {
+      const toggle = document.getElementById('autoRefreshToggle');
+      toggle.addEventListener('change', () => {
+        if (toggle.checked) {
+          startTimer();
+        } else {
+          stopTimer();
+        }
+      });
+      startTimer();
+    }
+
+    function startTimer() {
+      stopTimer();
+      autoRefreshTimer = setInterval(fetchData, 5000);
+    }
+
+    function stopTimer() {
+      if (autoRefreshTimer) clearInterval(autoRefreshTimer);
+    }
+
+    // Khởi động
+    document.addEventListener('DOMContentLoaded', () => {
+      fetchData();
+      setupAutoRefresh();
+    });
+  </script>
+</body>
+</html>
