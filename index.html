@@ -105,7 +105,7 @@
           <h1 class="text-xs sm:text-sm font-bold text-white tracking-wide uppercase">TRƯỜNG THPT NGUYỄN SINH SẮC</h1>
         </div>
       </div>
-      <a href="thongke.html" target="_blank" title="Xem Bảng Thống Kê Kết Quả Biểu Quyết"
+      <a href="thongke.html" id="btnBieuQuyetHeader" onclick="goToStats(event)" title="Xem Bảng Thống Kê Kết Quả Biểu Quyết"
         class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-400 hover:bg-amber-300 text-slate-950 shadow-sm transition cursor-pointer select-none">
         <i class="fa-solid fa-check-to-slot mr-1"></i> Biểu Quyết
       </a>
@@ -1222,6 +1222,12 @@
   <!-- JAVASCRIPT ĐIỀU HƯỚNG PHÂN TRANG & RÀNG BUỘC BIỂU QUYẾT -->
   <script>
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZVPc2KGoVfOjxw_0zihIg-RINlXF5mhy2EWpsrvjWNmzAbj4LWyoHSgqtUJIznI7XFg/exec";
+    
+    function goToStats(e) {
+      if (e) e.preventDefault();
+      window.location.href = "thongke.html";
+    }
+
     let currentStep = 1;
     const totalSteps = 4;
 
