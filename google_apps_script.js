@@ -119,7 +119,6 @@ function taoSheetThongKeVaBieuDo() {
     ss.deleteSheet(statsSheet);
   }
   statsSheet = ss.insertSheet("📊 THỐNG KÊ & BIỂU ĐỒ");
-  statsSheet.setGridlines(true);
 
   // 2. Danh mục 37 chỉ tiêu chuẩn
   const criteria = [
@@ -170,7 +169,7 @@ function taoSheetThongKeVaBieuDo() {
 
   // 4. Thẻ tóm tắt tổng số phiếu
   statsSheet.getRange("A2:B2").merge().setValue("Tổng Số Phiếu Đã Thu:").setFontWeight("bold").setBackground("#f1f5f9");
-  statsSheet.getRange("C2").setFormula(`=COUNTA('${rawSheetName}'!A2:A)-1`).setFontWeight("bold").setFontColor("#1e40af").setHorizontalAlignment("center").setFontSize(12);
+  statsSheet.getRange("C2").setFormula(`=COUNTA('${rawSheetName}'!A2:A)`).setFontWeight("bold").setFontColor("#1e40af").setHorizontalAlignment("center").setFontSize(12);
 
   statsSheet.getRange("D2:E2").merge().setValue("Tỷ Lệ Tán Thành Chung:").setFontWeight("bold").setBackground("#f1f5f9");
   statsSheet.getRange("F2").setFormula(`=AVERAGE(F4:F40)`).setNumberFormat("0.0%").setFontWeight("bold").setFontColor("#059669").setHorizontalAlignment("center").setFontSize(12);
@@ -213,15 +212,20 @@ function taoSheetThongKeVaBieuDo() {
   statsSheet.setColumnWidth(6, 90);
   statsSheet.setColumnWidth(7, 140);
 
-  // 7. Tạo Biểu Đồ Tròn (Pie Chart) Tán Thành Tổng Thể
+  // 7. Bảng phụ tạo Biểu Đồ Tròn (Pie Chart) ở Cột I, J
+  statsSheet.getRange("I2").setValue("Tán thành");
+  statsSheet.getRange("J2").setFormula("=F2");
+  statsSheet.getRange("I3").setValue("Không tán thành");
+  statsSheet.getRange("J3").setFormula("=1-F2");
+
   const chartBuilder = statsSheet.newChart()
     .setChartType(Charts.ChartType.PIE)
-    .addRange(statsSheet.getRange("D2:F2"))
-    .setPosition(2, 8, 0, 0)
+    .addRange(statsSheet.getRange("I2:J3"))
+    .setPosition(2, 9, 0, 0)
     .setOption('title', 'TỶ LỆ TÁN THÀNH BÌNH QUÂN')
-    .setOption('pieHole', 0.5)
+    .setOption('pieHole', 0.45)
     .setOption('colors', ['#059669', '#dc2626'])
-    .setOption('width', 450)
+    .setOption('width', 460)
     .setOption('height', 280)
     .build();
   statsSheet.insertChart(chartBuilder);
