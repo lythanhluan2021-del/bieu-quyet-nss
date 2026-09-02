@@ -1,0 +1,1475 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Phiếu Biểu Quyết Chỉ Tiêu Năm Học 2026 - 2027 | THPT Nguyễn Sinh Sắc</title>
+  
+  <!-- Favicon Logo -->
+  <link rel="icon" type="image/jpeg" href="logo.jpg" />
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <style>
+    /* Áp dụng Font chữ Times New Roman toàn diện */
+    * {
+      font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
+    }
+    body {
+      background-color: #f1f5f9;
+      color: #0f172a;
+      min-height: 100vh;
+      -webkit-tap-highlight-color: transparent;
+      line-height: 1.6;
+    }
+    .form-card {
+      background: #ffffff;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    .section-header {
+      background: linear-gradient(135deg, #0e7490 0%, #155e75 100%);
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+    .radio-pill input:checked + label.agree-label {
+      background-color: #0e7490;
+      color: #ffffff;
+      border-color: #0e7490;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(14, 116, 144, 0.35);
+    }
+    .radio-pill input:checked + label.disagree-label {
+      background-color: #be123c;
+      color: #ffffff;
+      border-color: #be123c;
+      font-weight: bold;
+      box-shadow: 0 2px 5px rgba(190, 18, 60, 0.35);
+    }
+    .banner-img {
+      width: 100%;
+      height: auto;
+      max-height: 380px;
+      object-fit: cover;
+      object-position: bottom center;
+      display: block;
+    }
+    .text-content {
+      font-size: 15px;
+      line-height: 1.65;
+    }
+    @media (min-width: 640px) {
+      .text-content {
+        font-size: 16px;
+      }
+    }
+    /* Hiệu ứng chuyển bước mượt mà */
+    .step-section {
+      display: none;
+      animation: fadeIn 0.25s ease-in-out forwards;
+    }
+    .step-section.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    /* Bước đang hoạt động */
+    .step-indicator.active {
+      background-color: #0e7490;
+      color: #ffffff;
+      border-color: #0e7490;
+      box-shadow: 0 0 0 3px rgba(14, 116, 144, 0.25);
+    }
+    .step-indicator.completed {
+      background-color: #059669;
+      color: #ffffff;
+      border-color: #059669;
+    }
+  </style>
+</head>
+<body class="pb-28 antialiased">
+
+  <!-- TOP BAR CỐ ĐỊNH -->
+  <header class="bg-gradient-to-r from-slate-900 via-cyan-950 to-slate-900 text-white shadow-md sticky top-0 z-40 border-b border-cyan-700/50">
+    <div class="max-w-3xl mx-auto px-4 py-2 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <img src="logo.jpg" alt="Logo THPT Nguyễn Sinh Sắc" class="w-9 h-9 rounded-full object-cover border-2 border-amber-400 shadow-md bg-white flex-shrink-0" />
+        <div>
+          <p class="text-[11px] uppercase tracking-wider text-cyan-200 font-bold leading-tight">SỞ GD-ĐT AN GIANG</p>
+          <h1 class="text-xs sm:text-sm font-bold text-white tracking-wide uppercase">TRƯỜNG THPT NGUYỄN SINH SẮC</h1>
+        </div>
+      </div>
+      <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-amber-400 text-slate-950 shadow-sm">
+        <i class="fa-solid fa-check-to-slot mr-1"></i> Biểu Quyết
+      </span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-3xl mx-auto px-3 sm:px-4 pt-3 space-y-4">
+
+    <!-- HERO BANNER VÀ TIÊU ĐỀ HỘI NGHỊ -->
+    <div class="form-card overflow-hidden shadow-lg border-slate-300">
+      <div class="w-full overflow-hidden bg-slate-100 relative">
+        <img src="banner.jpg" alt="Toàn cảnh Trường THPT Nguyễn Sinh Sắc" class="banner-img" />
+      </div>
+
+      <div class="p-4 sm:p-5 text-center">
+        <h2 class="text-base sm:text-lg font-bold text-slate-900 uppercase leading-snug">
+          PHIẾU BIỂU QUYẾT CHỈ TIÊU NGHỊ QUYẾT
+        </h2>
+        <h3 class="text-xs sm:text-sm font-bold text-cyan-900 uppercase mt-0.5">
+          HỘI NGHỊ VIÊN CHỨC – NGƯỜI LAO ĐỘNG NĂM HỌC 2026 – 2027
+        </h3>
+        <p class="text-xs text-slate-500 italic mt-1">
+          (Quy mô: 1.310 học sinh — Khối 10: 452 HS, Khối 11: 421 HS, Khối 12: 437 HS)
+        </p>
+      </div>
+    </div>
+
+    <!-- THANH TIẾN TRÌNH VÀ BƯỚC PHÂN TRANG (MULTI-STEP BAR) -->
+    <div class="form-card p-3 sm:p-4 shadow-md sticky top-14 z-30 bg-white/95 backdrop-blur-md border-cyan-200">
+      
+      <!-- Thanh % tiến độ -->
+      <div class="flex items-center justify-between mb-2">
+        <span class="text-xs sm:text-sm font-bold text-cyan-950 uppercase flex items-center" id="currentStepLabel">
+          <i class="fa-solid fa-layer-group text-cyan-700 mr-1.5"></i>
+          Bước 1 / 4: Chỉ tiêu Học sinh
+        </span>
+        <span class="text-xs font-bold text-cyan-700 bg-cyan-50 px-2 py-0.5 rounded-full border border-cyan-200" id="progressPercent">
+          25% Hoàn thành
+        </span>
+      </div>
+      
+      <div class="w-full bg-slate-200 rounded-full h-2 mb-3 overflow-hidden">
+        <div id="progressBar" class="bg-gradient-to-r from-cyan-600 to-teal-600 h-2 rounded-full transition-all duration-300 ease-out" style="width: 25%"></div>
+      </div>
+
+      <!-- 4 Nút Chọn Nhanh Bước -->
+      <div class="grid grid-cols-4 gap-1.5 sm:gap-2 text-center text-xs">
+        <button type="button" onclick="goToStep(1)" id="stepTab1" class="step-indicator active py-2 px-1 rounded-xl border border-slate-300 font-bold transition flex items-center justify-center space-x-1">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[10px] flex items-center justify-center flex-shrink-0">1</span>
+          <span class="truncate">Học sinh</span>
+        </button>
+        <button type="button" onclick="goToStep(2)" id="stepTab2" class="step-indicator py-2 px-1 rounded-xl border border-slate-300 font-bold transition flex items-center justify-center space-x-1 bg-slate-50 text-slate-600">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[10px] flex items-center justify-center flex-shrink-0">2</span>
+          <span class="truncate">15 Bộ môn</span>
+        </button>
+        <button type="button" onclick="goToStep(3)" id="stepTab3" class="step-indicator py-2 px-1 rounded-xl border border-slate-300 font-bold transition flex items-center justify-center space-x-1 bg-slate-50 text-slate-600">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[10px] flex items-center justify-center flex-shrink-0">3</span>
+          <span class="truncate">CB - GV</span>
+        </button>
+        <button type="button" onclick="goToStep(4)" id="stepTab4" class="step-indicator py-2 px-1 rounded-xl border border-slate-300 font-bold transition flex items-center justify-center space-x-1 bg-slate-50 text-slate-600">
+          <span class="w-4 h-4 rounded-full bg-slate-200 text-slate-800 text-[10px] flex items-center justify-center flex-shrink-0">4</span>
+          <span class="truncate">AI & Tập thể</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- FORM START -->
+    <form id="votingForm" onsubmit="handleFormSubmit(event)" class="space-y-4">
+
+      <!-- ======================================================== -->
+      <!-- BƯỚC 1: CHỈ TIÊU HỌC SINH -->
+      <!-- ======================================================== -->
+      <section id="step1" class="step-section active space-y-4">
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white flex items-center justify-between">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-user-graduate mr-2 text-amber-300"></i>
+              Bước 1: Chỉ tiêu Học sinh
+            </h3>
+            <span class="text-xs bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-400/40">Bước 1/4</span>
+          </div>
+          <div class="p-4 space-y-4 divide-y divide-slate-200">
+
+            <!-- a.1: Duy trì sĩ số -->
+            <div class="pt-3 first:pt-0">
+              <p class="text-content text-slate-900">
+                <b>1. Duy trì sĩ số:</b> Tỷ lệ học sinh giảm trong năm học không quá <b>2.0%</b>, khống chế học sinh bỏ học không quá <b>1.0%</b>, tỷ lệ lưu ban <b>dưới 1%</b>.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_si_so_agree" name="hs_si_so" value="Đồng ý" required class="hidden">
+                  <label for="hs_si_so_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_si_so_disagree" name="hs_si_so" value="Không đồng ý" class="hidden">
+                  <label for="hs_si_so_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.2: Đầu ra tốt nghiệp -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>2. Đầu ra tốt nghiệp:</b> Giữ vững tỷ lệ <b>100%</b> học sinh đỗ tốt nghiệp THPT.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_tot_nghiep_agree" name="hs_tot_nghiep" value="Đồng ý" required class="hidden">
+                  <label for="hs_tot_nghiep_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_tot_nghiep_disagree" name="hs_tot_nghiep" value="Không đồng ý" class="hidden">
+                  <label for="hs_tot_nghiep_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.3: Đầu ra Đại học, Cao đẳng -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>3. Đầu ra Đại học, Cao đẳng:</b> Phấn đấu đạt từ <b>80%</b> học sinh bước vào giảng đường Đại học, Cao đẳng trở lên trên tổng số hồ sơ đăng ký xét tuyển.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_dh_cd_agree" name="hs_dh_cd" value="Đồng ý" required class="hidden">
+                  <label for="hs_dh_cd_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_dh_cd_disagree" name="hs_dh_cd" value="Không đồng ý" class="hidden">
+                  <label for="hs_dh_cd_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.4: Tỷ lệ lên lớp thẳng -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>4. Tỷ lệ lên lớp thẳng:</b> Đạt tỷ lệ <b>99%</b> trở lên.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_len_lop_agree" name="hs_len_lop" value="Đồng ý" required class="hidden">
+                  <label for="hs_len_lop_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_len_lop_disagree" name="hs_len_lop" value="Không đồng ý" class="hidden">
+                  <label for="hs_len_lop_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.5: Kết quả học tập -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>5. Kết quả học tập (Học lực toàn trường):</b><br>
+                <span class="text-slate-700 pl-3 block">
+                  • Loại Tốt: <b>≥ 45.12%</b> &nbsp;|&nbsp; • Loại Khá: <b>≥ 48.47%</b><br>
+                  • Loại Đạt: <b>≤ 5.80%</b> &nbsp;&nbsp;&nbsp;|&nbsp; • Loại Chưa đạt: <b>≤ 0.61%</b>
+                </span>
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_hoc_luc_agree" name="hs_hoc_luc" value="Đồng ý" required class="hidden">
+                  <label for="hs_hoc_luc_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_hoc_luc_disagree" name="hs_hoc_luc" value="Không đồng ý" class="hidden">
+                  <label for="hs_hoc_luc_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.6: Kết quả rèn luyện -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>6. Kết quả rèn luyện (Hạnh kiểm toàn trường):</b><br>
+                <span class="text-slate-700 pl-3 block">
+                  • Loại Tốt: <b>≥ 90.84%</b> &nbsp;|&nbsp; • Loại Khá: <b>≥ 6.64%</b><br>
+                  • Loại Đạt: <b>≤ 2.29%</b> &nbsp;&nbsp;&nbsp;|&nbsp; • Loại Chưa đạt: <b>≤ 0.23%</b>
+                </span>
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_hanh_kiem_agree" name="hs_hanh_kiem" value="Đồng ý" required class="hidden">
+                  <label for="hs_hanh_kiem_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_hanh_kiem_disagree" name="hs_hanh_kiem" value="Không đồng ý" class="hidden">
+                  <label for="hs_hanh_kiem_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.7: Phong trào mũi nhọn -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>7. Phong trào mũi nhọn:</b> Đạt ít nhất <b>01 giải</b> học sinh giỏi văn hóa cấp tỉnh; giành tối thiểu <b>03 giải</b> cấp tỉnh trong các cuộc thi phong trào khác.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_giai_tinh_agree" name="hs_giai_tinh" value="Đồng ý" required class="hidden">
+                  <label for="hs_giai_tinh_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_giai_tinh_disagree" name="hs_giai_tinh" value="Không đồng ý" class="hidden">
+                  <label for="hs_giai_tinh_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.8: Bảo hiểm & Tiện ích học đường -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>8. Bảo hiểm & Tiện ích học đường:</b> Phấn đấu <b>100%</b> học sinh tham gia BHYT; vận động <b>trên 95%</b> học sinh tham gia BHCN; <b>100%</b> học sinh đăng ký sổ liên lạc điện tử VNEDU và hệ thống Wifi trường học.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_bao_hiem_agree" name="hs_bao_hiem" value="Đồng ý" required class="hidden">
+                  <label for="hs_bao_hiem_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_bao_hiem_disagree" name="hs_bao_hiem" value="Không đồng ý" class="hidden">
+                  <label for="hs_bao_hiem_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- a.9: An ninh học đường -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>9. An ninh học đường:</b> <b>100%</b> học sinh không vi phạm Luật Giao thông ở mức độ nghiêm trọng; không để xảy ra tệ nạn xã hội xâm nhập vào nhà trường; đảm bảo an toàn cháy nổ, không xảy ra tai nạn thương tích.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="hs_an_ninh_agree" name="hs_an_ninh" value="Đồng ý" required class="hidden">
+                  <label for="hs_an_ninh_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="hs_an_ninh_disagree" name="hs_an_ninh" value="Không đồng ý" class="hidden">
+                  <label for="hs_an_ninh_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Nút chuyển bước 1 -> 2 -->
+        <div class="flex justify-end pt-2">
+          <button type="button" onclick="nextStep(2)"
+            class="py-3 px-6 bg-cyan-800 hover:bg-cyan-900 text-white font-bold rounded-xl shadow-md transition flex items-center space-x-2 text-sm sm:text-base">
+            <span>Tiếp tục: Chỉ tiêu 15 Bộ môn</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- BƯỚC 2: CHỈ TIÊU 15 BỘ MÔN -->
+      <!-- ======================================================== -->
+      <section id="step2" class="step-section space-y-4">
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white flex items-center justify-between">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-book-open mr-2 text-amber-300"></i>
+              Bước 2: Chỉ tiêu 15 Bộ môn
+            </h3>
+            <span class="text-xs bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-400/40">Bước 2/4</span>
+          </div>
+          
+          <div class="p-3 sm:p-4 bg-slate-50">
+            <p class="text-xs sm:text-sm text-slate-600 italic mb-2.5">
+              (Quý Thầy/Cô tích chọn "Đồng ý" hoặc "Không đồng ý" trực tiếp cho từng môn học ở cột bên phải)
+            </p>
+
+            <!-- BẢNG TÍCH HỢP NÚT BIỂU QUYẾT TRỰC TIẾP -->
+            <div class="overflow-x-auto rounded-xl border border-slate-300 shadow bg-white">
+              <table class="w-full text-left text-xs sm:text-sm text-slate-800 border-collapse">
+                <thead class="bg-cyan-950 text-white font-bold uppercase text-[11px] sm:text-xs">
+                  <tr>
+                    <th class="py-2.5 px-2 text-center border-r border-cyan-800 w-10">STT</th>
+                    <th class="py-2.5 px-3 border-r border-cyan-800 min-w-[120px]">Bộ môn</th>
+                    <th class="py-2.5 px-2.5 text-rose-300 text-center border-r border-cyan-800 min-w-[85px]">Điểm yếu (&lt; 5.0)</th>
+                    <th class="py-2.5 px-2.5 text-emerald-300 text-center border-r border-cyan-800 min-w-[85px]">Điểm giỏi (≥ 8.0)</th>
+                    <th class="py-2.5 px-3 text-center min-w-[150px] bg-cyan-900">Ý kiến biểu quyết</th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-200 radio-pill">
+
+                  <!-- 1. Toán -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">1</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Toán học</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 2.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 31.30%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_toan_agree" name="mon_toan" value="Đồng ý" required class="hidden">
+                        <label for="mon_toan_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_toan_disagree" name="mon_toan" value="Không đồng ý" class="hidden">
+                        <label for="mon_toan_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 2. Ngữ văn -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">2</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Ngữ văn</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 50.31%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_van_agree" name="mon_van" value="Đồng ý" required class="hidden">
+                        <label for="mon_van_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_van_disagree" name="mon_van" value="Không đồng ý" class="hidden">
+                        <label for="mon_van_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 3. Vật lí -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">3</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Vật lí</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 48.01%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_ly_agree" name="mon_ly" value="Đồng ý" required class="hidden">
+                        <label for="mon_ly_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_ly_disagree" name="mon_ly" value="Không đồng ý" class="hidden">
+                        <label for="mon_ly_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 4. Hóa học -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">4</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Hóa học</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 2.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 21.83%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_hoa_agree" name="mon_hoa" value="Đồng ý" required class="hidden">
+                        <label for="mon_hoa_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_hoa_disagree" name="mon_hoa" value="Không đồng ý" class="hidden">
+                        <label for="mon_hoa_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 5. Sinh học -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">5</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Sinh học</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 40.44%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_sinh_agree" name="mon_sinh" value="Đồng ý" required class="hidden">
+                        <label for="mon_sinh_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_sinh_disagree" name="mon_sinh" value="Không đồng ý" class="hidden">
+                        <label for="mon_sinh_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 6. Tin học -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">6</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Tin học</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 58.51%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_tin_agree" name="mon_tin" value="Đồng ý" required class="hidden">
+                        <label for="mon_tin_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_tin_disagree" name="mon_tin" value="Không đồng ý" class="hidden">
+                        <label for="mon_tin_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 7. Lịch sử -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">7</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Lịch sử</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 90.00%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_su_agree" name="mon_su" value="Đồng ý" required class="hidden">
+                        <label for="mon_su_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_su_disagree" name="mon_su" value="Không đồng ý" class="hidden">
+                        <label for="mon_su_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 8. Địa lí -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">8</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Địa lí</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 83.29%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_dia_agree" name="mon_dia" value="Đồng ý" required class="hidden">
+                        <label for="mon_dia_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_dia_disagree" name="mon_dia" value="Không đồng ý" class="hidden">
+                        <label for="mon_dia_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 9. Tiếng Anh -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">9</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Ngoại ngữ (Tiếng Anh)</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 27.94%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_anh_agree" name="mon_anh" value="Đồng ý" required class="hidden">
+                        <label for="mon_anh_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_anh_disagree" name="mon_anh" value="Không đồng ý" class="hidden">
+                        <label for="mon_anh_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 10. Công nghệ -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">10</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Công nghệ</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 78.57%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_cn_agree" name="mon_cn" value="Đồng ý" required class="hidden">
+                        <label for="mon_cn_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_cn_disagree" name="mon_cn" value="Không đồng ý" class="hidden">
+                        <label for="mon_cn_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 11. GDQP & AN -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">11</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">GDQP & AN</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">0.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 87.48%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_gdqp_agree" name="mon_gdqp" value="Đồng ý" required class="hidden">
+                        <label for="mon_gdqp_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_gdqp_disagree" name="mon_gdqp" value="Không đồng ý" class="hidden">
+                        <label for="mon_gdqp_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 12. GDKT & PL -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">12</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">GD Kinh tế & Pháp luật</td>
+                    <td class="py-2.5 px-2.5 text-rose-700 font-bold text-center">&lt; 1.00%</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center">≥ 64.95%</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_gdktpl_agree" name="mon_gdktpl" value="Đồng ý" required class="hidden">
+                        <label for="mon_gdktpl_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_gdktpl_disagree" name="mon_gdktpl" value="Không đồng ý" class="hidden">
+                        <label for="mon_gdktpl_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 13. GD Thể chất -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">13</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">GD Thể chất</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center text-xs" colspan="2">0.00% yếu (Đạt 100.00% Đạt)</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_thechat_agree" name="mon_thechat" value="Đồng ý" required class="hidden">
+                        <label for="mon_thechat_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_thechat_disagree" name="mon_thechat" value="Không đồng ý" class="hidden">
+                        <label for="mon_thechat_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 14. GD Địa phương -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">14</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Nội dung GD Địa phương</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center text-xs" colspan="2">0.00% yếu (Đạt 100.00% Đạt)</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_diaphuong_agree" name="mon_diaphuong" value="Đồng ý" required class="hidden">
+                        <label for="mon_diaphuong_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_diaphuong_disagree" name="mon_diaphuong" value="Không đồng ý" class="hidden">
+                        <label for="mon_diaphuong_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                  <!-- 15. HĐTN - HN -->
+                  <tr class="hover:bg-cyan-50/50 transition">
+                    <td class="py-2.5 px-2 text-center font-bold text-slate-600">15</td>
+                    <td class="py-2.5 px-3 font-bold text-slate-900">Hoạt động TN, HN</td>
+                    <td class="py-2.5 px-2.5 text-emerald-800 font-bold text-center text-xs" colspan="2">0.00% yếu (Đạt 100.00% Đạt)</td>
+                    <td class="py-2 px-2 text-center">
+                      <div class="flex items-center justify-center space-x-1.5">
+                        <input type="radio" id="mon_hdtn_agree" name="mon_hdtn" value="Đồng ý" required class="hidden">
+                        <label for="mon_hdtn_agree" class="agree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-check mr-1 text-[10px]"></i> Đồng ý
+                        </label>
+                        <input type="radio" id="mon_hdtn_disagree" name="mon_hdtn" value="Không đồng ý" class="hidden">
+                        <label for="mon_hdtn_disagree" class="disagree-label px-2.5 py-1.5 rounded-lg border border-slate-300 text-xs font-medium cursor-pointer transition text-slate-700 bg-slate-50 flex items-center">
+                          <i class="fa-solid fa-xmark mr-1 text-[10px]"></i> Không
+                        </label>
+                      </div>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- Nút điều hướng Bước 2 -->
+        <div class="flex justify-between items-center pt-2">
+          <button type="button" onclick="goToStep(1)"
+            class="py-3 px-4 sm:px-5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl shadow-sm transition flex items-center space-x-1.5 text-xs sm:text-sm">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Quay lại: Học sinh</span>
+          </button>
+          <button type="button" onclick="nextStep(3)"
+            class="py-3 px-4 sm:px-6 bg-cyan-800 hover:bg-cyan-900 text-white font-bold rounded-xl shadow-md transition flex items-center space-x-1.5 text-xs sm:text-sm">
+            <span>Tiếp tục: Điểm TN & CB-GV</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- BƯỚC 3: ĐIỂM TỐT NGHIỆP & CÁN BỘ VIÊN CHỨC -->
+      <!-- ======================================================== -->
+      <section id="step3" class="step-section space-y-4">
+        
+        <!-- c) Điểm tốt nghiệp -->
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white flex items-center justify-between">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-chart-line mr-2 text-amber-300"></i>
+              Bước 3: Điểm Tốt nghiệp & Cán bộ GV
+            </h3>
+            <span class="text-xs bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-400/40">Bước 3/4</span>
+          </div>
+          <div class="p-4 space-y-3">
+            <h4 class="text-sm font-bold text-cyan-900 uppercase">
+              c) Chỉ tiêu điểm trung bình thi tốt nghiệp THPT so với tỉnh
+            </h4>
+            <p class="text-content text-slate-900">
+              Lấy điểm trung bình thi tốt nghiệp THPT của từng môn trên địa bàn tỉnh An Giang năm học 2025–2026 làm mặt bằng tham chiếu để xây dựng chỉ tiêu phấn đấu của nhà trường:
+            </p>
+            <ul class="list-disc pl-5 space-y-1.5 text-content text-slate-700">
+              <li>Đối với môn thấp hơn tỉnh <b>trên 0,50 điểm</b>: Phấn đấu <b>rút ngắn ít nhất 0,50 điểm</b> khoảng cách.</li>
+              <li>Đối với môn thấp hơn tỉnh <b>từ 0,50 điểm trở xuống</b>: Phấn đấu <b>bằng hoặc cao hơn</b> điểm TB tỉnh.</li>
+              <li>Đối với môn <b>bằng hoặc cao hơn</b> tỉnh: Phấn đấu <b>tăng thêm 0,25 điểm</b> so với mức chênh lệch.</li>
+            </ul>
+            <div class="grid grid-cols-2 gap-2.5 mt-3 radio-pill">
+              <div>
+                <input type="radio" id="muc_c_agree" name="muc_c_tn" value="Đồng ý" required class="hidden">
+                <label for="muc_c_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                  <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                </label>
+              </div>
+              <div>
+                <input type="radio" id="muc_c_disagree" name="muc_c_tn" value="Không đồng ý" class="hidden">
+                <label for="muc_c_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                  <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- d) Cán bộ viên chức -->
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-chalkboard-user mr-2 text-amber-300"></i>
+              d) Chỉ tiêu đối với cán bộ, viên chức và người lao động
+            </h3>
+          </div>
+          <div class="p-4 space-y-4 divide-y divide-slate-200">
+
+            <!-- d.1: Thi đua -->
+            <div class="pt-3 first:pt-0">
+              <p class="text-content text-slate-900">
+                <b>1. Danh hiệu thi đua cá nhân:</b> Phấn đấu giữ vững chỉ tiêu <b>100%</b> cán bộ, viên chức, người lao động đạt danh hiệu Lao động tiên tiến; ít nhất <b>20%</b> đạt danh hiệu Chiến sĩ thi đua cơ sở.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="cb_thi_dua_agree" name="cb_thi_dua" value="Đồng ý" required class="hidden">
+                  <label for="cb_thi_dua_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="cb_thi_dua_disagree" name="cb_thi_dua" value="Không đồng ý" class="hidden">
+                  <label for="cb_thi_dua_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- d.2: Xếp loại chất lượng viên chức -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>2. Xếp loại chất lượng viên chức:</b> <b>100%</b> nhân sự được đánh giá hoàn thành nhiệm vụ trở lên, trong đó có ít nhất <b>80%</b> Hoàn thành tốt nhiệm vụ và <b>20%</b> Hoàn thành xuất sắc nhiệm vụ.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="cb_xep_loai_agree" name="cb_xep_loai" value="Đồng ý" required class="hidden">
+                  <label for="cb_xep_loai_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="cb_xep_loai_disagree" name="cb_xep_loai" value="Không đồng ý" class="hidden">
+                  <label for="cb_xep_loai_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- d.3: Ban Giám hiệu -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>3. Ban Giám hiệu:</b> <b>100%</b> thành viên Ban Giám hiệu giữ vững danh hiệu Hoàn thành tốt nhiệm vụ trở lên, nêu cao vai trò lãnh đạo đoàn kết đơn vị.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="cb_bgh_agree" name="cb_bgh" value="Đồng ý" required class="hidden">
+                  <label for="cb_bgh_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="cb_bgh_disagree" name="cb_bgh" value="Không đồng ý" class="hidden">
+                  <label for="cb_bgh_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- d.4: Nghiên cứu khoa học -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>4. Nghiên cứu khoa học (SKKN):</b> Có ít nhất <b>30%</b> giáo viên Tổ chuyên môn đạt sáng kiến kinh nghiệm (SKKN) cấp trường; toàn trường đạt ít nhất <b>10 sáng kiến</b> cấp cơ sở trở lên.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="cb_skkn_agree" name="cb_skkn" value="Đồng ý" required class="hidden">
+                  <label for="cb_skkn_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="cb_skkn_disagree" name="cb_skkn" value="Không đồng ý" class="hidden">
+                  <label for="cb_skkn_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- d.5: Chuyên môn & Đổi mới giảng dạy -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>5. Chuyên môn & Đổi mới giảng dạy:</b>
+              </p>
+              <ul class="list-disc pl-5 space-y-1 text-content text-slate-700 mt-1">
+                <li>Mỗi GV dạy cho tổ dự giờ (có đánh giá) ≥ <b>01 tiết/HK</b>, dự giờ thao giảng theo phân công, dự giờ đồng nghiệp ≥ <b>04 tiết/HK</b>.</li>
+                <li>Mỗi GV thực hiện từ <b>08 tiết/năm học</b> bài giảng điện tử hoặc ứng dụng CNTT.</li>
+                <li>Thao giảng NC bài học ≥ <b>02 tiết/năm/môn</b>; sinh hoạt ≥ <b>02 chuyên đề</b> nâng cao chất lượng/năm.</li>
+                <li>Toán, Lý, Hóa, Sinh, Tin, CN dạy STEM ≥ <b>01 bài học/lớp</b>; tổ chức tốt Ngày hội STEM toàn trường.</li>
+                <li>Văn, Sử, Địa, GDKT&PL, Tiếng Anh dạy học gắn trải nghiệm sáng tạo ≥ <b>01 hoạt động/năm</b>.</li>
+                <li>Mỗi bộ môn làm thêm ≥ <b>01 đồ dùng dạy học</b>; khuyến khích hướng dẫn HS ≥ <b>01 đề tài NCKH-STT</b> dự thi cấp trường.</li>
+                <li>Trích xuất <b>10%</b> nội dung dạy học trực tuyến linh hoạt.</li>
+              </ul>
+              <div class="grid grid-cols-2 gap-2.5 mt-3 radio-pill">
+                <div>
+                  <input type="radio" id="cb_chuyen_mon_agree" name="cb_chuyen_mon" value="Đồng ý" required class="hidden">
+                  <label for="cb_chuyen_mon_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="cb_chuyen_mon_disagree" name="cb_chuyen_mon" value="Không đồng ý" class="hidden">
+                  <label for="cb_chuyen_mon_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Nút điều hướng Bước 3 -->
+        <div class="flex justify-between items-center pt-2">
+          <button type="button" onclick="goToStep(2)"
+            class="py-3 px-4 sm:px-5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl shadow-sm transition flex items-center space-x-1.5 text-xs sm:text-sm">
+            <i class="fa-solid fa-arrow-left"></i>
+            <span>Quay lại: 15 Bộ môn</span>
+          </button>
+          <button type="button" onclick="nextStep(4)"
+            class="py-3 px-4 sm:px-6 bg-cyan-800 hover:bg-cyan-900 text-white font-bold rounded-xl shadow-md transition flex items-center space-x-1.5 text-xs sm:text-sm">
+            <span>Tiếp tục: AI, Tập thể & Hoàn tất</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- ======================================================== -->
+      <!-- BƯỚC 4: GIÁO DỤC AI, TẬP THỂ & HOÀN TẤT -->
+      <!-- ======================================================== -->
+      <section id="step4" class="step-section space-y-4">
+        
+        <!-- e) AI -->
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white flex items-center justify-between">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-microchip mr-2 text-amber-300"></i>
+              Bước 4: Giáo dục AI, Tập thể & Hoàn tất
+            </h3>
+            <span class="text-xs bg-cyan-950/60 px-2 py-0.5 rounded-md border border-cyan-400/40">Bước 4/4</span>
+          </div>
+          <div class="p-4 space-y-4 divide-y divide-slate-200">
+            <h4 class="text-sm font-bold text-cyan-900 uppercase">
+              e) Chỉ tiêu triển khai thực hiện Giáo dục Trí tuệ nhân tạo (AI) cho học sinh
+            </h4>
+            <p class="text-xs sm:text-sm text-slate-600 italic pb-1">
+              (Theo Kế hoạch số 369/KH-THPTNSS ngày 26/8/2026 của trường THPT Nguyễn Sinh Sắc)
+            </p>
+
+            <!-- e.1 -->
+            <div class="pt-3 first:pt-0">
+              <p class="text-content text-slate-900">
+                <b>1. Đảm bảo thời lượng & Bảng khung nội dung:</b> <b>100%</b> học sinh các khối lớp được tiếp cận và học tập nội dung Giáo dục AI với thời lượng tối thiểu <b>12 tiết/lớp/năm học</b> theo 03 hình thức linh hoạt (Chuyên đề giáo dục AI: 2 buổi/ngày; Lồng ghép trong các môn học; Hoạt động giáo dục theo nhu cầu / CLB).
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="ai_thoi_luong_agree" name="ai_thoi_luong" value="Đồng ý" required class="hidden">
+                  <label for="ai_thoi_luong_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="ai_thoi_luong_disagree" name="ai_thoi_luong" value="Không đồng ý" class="hidden">
+                  <label for="ai_thoi_luong_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- e.2 -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>2. Tập huấn & Bồi dưỡng giáo viên:</b> <b>100%</b> giáo viên tham gia tập huấn chuyên môn về AI, kỹ năng thiết kế bài giảng, kiểm tra đánh giá và ứng dụng AI an toàn, có trách nhiệm.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="ai_tap_huan_agree" name="ai_tap_huan" value="Đồng ý" required class="hidden">
+                  <label for="ai_tap_huan_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="ai_tap_huan_disagree" name="ai_tap_huan" value="Không đồng ý" class="hidden">
+                  <label for="ai_tap_huan_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- e.3 -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>3. Đảm bảo yêu cầu cần đạt:</b> <b>100%</b> học sinh nắm vững kiến thức nền tảng, tư duy phản biện, biết khai thác công cụ AI phù hợp trong học tập, kiểm chứng thông tin, tuân thủ đạo đức, bản quyền và bảo mật dữ liệu cá nhân.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="ai_yeu_cau_agree" name="ai_yeu_cau" value="Đồng ý" required class="hidden">
+                  <label for="ai_yeu_cau_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="ai_yeu_cau_disagree" name="ai_yeu_cau" value="Không đồng ý" class="hidden">
+                  <label for="ai_yeu_cau_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- e.4 -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>4. Kiểm tra, đánh giá & Báo cáo:</b> Đánh giá quá trình và sản phẩm học tập của học sinh (không tổ chức bài kiểm tra định kỳ riêng); hoàn thành báo cáo tổng kết thực hiện về Sở GD&ĐT trước ngày <b>15/6/2027</b>.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="ai_danh_gia_agree" name="ai_danh_gia" value="Đồng ý" required class="hidden">
+                  <label for="ai_danh_gia_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="ai_danh_gia_disagree" name="ai_danh_gia" value="Không đồng ý" class="hidden">
+                  <label for="ai_danh_gia_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- f) Tập thể & Đoàn thể -->
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-users mr-2 text-amber-300"></i>
+              f) Chỉ tiêu đối với tập thể và các đoàn thể
+            </h3>
+          </div>
+          <div class="p-4 space-y-4 divide-y divide-slate-200">
+
+            <!-- f.1 -->
+            <div class="pt-3 first:pt-0">
+              <p class="text-content text-slate-900">
+                <b>1. Danh hiệu thi đua trường:</b> Quyết tâm phấn đấu đạt danh hiệu <b>Tập thể Lao động xuất sắc</b>.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="tt_danh_hieu_agree" name="tt_danh_hieu" value="Đồng ý" required class="hidden">
+                  <label for="tt_danh_hieu_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="tt_danh_hieu_disagree" name="tt_danh_hieu" value="Không đồng ý" class="hidden">
+                  <label for="tt_danh_hieu_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- f.2 -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>2. Xếp loại đoàn thể:</b> Đảng bộ đạt <b>"Hoàn thành tốt nhiệm vụ trở lên"</b>; Đoàn TNCS Hồ Chí Minh đạt danh hiệu <b>"Hoàn thành xuất sắc nhiệm vụ"</b>.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="tt_doan_the_agree" name="tt_doan_the" value="Đồng ý" required class="hidden">
+                  <label for="tt_doan_the_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="tt_doan_the_disagree" name="tt_doan_the" value="Không đồng ý" class="hidden">
+                  <label for="tt_doan_the_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- f.3 -->
+            <div class="pt-3">
+              <p class="text-content text-slate-900">
+                <b>3. Công tác nhân văn:</b> BGH, tổ văn phòng và mỗi tổ chuyên môn thực hiện nhận đỡ đầu, hỗ trợ kinh phí, sách vở cho ít nhất <b>02 học sinh</b> có hoàn cảnh khó khăn bước tiếp đến trường.
+              </p>
+              <div class="grid grid-cols-2 gap-2.5 mt-2.5 radio-pill">
+                <div>
+                  <input type="radio" id="tt_do_dau_agree" name="tt_do_dau" value="Đồng ý" required class="hidden">
+                  <label for="tt_do_dau_agree" class="agree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-check mr-1.5 text-xs"></i> Đồng ý
+                  </label>
+                </div>
+                <div>
+                  <input type="radio" id="tt_do_dau_disagree" name="tt_do_dau" value="Không đồng ý" class="hidden">
+                  <label for="tt_do_dau_disagree" class="disagree-label flex items-center justify-center py-2 px-3 rounded-xl border border-slate-300 text-sm font-medium cursor-pointer transition text-slate-700 bg-slate-50">
+                    <i class="fa-solid fa-xmark mr-1.5 text-xs"></i> Không đồng ý
+                  </label>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- Ý kiến đóng góp -->
+        <div class="form-card overflow-hidden">
+          <div class="section-header px-4 py-3 text-white">
+            <h3 class="text-sm sm:text-base font-bold uppercase tracking-wide flex items-center">
+              <i class="fa-solid fa-comment-dots mr-2 text-amber-300"></i>
+              Ý KIẾN ĐÓNG GÓP, ĐỀ XUẤT BỔ SUNG (NẾU CÓ)
+            </h3>
+          </div>
+          <div class="p-4">
+            <label class="block text-content font-bold text-slate-900 mb-1.5" for="additionalFeedback">
+              Thầy/Cô có ý kiến đóng góp hoặc đề xuất điều chỉnh chỉ tiêu nào khác xin vui lòng nhập tại đây:
+            </label>
+            <textarea id="additionalFeedback" name="additionalFeedback" rows="3" placeholder="Nhập ý kiến đề xuất, đóng góp tại đây (nếu có)..."
+              class="w-full p-3 bg-slate-50 border border-slate-300 rounded-xl text-sm sm:text-base focus:bg-white focus:outline-none focus:ring-2 focus:ring-cyan-600 transition"></textarea>
+          </div>
+        </div>
+
+        <!-- Nút điều hướng Bước 4 & Nút GỬI -->
+        <div class="space-y-3 pt-2">
+          <button type="submit" id="submitBtn"
+            class="w-full py-4 px-4 bg-gradient-to-r from-cyan-800 via-teal-800 to-slate-900 hover:from-cyan-900 hover:to-slate-950 text-white font-bold text-base sm:text-lg rounded-2xl shadow-xl active:scale-[0.99] transition duration-150 flex items-center justify-center space-x-2">
+            <i class="fa-solid fa-paper-plane text-lg"></i>
+            <span class="tracking-wide">HOÀN TẤT & GỬI PHIẾU BIỂU QUYẾT</span>
+          </button>
+          
+          <div class="flex justify-between items-center">
+            <button type="button" onclick="goToStep(3)"
+              class="py-2.5 px-4 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-xl shadow-sm transition flex items-center space-x-1.5 text-xs sm:text-sm">
+              <i class="fa-solid fa-arrow-left"></i>
+              <span>Quay lại: Điểm TN & CB-GV</span>
+            </button>
+            <p class="text-[11px] sm:text-xs text-slate-500 text-right flex items-center space-x-1">
+              <i class="fa-solid fa-shield-halved text-cyan-700"></i>
+              <span>Phiếu biểu quyết ẩn danh 100%</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+    </form>
+
+    <!-- SUCCESS MODAL (LỜI CẢM ƠN & CHÚC MỪNG NĂM HỌC MỚI) -->
+    <div id="successModal" class="fixed inset-0 bg-slate-900/70 backdrop-blur-sm z-50 flex items-center justify-center p-3 sm:p-4 hidden">
+      <div class="bg-white rounded-3xl p-5 sm:p-7 max-w-md w-full text-center shadow-2xl border border-slate-200 animate-fadeIn">
+        
+        <!-- Logo & Biểu tượng vinh danh -->
+        <div class="relative w-20 h-20 mx-auto mb-3">
+          <img src="logo.jpg" alt="Logo NSS" class="w-20 h-20 rounded-full object-cover border-2 border-emerald-500 shadow-md bg-white mx-auto" />
+          <span class="absolute -bottom-1 -right-1 bg-emerald-600 text-white rounded-full w-7 h-7 flex items-center justify-center text-sm shadow-md border-2 border-white">
+            <i class="fa-solid fa-check"></i>
+          </span>
+        </div>
+
+        <h3 class="text-base sm:text-lg font-bold text-slate-900 mb-1 uppercase tracking-wide">
+          BIỂU QUYẾT THÀNH CÔNG!
+        </h3>
+        
+        <!-- Lời cảm ơn & Lời chúc đầu năm học mới -->
+        <div class="my-3.5 p-3.5 sm:p-4 bg-gradient-to-br from-cyan-50/80 via-emerald-50/50 to-amber-50/60 rounded-2xl border border-cyan-200/80 text-left space-y-2.5">
+          <p class="text-xs sm:text-sm text-slate-800 leading-relaxed">
+            🌸 <b class="text-cyan-950 font-bold">Trân trọng cảm ơn Quý Thầy/Cô</b> đã đóng góp tiếng nói trách nhiệm, tâm huyết và tinh thần đoàn kết vì sự phát triển chung của mái trường <b>THPT Nguyễn Sinh Sắc</b>.
+          </p>
+          <div class="h-px bg-cyan-200/60 w-full"></div>
+          <p class="text-xs sm:text-sm text-slate-800 leading-relaxed italic">
+            ✨ Kính chúc Quý Thầy/Cô cùng toàn thể Viên chức – Người lao động bước vào <b>Năm học mới 2026 – 2027</b> luôn dồi dào sức khỏe, tràn đầy năng lượng, hạnh phúc và gặt hái thật nhiều thắng lợi vẻ vang trên hành trình gieo mầm tri thức!
+          </p>
+        </div>
+
+        <!-- Thông tin ghi nhận hệ thống -->
+        <div class="bg-slate-50 p-2.5 sm:p-3 rounded-xl text-left text-xs text-slate-600 mb-4 border border-slate-200 space-y-1">
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">⏰ Thời gian ghi nhận:</span>
+            <span id="submittedTime" class="font-bold text-slate-800"></span>
+          </div>
+          <div class="flex items-center justify-between">
+            <span class="text-slate-500">🔒 Quyền riêng tư:</span>
+            <span class="font-bold text-emerald-700"><i class="fa-solid fa-shield-check mr-1"></i>Phiếu biểu quyết ẩn danh 100%</span>
+          </div>
+        </div>
+
+        <button type="button" onclick="closeSuccessModal()"
+          class="w-full py-3 bg-gradient-to-r from-cyan-900 to-slate-900 hover:from-cyan-950 hover:to-black text-white text-sm font-bold rounded-xl shadow-lg transition flex items-center justify-center space-x-2">
+          <span>Trân trọng cảm ơn & Hoàn tất</span>
+          <i class="fa-solid fa-heart text-rose-400"></i>
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- JAVASCRIPT ĐIỀU HƯỚNG PHÂN TRANG & RÀNG BUỘC BIỂU QUYẾT -->
+  <script>
+    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzAn5hgT4I-gjM13mbr5AYqoBi228Pf9fEQSSp82Q3TagDbcQj6GvDnRCAoHcdsBGphmQ/exec";
+    let currentStep = 1;
+    const totalSteps = 4;
+
+    const stepTitles = [
+      "Bước 1 / 4: Chỉ tiêu Học sinh",
+      "Bước 2 / 4: Chỉ tiêu 15 Bộ môn",
+      "Bước 3 / 4: Điểm Tốt nghiệp & Cán bộ GV",
+      "Bước 4 / 4: Giáo dục AI, Tập thể & Hoàn tất"
+    ];
+
+    // Danh sách 37 trường bắt buộc theo từng bước
+    const stepFields = {
+      1: ["hs_si_so", "hs_tot_nghiep", "hs_dh_cd", "hs_len_lop", "hs_hoc_luc", "hs_hanh_kiem", "hs_giai_tinh", "hs_bao_hiem", "hs_an_ninh"],
+      2: ["mon_toan", "mon_van", "mon_ly", "mon_hoa", "mon_sinh", "mon_tin", "mon_su", "mon_dia", "mon_anh", "mon_cn", "mon_gdqp", "mon_gdktpl", "mon_thechat", "mon_diaphuong", "mon_hdtn"],
+      3: ["muc_c_tn", "cb_thi_dua", "cb_xep_loai", "cb_bgh", "cb_skkn", "cb_chuyen_mon"],
+      4: ["ai_thoi_luong", "ai_tap_huan", "ai_yeu_cau", "ai_danh_gia", "tt_danh_hieu", "tt_doan_the", "tt_do_dau"]
+    };
+
+    // Hàm kiểm tra ràng buộc của một bước
+    function validateStep(stepNum, showAlert = true) {
+      const fields = stepFields[stepNum] || [];
+      const currentSection = document.getElementById(`step${stepNum}`);
+      const unvotedFields = [];
+      let firstUnvotedElement = null;
+
+      fields.forEach(name => {
+        const checked = currentSection.querySelector(`input[name="${name}"]:checked`);
+        const anyInput = currentSection.querySelector(`input[name="${name}"]`);
+        
+        if (anyInput) {
+          const container = anyInput.closest('tr') || anyInput.closest('.pt-3') || anyInput.closest('div');
+          
+          if (!checked) {
+            unvotedFields.push(name);
+            if (container) {
+              container.classList.add('ring-2', 'ring-rose-500', 'bg-rose-50/70', 'rounded-xl');
+              
+              // Thêm dòng cảnh báo nếu chưa có
+              if (!container.querySelector('.validation-warning')) {
+                const warnMsg = document.createElement('div');
+                warnMsg.className = 'validation-warning text-rose-600 text-xs font-bold mt-1.5 flex items-center';
+                warnMsg.innerHTML = '<i class="fa-solid fa-circle-exclamation mr-1.5"></i> Vui lòng chọn "Đồng ý" hoặc "Không đồng ý" cho chỉ tiêu này!';
+                container.appendChild(warnMsg);
+              }
+            }
+            if (!firstUnvotedElement) {
+              firstUnvotedElement = container;
+            }
+          } else {
+            if (container) {
+              container.classList.remove('ring-2', 'ring-rose-500', 'bg-rose-50/70');
+              const existingWarn = container.querySelector('.validation-warning');
+              if (existingWarn) existingWarn.remove();
+            }
+          }
+        }
+      });
+
+      if (unvotedFields.length > 0) {
+        if (showAlert && firstUnvotedElement) {
+          firstUnvotedElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          alert(`Thầy/Cô còn ${unvotedFields.length} chỉ tiêu chưa biểu quyết ở bước này.\n\nVui lòng chọn "Đồng ý" hoặc "Không đồng ý" cho tất cả các mục để tiếp tục!`);
+        }
+        return false;
+      }
+      return true;
+    }
+
+    // Tự động xóa viền đỏ cảnh báo ngay khi Thầy/Cô tích chọn
+    document.addEventListener('DOMContentLoaded', () => {
+      const form = document.getElementById('votingForm');
+      form.addEventListener('change', (e) => {
+        if (e.target.type === 'radio') {
+          const container = e.target.closest('tr') || e.target.closest('.pt-3') || e.target.closest('div');
+          if (container) {
+            container.classList.remove('ring-2', 'ring-rose-500', 'bg-rose-50/70', 'bg-amber-50');
+            const warnMsg = container.querySelector('.validation-warning');
+            if (warnMsg) warnMsg.remove();
+          }
+          checkStepStatus();
+        }
+      });
+      checkStepStatus();
+    });
+
+    // Cập nhật trạng thái hoàn thành trên các tab
+    function checkStepStatus() {
+      for (let s = 1; s <= totalSteps; s++) {
+        const fields = stepFields[s] || [];
+        const sec = document.getElementById(`step${s}`);
+        let completed = 0;
+        fields.forEach(name => {
+          if (sec.querySelector(`input[name="${name}"]:checked`)) completed++;
+        });
+        const tab = document.getElementById(`stepTab${s}`);
+        if (completed === fields.length && completed > 0) {
+          tab.classList.add('border-emerald-500');
+        } else {
+          tab.classList.remove('border-emerald-500');
+        }
+      }
+    }
+
+    function goToStep(step) {
+      if (step < 1 || step > totalSteps) return;
+
+      // Nếu người dùng muốn nhảy tiến bước tới (vd: 1 -> 3), phải hoàn thành các bước trước đó
+      if (step > currentStep) {
+        for (let s = currentStep; s < step; s++) {
+          if (!validateStep(s, true)) {
+            return; // Chặn nhảy bước nếu bước trước chưa xong
+          }
+        }
+      }
+
+      // Ẩn tất cả các step
+      document.querySelectorAll('.step-section').forEach(sec => sec.classList.remove('active'));
+      document.querySelectorAll('.step-indicator').forEach(tab => {
+        tab.classList.remove('active');
+        tab.classList.add('bg-slate-50', 'text-slate-600');
+      });
+
+      // Hiển thị step được chọn
+      document.getElementById(`step${step}`).classList.add('active');
+      
+      // Đánh dấu các bước đã qua và bước hiện tại
+      for (let i = 1; i <= totalSteps; i++) {
+        const tab = document.getElementById(`stepTab${i}`);
+        if (i < step) {
+          tab.classList.add('completed');
+          tab.classList.remove('bg-slate-50', 'text-slate-600');
+        } else if (i === step) {
+          tab.classList.add('active');
+          tab.classList.remove('bg-slate-50', 'text-slate-600', 'completed');
+        }
+      }
+
+      currentStep = step;
+      const progressPercent = Math.round((step / totalSteps) * 100);
+      document.getElementById('progressBar').style.width = `${progressPercent}%`;
+      document.getElementById('progressPercent').innerText = `${progressPercent}% Hoàn thành`;
+      document.getElementById('currentStepLabel').innerHTML = `<i class="fa-solid fa-layer-group text-cyan-700 mr-1.5"></i> ${stepTitles[step - 1]}`;
+
+      // Cuộn mượt lên đầu nội dung
+      window.scrollTo({ top: 120, behavior: 'smooth' });
+    }
+
+    function nextStep(targetStep) {
+      if (!validateStep(currentStep, true)) {
+        return; // Chặn nếu bước hiện tại chưa chọn đủ
+      }
+      goToStep(targetStep);
+    }
+
+    async function handleFormSubmit(event) {
+      event.preventDefault();
+
+      // RÀNG BUỘC TOÀN DIỆN: Kiểm tra cả 4 bước trước khi gửi
+      for (let s = 1; s <= totalSteps; s++) {
+        if (!validateStep(s, false)) {
+          goToStep(s);
+          validateStep(s, true); // Cuộn và báo lỗi cụ thể
+          return;
+        }
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-lg mr-2"></i> ĐANG GỬI DỮ LIỆU...`;
+
+      const formData = new FormData(event.target);
+      const data = {
+        timestamp: new Date().toLocaleString('vi-VN'),
+        
+        // Mục a: Học sinh
+        hs_si_so: formData.get('hs_si_so') || '',
+        hs_tot_nghiep: formData.get('hs_tot_nghiep') || '',
+        hs_dh_cd: formData.get('hs_dh_cd') || '',
+        hs_len_lop: formData.get('hs_len_lop') || '',
+        hs_hoc_luc: formData.get('hs_hoc_luc') || '',
+        hs_hanh_kiem: formData.get('hs_hanh_kiem') || '',
+        hs_giai_tinh: formData.get('hs_giai_tinh') || '',
+        hs_bao_hiem: formData.get('hs_bao_hiem') || '',
+        hs_an_ninh: formData.get('hs_an_ninh') || '',
+
+        // Mục b: 15 Bộ môn
+        mon_toan: formData.get('mon_toan') || '',
+        mon_van: formData.get('mon_van') || '',
+        mon_ly: formData.get('mon_ly') || '',
+        mon_hoa: formData.get('mon_hoa') || '',
+        mon_sinh: formData.get('mon_sinh') || '',
+        mon_tin: formData.get('mon_tin') || '',
+        mon_su: formData.get('mon_su') || '',
+        mon_dia: formData.get('mon_dia') || '',
+        mon_anh: formData.get('mon_anh') || '',
+        mon_cn: formData.get('mon_cn') || '',
+        mon_gdqp: formData.get('mon_gdqp') || '',
+        mon_gdktpl: formData.get('mon_gdktpl') || '',
+        mon_thechat: formData.get('mon_thechat') || '',
+        mon_diaphuong: formData.get('mon_diaphuong') || '',
+        mon_hdtn: formData.get('mon_hdtn') || '',
+
+        // Mục c: Điểm TB thi tốt nghiệp so với tỉnh
+        muc_c_tn: formData.get('muc_c_tn') || '',
+
+        // Mục d: Cán bộ, viên chức & người lao động
+        cb_thi_dua: formData.get('cb_thi_dua') || '',
+        cb_xep_loai: formData.get('cb_xep_loai') || '',
+        cb_bgh: formData.get('cb_bgh') || '',
+        cb_skkn: formData.get('cb_skkn') || '',
+        cb_chuyen_mon: formData.get('cb_chuyen_mon') || '',
+
+        // Mục e: Trí tuệ nhân tạo (AI)
+        ai_thoi_luong: formData.get('ai_thoi_luong') || '',
+        ai_tap_huan: formData.get('ai_tap_huan') || '',
+        ai_yeu_cau: formData.get('ai_yeu_cau') || '',
+        ai_danh_gia: formData.get('ai_danh_gia') || '',
+
+        // Mục f: Tập thể & Đoàn thể
+        tt_danh_hieu: formData.get('tt_danh_hieu') || '',
+        tt_doan_the: formData.get('tt_doan_the') || '',
+        tt_do_dau: formData.get('tt_do_dau') || '',
+
+        // Ý kiến đóng góp khác
+        additionalFeedback: document.getElementById('additionalFeedback').value.trim()
+      };
+
+      try {
+        if (GOOGLE_SCRIPT_URL && !GOOGLE_SCRIPT_URL.includes("YOUR_GOOGLE_APPS_SCRIPT_URL_HERE")) {
+          await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+          });
+        } else {
+          console.log("Mock Submit Data:", data);
+        }
+
+        document.getElementById('submittedTime').innerText = data.timestamp;
+        document.getElementById('successModal').classList.remove('hidden');
+        document.getElementById('votingForm').reset();
+        checkStepStatus();
+        goToStep(1);
+
+      } catch (err) {
+        console.error("Lỗi:", err);
+        alert("Có lỗi kết nối. Vui lòng thử lại!");
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
+      }
+    }
+
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.add('hidden');
+    }
+  </script>
+</body>
+</html>
