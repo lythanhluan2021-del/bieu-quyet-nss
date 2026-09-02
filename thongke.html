@@ -272,16 +272,18 @@
           <!-- Chú giải Donut -->
           <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-700/60 text-center text-xs">
             <div class="bg-emerald-950/60 p-2.5 rounded-xl border border-emerald-800/40">
-              <p class="text-emerald-400 font-bold flex items-center justify-center">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Đồng Ý
+              <p class="text-emerald-400 font-bold flex items-center justify-center text-[11px]">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> TÁN THÀNH
               </p>
-              <p class="text-xs sm:text-sm font-bold text-white mt-0.5" id="donutAgreeCount">0 phiếu (0%)</p>
+              <p class="text-base sm:text-lg font-bold text-emerald-300 mt-0.5" id="donutAgreeCount">0%</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">Bình quân 37 chỉ tiêu</p>
             </div>
             <div class="bg-rose-950/60 p-2.5 rounded-xl border border-rose-800/40">
-              <p class="text-rose-400 font-bold flex items-center justify-center">
-                <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span> Không Đồng Ý
+              <p class="text-rose-400 font-bold flex items-center justify-center text-[11px]">
+                <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span> KHÔNG TÁN THÀNH
               </p>
-              <p class="text-xs sm:text-sm font-bold text-white mt-0.5" id="donutDisagreeCount">0 phiếu (0%)</p>
+              <p class="text-base sm:text-lg font-bold text-rose-300 mt-0.5" id="donutDisagreeCount">0%</p>
+              <p class="text-[10px] text-slate-400 mt-0.5">Ý kiến bảo lưu/chưa đạt</p>
             </div>
           </div>
         </div>
@@ -768,8 +770,8 @@
       const disagreePercent = totalSub > 0 ? Math.round((100 - avgAgreePercent) * 10) / 10 : 0;
 
       document.getElementById('donutCenterPercent').innerText = totalSub > 0 ? `${avgAgreePercent}%` : "0%";
-      document.getElementById('donutAgreeCount').innerText = `${totalSub} phiếu (${avgAgreePercent}%)`;
-      document.getElementById('donutDisagreeCount').innerText = `${totalSub > 0 && disagreePercent > 0 ? Math.round((disagreePercent * totalSub) / 100) : 0} phiếu (${disagreePercent}%)`;
+      document.getElementById('donutAgreeCount').innerText = totalSub > 0 ? `${avgAgreePercent}%` : "0%";
+      document.getElementById('donutDisagreeCount').innerText = totalSub > 0 ? `${disagreePercent}%` : "0%";
 
       const ctx = document.getElementById('masterDonutChart').getContext('2d');
       if (donutChartInstance) {
@@ -833,28 +835,28 @@
       document.getElementById('groupRateA').innerText = `${gA.percent}%`;
       document.getElementById('groupBarA_Agree').style.width = `${gA.percent}%`;
       document.getElementById('groupBarA_Disagree').style.width = `${100 - gA.percent}%`;
-      document.getElementById('groupCountA').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gA.percent}% tán thành)` : `Chưa có phiếu`;
+      document.getElementById('groupCountA').innerText = totalSub > 0 ? `Đồng ý: ${gA.percent}% | Không đồng ý: ${Math.round((100 - gA.percent) * 10) / 10}% (Trên ${totalSub} phiếu)` : `Chưa có phiếu`;
 
       // Nhóm B: 15 Bộ môn
       const gB = calcGroup(s => s.group === 'b');
       document.getElementById('groupRateB').innerText = `${gB.percent}%`;
       document.getElementById('groupBarB_Agree').style.width = `${gB.percent}%`;
       document.getElementById('groupBarB_Disagree').style.width = `${100 - gB.percent}%`;
-      document.getElementById('groupCountB').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gB.percent}% tán thành)` : `Chưa có phiếu`;
+      document.getElementById('groupCountB').innerText = totalSub > 0 ? `Đồng ý: ${gB.percent}% | Không đồng ý: ${Math.round((100 - gB.percent) * 10) / 10}% (Trên ${totalSub} phiếu)` : `Chưa có phiếu`;
 
       // Nhóm CD: Điểm TN & CB-GV
       const gCD = calcGroup(s => s.group === 'c' || s.group === 'd');
       document.getElementById('groupRateCD').innerText = `${gCD.percent}%`;
       document.getElementById('groupBarCD_Agree').style.width = `${gCD.percent}%`;
       document.getElementById('groupBarCD_Disagree').style.width = `${100 - gCD.percent}%`;
-      document.getElementById('groupCountCD').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gCD.percent}% tán thành)` : `Chưa có phiếu`;
+      document.getElementById('groupCountCD').innerText = totalSub > 0 ? `Đồng ý: ${gCD.percent}% | Không đồng ý: ${Math.round((100 - gCD.percent) * 10) / 10}% (Trên ${totalSub} phiếu)` : `Chưa có phiếu`;
 
       // Nhóm EF: AI & Tập thể
       const gEF = calcGroup(s => s.group === 'e' || s.group === 'f');
       document.getElementById('groupRateEF').innerText = `${gEF.percent}%`;
       document.getElementById('groupBarEF_Agree').style.width = `${gEF.percent}%`;
       document.getElementById('groupBarEF_Disagree').style.width = `${100 - gEF.percent}%`;
-      document.getElementById('groupCountEF').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gEF.percent}% tán thành)` : `Chưa có phiếu`;
+      document.getElementById('groupCountEF').innerText = totalSub > 0 ? `Đồng ý: ${gEF.percent}% | Không đồng ý: ${Math.round((100 - gEF.percent) * 10) / 10}% (Trên ${totalSub} phiếu)` : `Chưa có phiếu`;
     }
 
     // 3. MA TRẬN NHIỆT 37 CHỈ TIÊU (37 HEATMAP TILES)
