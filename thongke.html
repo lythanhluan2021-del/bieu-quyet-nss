@@ -215,13 +215,19 @@
         <button onclick="switchView('matrix')" id="tabBtnMatrix"
           class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
           <i class="fa-solid fa-table-cells"></i>
-          <span>2. Bảng Chi Tiết 15 Bộ Môn & 4 Nhóm</span>
+          <span>2. Thống Kê % Chi Tiết 15 Bộ Môn & 4 Nhóm</span>
+        </button>
+
+        <button onclick="switchView('table37')" id="tabBtnTable37"
+          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-list-check"></i>
+          <span>3. Bảng Kiểm Phiếu Toàn Diện 37 Chỉ Tiêu</span>
         </button>
 
         <button onclick="switchView('feedbacks')" id="tabBtnFeedbacks"
           class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
           <i class="fa-solid fa-comments"></i>
-          <span>3. Ý Kiến Đóng Góp (<span id="fbBadgeCount">0</span>)</span>
+          <span>4. Ý Kiến Đóng Góp (<span id="fbBadgeCount">0</span>)</span>
         </button>
       </div>
 
@@ -265,17 +271,17 @@
 
           <!-- Chú giải Donut -->
           <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-700/60 text-center text-xs">
-            <div class="bg-emerald-950/60 p-2 rounded-xl border border-emerald-800/40">
+            <div class="bg-emerald-950/60 p-2.5 rounded-xl border border-emerald-800/40">
               <p class="text-emerald-400 font-bold flex items-center justify-center">
                 <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Đồng Ý
               </p>
-              <p class="text-sm font-bold text-white mt-0.5" id="donutAgreeCount">0 lượt</p>
+              <p class="text-xs sm:text-sm font-bold text-white mt-0.5" id="donutAgreeCount">0 phiếu (0%)</p>
             </div>
-            <div class="bg-rose-950/60 p-2 rounded-xl border border-rose-800/40">
+            <div class="bg-rose-950/60 p-2.5 rounded-xl border border-rose-800/40">
               <p class="text-rose-400 font-bold flex items-center justify-center">
                 <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span> Không Đồng Ý
               </p>
-              <p class="text-sm font-bold text-white mt-0.5" id="donutDisagreeCount">0 lượt</p>
+              <p class="text-xs sm:text-sm font-bold text-white mt-0.5" id="donutDisagreeCount">0 phiếu (0%)</p>
             </div>
           </div>
         </div>
@@ -291,7 +297,7 @@
           </div>
 
           <!-- 4 Khối Tiến Độ Nhóm Trọng Tâm -->
-          <div class="space-y-3.5 my-auto" id="categoryProgressBars">
+          <div class="space-y-3 my-auto" id="categoryProgressBars">
             
             <!-- Nhóm 1: Học sinh -->
             <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
@@ -308,7 +314,7 @@
               </div>
               <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
                 <span>Duy trì sĩ số, Tốt nghiệp 100%, ĐH-CĐ ≥80%, Lên lớp ≥99%, BHYT...</span>
-                <span id="groupCountA" class="text-slate-300 font-medium">0/0 đồng ý</span>
+                <span id="groupCountA" class="text-slate-300 font-medium">0 phiếu</span>
               </div>
             </div>
 
@@ -327,7 +333,7 @@
               </div>
               <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
                 <span>Toán, Văn, Lý, Hóa, Sinh, Tin, Sử, Địa, Ngoại ngữ, Công nghệ, GDQP...</span>
-                <span id="groupCountB" class="text-slate-300 font-medium">0/0 đồng ý</span>
+                <span id="groupCountB" class="text-slate-300 font-medium">0 phiếu</span>
               </div>
             </div>
 
@@ -346,7 +352,7 @@
               </div>
               <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
                 <span>Điểm TB thi TN so với tỉnh, Thi đua cá nhân, Xếp loại VC, SKKN...</span>
-                <span id="groupCountCD" class="text-slate-300 font-medium">0/0 đồng ý</span>
+                <span id="groupCountCD" class="text-slate-300 font-medium">0 phiếu</span>
               </div>
             </div>
 
@@ -365,7 +371,7 @@
               </div>
               <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
                 <span>KH 369 AI (12 tiết/năm, 100% GV-HS), TTLĐ xuất sắc, Đỡ đầu 2 HS...</span>
-                <span id="groupCountEF" class="text-slate-300 font-medium">0/0 đồng ý</span>
+                <span id="groupCountEF" class="text-slate-300 font-medium">0 phiếu</span>
               </div>
             </div>
 
@@ -398,20 +404,30 @@
           </div>
         </div>
 
-        <!-- 37 Ô LƯỚI MA TRẬN (Tự động dàn đều 1 hàng hoặc nhiều cột) -->
+        <!-- 37 Ô LƯỚI MA TRẬN -->
         <div id="heatmapGrid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9 lg:grid-cols-12 xl:grid-cols-19 gap-2">
           <!-- Render động 37 ô -->
         </div>
 
         <!-- Khung xem trước chi tiết khi rê/bấm vào ô -->
-        <div id="heatmapPreviewBox" class="mt-3.5 p-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs flex items-center justify-between flex-wrap gap-2">
-          <div class="flex items-center space-x-2">
-            <span class="px-2 py-0.5 rounded bg-cyan-900 text-cyan-300 font-bold text-[11px]" id="previewBadge">#1</span>
-            <span class="font-bold text-white" id="previewTitle">Rê chuột hoặc bấm vào ô bất kỳ ở trên để xem chi tiết chỉ tiêu</span>
+        <div id="heatmapPreviewBox" class="mt-3.5 p-3.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs space-y-2">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <div class="flex items-center space-x-2">
+              <span class="px-2 py-0.5 rounded bg-cyan-900 text-cyan-300 font-bold text-[11px]" id="previewBadge">#1</span>
+              <span class="font-bold text-white text-xs sm:text-sm" id="previewTitle">Rê chuột hoặc bấm vào ô bất kỳ ở trên để xem chi tiết chỉ tiêu</span>
+            </div>
+            <span id="previewStatusBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">100% Đồng thuận</span>
           </div>
-          <div class="flex items-center space-x-3 text-xs" id="previewStats">
-            <span class="text-emerald-400 font-bold" id="previewAgree">--</span>
-            <span class="text-rose-400 font-bold" id="previewDisagree">--</span>
+
+          <!-- Thanh tiến độ kép xem trước -->
+          <div class="w-full bg-slate-800 rounded-lg h-2.5 flex overflow-hidden">
+            <div id="previewBarAgree" class="bg-emerald-500 h-full transition-all duration-300" style="width: 100%"></div>
+            <div id="previewBarDisagree" class="bg-rose-500 h-full transition-all duration-300" style="width: 0%"></div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs pt-0.5 font-bold">
+            <span class="text-emerald-400" id="previewAgree">🟢 Đồng ý: --</span>
+            <span class="text-rose-400" id="previewDisagree">🔴 Không đồng ý: --</span>
           </div>
         </div>
 
@@ -420,18 +436,18 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- VIEW 2: BẢNG SO SÁNH 15 BỘ MÔN & CHI TIẾT 4 NHÓM (DETAILED MATRIX) -->
+    <!-- VIEW 2: BẢNG SO SÁNH 15 BỘ MÔN & CHI TIẾT 4 NHÓM (% ĐỒNG Ý VS % KHÔNG ĐỒNG Ý) -->
     <!-- ========================================================================= -->
     <div id="viewMatrix" class="hidden space-y-5">
       
-      <!-- PHẦN 1: 15 BỘ MÔN (LƯỚI 3 CỘT GỌN GÀNG) -->
+      <!-- PHẦN 1: 15 BỘ MÔN (LƯỚI 3 CỘT GỌN GÀNG VỚI % CHI TIẾT) -->
       <div class="panel-card p-4 sm:p-5 rounded-2xl shadow-xl space-y-3.5">
-        <div class="flex items-center justify-between border-b border-slate-700/60 pb-2.5">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-700/60 pb-2.5">
           <h3 class="text-xs sm:text-sm font-bold text-amber-300 uppercase flex items-center">
             <i class="fa-solid fa-book-bookmark mr-2 text-amber-400"></i>
-            KẾT QUẢ BIỂU QUYẾT 15 BỘ MÔN NĂM HỌC 2026 - 2027
+            KẾT QUẢ BIỂU QUYẾT 15 BỘ MÔN NĂM HỌC 2026 - 2027 (% ĐỒNG Ý & % KHÔNG ĐỒNG Ý)
           </h3>
-          <span class="text-xs text-slate-400">Bảng tra cứu trực quan 15 môn</span>
+          <span class="text-xs text-slate-400">Tất cả 15 môn học</span>
         </div>
 
         <div id="subjectGrid3Col" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -446,27 +462,27 @@
         <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
           <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
             <i class="fa-solid fa-graduation-cap mr-2 text-cyan-400"></i>
-            Chỉ Tiêu Học Sinh (9)
+            Chỉ Tiêu Học Sinh (9 mục)
           </h3>
-          <div id="listGroupA" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
+          <div id="listGroupA" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
         </div>
 
         <!-- Nhóm CB-GV & Điểm TN -->
         <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
           <h3 class="text-xs sm:text-sm font-bold text-indigo-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
             <i class="fa-solid fa-chalkboard-user mr-2 text-indigo-400"></i>
-            Điểm TN & Cán Bộ GV (6)
+            Điểm TN & Cán Bộ GV (6 mục)
           </h3>
-          <div id="listGroupCD" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
+          <div id="listGroupCD" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
         </div>
 
         <!-- Nhóm AI & Tập thể -->
         <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
           <h3 class="text-xs sm:text-sm font-bold text-teal-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
             <i class="fa-solid fa-robot mr-2 text-teal-400"></i>
-            Giáo Dục AI & Tập Thể (7)
+            Giáo Dục AI & Tập Thể (7 mục)
           </h3>
-          <div id="listGroupEF" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
+          <div id="listGroupEF" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
         </div>
 
       </div>
@@ -474,7 +490,48 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- VIEW 3: Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA GIÁO VIÊN -->
+    <!-- VIEW 3: BẢNG KIỂM PHIẾU TOÀN DIỆN 37 CHỈ TIÊU (FULL STATISTICAL DATA TABLE) -->
+    <!-- ========================================================================= -->
+    <div id="viewTable37" class="hidden space-y-4">
+      <div class="panel-card p-4 sm:p-6 rounded-2xl shadow-xl space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-700/60 pb-3">
+          <div>
+            <h3 class="text-sm sm:text-base font-bold text-amber-300 uppercase flex items-center">
+              <i class="fa-solid fa-list-check mr-2 text-amber-400"></i>
+              BẢNG KIỂM PHIẾU & THỐNG KÊ CHI TIẾT TOÀN BỘ 37 CHỈ TIÊU NGHỊ QUYẾT
+            </h3>
+            <p class="text-xs text-slate-400 mt-0.5">Bảng kê chi tiết số phiếu, tỷ lệ % đồng ý và % không đồng ý từng mục</p>
+          </div>
+          <button onclick="window.print()" class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs border border-slate-700 shadow flex items-center space-x-1.5">
+            <i class="fa-solid fa-print"></i>
+            <span>In Bảng Số Liệu</span>
+          </button>
+        </div>
+
+        <!-- Table Container -->
+        <div class="overflow-x-auto rounded-xl border border-slate-700/80">
+          <table class="w-full text-left text-xs border-collapse">
+            <thead class="bg-slate-900 text-slate-300 font-bold uppercase tracking-wider text-[11px] border-b border-slate-700">
+              <tr>
+                <th class="p-3 text-center w-12">STT</th>
+                <th class="p-3 w-32">Nhóm</th>
+                <th class="p-3 min-w-[280px]">Nội Dung Chỉ Tiêu</th>
+                <th class="p-3 text-center w-36 text-emerald-400">Phiếu Đồng Ý (%)</th>
+                <th class="p-3 text-center w-36 text-rose-400">Phiếu Không Đồng Ý (%)</th>
+                <th class="p-3 text-center w-48">Thanh Trực Quan</th>
+                <th class="p-3 text-center w-28">Đánh Giá</th>
+              </tr>
+            </thead>
+            <tbody id="fullTable37Body" class="divide-y divide-slate-800 text-slate-200">
+              <!-- Render động 37 hàng -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 4: Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA GIÁO VIÊN -->
     <!-- ========================================================================= -->
     <div id="viewFeedbacks" class="hidden space-y-4">
       <div class="panel-card p-4 sm:p-6 rounded-2xl shadow-xl">
@@ -524,21 +581,21 @@
       { id: "hs_bao_hiem", num: 8, name: "Bảo hiểm & Tiện ích (100% BHYT, VNEDU, Wifi)", group: "a", groupName: "Học sinh" },
       { id: "hs_an_ninh", num: 9, name: "An ninh học đường (An toàn ATGT, không TNXH)", group: "a", groupName: "Học sinh" },
 
-      { id: "mon_toan", num: 10, name: "Toán học (Yếu <2.0%, Giỏi ≥31.30%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_van", num: 11, name: "Ngữ văn (Yếu <1.0%, Giỏi ≥50.31%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_ly", num: 12, name: "Vật lí (Yếu <1.0%, Giỏi ≥48.01%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_hoa", num: 13, name: "Hóa học (Yếu <2.0%, Giỏi ≥21.83%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_sinh", num: 14, name: "Sinh học (Yếu <1.0%, Giỏi ≥40.44%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_tin", num: 15, name: "Tin học (Yếu <1.0%, Giỏi ≥58.51%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_su", num: 16, name: "Lịch sử (Yếu <1.0%, Giỏi ≥90.00%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_dia", num: 17, name: "Địa lí (Yếu <1.0%, Giỏi ≥83.29%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_anh", num: 18, name: "Ngoại ngữ - Tiếng Anh (Yếu <1.0%, Giỏi ≥27.94%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_cn", num: 19, name: "Công nghệ (Yếu <1.0%, Giỏi ≥78.57%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_gdqp", num: 20, name: "GDQP & AN (Yếu 0.0%, Giỏi ≥87.48%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_gdktpl", num: 21, name: "GD Kinh tế & Pháp luật (Yếu <1.0%, Giỏi ≥64.95%)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_thechat", num: 22, name: "GD Thể chất (100% Đạt, 0% Yếu)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_diaphuong", num: 23, name: "Nội dung GD Địa phương (100% Đạt, 0% Yếu)", group: "b", groupName: "Bộ môn" },
-      { id: "mon_hdtn", num: 24, name: "Hoạt động TN - HN (100% Đạt, 0% Yếu)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_toan", num: 10, name: "Toán học (Yếu <2.0%, Giỏi ≥31.30%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_van", num: 11, name: "Ngữ văn (Yếu <1.0%, Giỏi ≥50.31%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_ly", num: 12, name: "Vật lí (Yếu <1.0%, Giỏi ≥48.01%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_hoa", num: 13, name: "Hóa học (Yếu <2.0%, Giỏi ≥21.83%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_sinh", num: 14, name: "Sinh học (Yếu <1.0%, Giỏi ≥40.44%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_tin", num: 15, name: "Tin học (Yếu <1.0%, Giỏi ≥58.51%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_su", num: 16, name: "Lịch sử (Yếu <1.0%, Giỏi ≥90.00%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_dia", num: 17, name: "Địa lí (Yếu <1.0%, Giỏi ≥83.29%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_anh", num: 18, name: "Ngoại ngữ - Tiếng Anh (Yếu <1.0%, Giỏi ≥27.94%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_cn", num: 19, name: "Công nghệ (Yếu <1.0%, Giỏi ≥78.57%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_gdqp", num: 20, name: "GDQP & AN (Yếu 0.0%, Giỏi ≥87.48%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_gdktpl", num: 21, name: "GD Kinh tế & Pháp luật (Yếu <1.0%, Giỏi ≥64.95%)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_thechat", num: 22, name: "GD Thể chất (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_diaphuong", num: 23, name: "Nội dung GD Địa phương (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
+      { id: "mon_hdtn", num: 24, name: "Hoạt động TN - HN (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
 
       { id: "muc_c_tn", num: 25, name: "Điểm TB thi tốt nghiệp THPT so với tỉnh", group: "c", groupName: "Điểm TN & CB-GV" },
       { id: "cb_thi_dua", num: 26, name: "Danh hiệu thi đua cá nhân (100% LĐTT, ≥20% CSTĐCS)", group: "d", groupName: "Điểm TN & CB-GV" },
@@ -601,9 +658,6 @@
         lastSubmitted = lastRow.c && lastRow.c[0] ? (lastRow.c[0].f || lastRow.c[0].v || "") : "";
       }
 
-      let totalAgreeVotesAll = 0;
-      let totalDisagreeVotesAll = 0;
-
       for (let i = 0; i < fieldMeta.length; i++) {
         const colIndex = i + 1;
         let agreeCount = 0;
@@ -620,9 +674,6 @@
             }
           }
         }
-
-        totalAgreeVotesAll += agreeCount;
-        totalDisagreeVotesAll += disagreeCount;
 
         const agreePercent = numVotes > 0 ? Math.round((agreeCount / numVotes) * 1000) / 10 : 0;
         const disagreePercent = numVotes > 0 ? Math.round((disagreeCount / numVotes) * 1000) / 10 : 0;
@@ -655,8 +706,6 @@
       return {
         status: "success",
         totalSubmissions: numVotes,
-        totalAgreeVotesAll: totalAgreeVotesAll,
-        totalDisagreeVotesAll: totalDisagreeVotesAll,
         lastSubmitted: lastSubmitted,
         lastUpdated: new Date().toLocaleTimeString('vi-VN') + " " + new Date().toLocaleDateString('vi-VN'),
         stats: stats,
@@ -706,7 +755,10 @@
       // 5. Render Bảng 15 Bộ Môn (3 Cột) & 3 Nhóm Chi Tiết
       renderDetailedTables(data.stats || []);
 
-      // 6. Render Danh Sách Ý Kiến
+      // 6. Render Bảng Kiểm Phiếu Toàn Diện 37 Chỉ Tiêu
+      renderFullTable37(data.stats || []);
+
+      // 7. Render Danh Sách Ý Kiến
       renderFeedbackList(data.feedbacks || []);
     }
 
@@ -840,6 +892,11 @@
       });
 
       container.innerHTML = html;
+
+      // Kích hoạt mặc định mục #1
+      if (stats.length > 0) {
+        showHeatmapPreview(1);
+      }
     }
 
     function showHeatmapPreview(num) {
@@ -847,13 +904,30 @@
       const item = globalData.stats.find(s => s.num === num);
       if (!item) return;
 
+      const isUnanimous = globalData.totalSubmissions > 0 && item.agree === globalData.totalSubmissions;
+
       document.getElementById('previewBadge').innerText = `Chỉ tiêu #${item.num} (${item.groupName})`;
       document.getElementById('previewTitle').innerText = item.name;
-      document.getElementById('previewAgree').innerText = `✓ Đồng ý: ${item.agree} phiếu (${item.agreePercent}%)`;
-      document.getElementById('previewDisagree').innerText = `✗ Không đồng ý: ${item.disagree} phiếu (${item.disagreePercent}%)`;
+      document.getElementById('previewAgree').innerText = `🟢 Đồng ý: ${item.agree} phiếu (${item.agreePercent}%)`;
+      document.getElementById('previewDisagree').innerText = `🔴 Không đồng ý: ${item.disagree} phiếu (${item.disagreePercent}%)`;
+      
+      document.getElementById('previewBarAgree').style.width = `${item.agreePercent}%`;
+      document.getElementById('previewBarDisagree').style.width = `${item.disagreePercent}%`;
+
+      const statusBadge = document.getElementById('previewStatusBadge');
+      if (isUnanimous) {
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50";
+        statusBadge.innerHTML = `<i class="fa-solid fa-crown mr-1"></i>100% Đồng thuận`;
+      } else if (item.agreePercent >= 90) {
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40";
+        statusBadge.innerHTML = `✅ Đạt ${item.agreePercent}% Tán thành`;
+      } else {
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-500/40";
+        statusBadge.innerHTML = `⚠️ ${item.agreePercent}% Tán thành`;
+      }
     }
 
-    // 4. BẢNG 15 BỘ MÔN (3 CỘT) & CHI TIẾT 4 NHÓM
+    // 4. BẢNG 15 BỘ MÔN (3 CỘT) & CHI TIẾT 4 NHÓM (% ĐỒNG Ý VS % KHÔNG ĐỒNG Ý)
     function renderDetailedTables(stats) {
       // 15 Bộ môn (Grid 3 Cột)
       const subjectContainer = document.getElementById('subjectGrid3Col');
@@ -863,22 +937,25 @@
       subjects.forEach(st => {
         const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
         const badge = isUnanimous 
-          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50"><i class="fa-solid fa-crown mr-1"></i>100%</span>`
-          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">${st.agreePercent}%</span>`;
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50 flex-shrink-0"><i class="fa-solid fa-crown mr-1"></i>100%</span>`
+          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex-shrink-0">${st.agreePercent}%</span>`;
 
         subHtml += `
-          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5 shadow-sm">
+          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-2 shadow-sm">
             <div class="flex items-start justify-between gap-2">
-              <span class="font-bold text-xs sm:text-sm text-white leading-snug truncate">${st.name}</span>
+              <span class="font-bold text-xs sm:text-sm text-white leading-snug">${st.num}. ${st.name}</span>
               ${badge}
             </div>
-            <div class="w-full bg-slate-800 rounded-lg h-2 flex overflow-hidden">
-              <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
-              <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
+            
+            <!-- Thanh Progress kép -->
+            <div class="w-full bg-slate-800 rounded-lg h-2.5 flex overflow-hidden p-0.5 border border-slate-700/60">
+              <div class="bg-emerald-500 h-full rounded-sm transition-all duration-300" style="width: ${st.agreePercent}%"></div>
+              <div class="bg-rose-500 h-full rounded-sm transition-all duration-300" style="width: ${st.disagreePercent}%"></div>
             </div>
-            <div class="flex items-center justify-between text-[11px] pt-0.5">
-              <span class="text-emerald-400 font-bold">✓ ${st.agree} phiếu</span>
-              <span class="text-rose-400 font-bold">✗ ${st.disagree} phiếu</span>
+
+            <div class="flex items-center justify-between text-[11px] pt-0.5 font-bold">
+              <span class="text-emerald-400">🟢 Đồng ý: ${st.agree} (${st.agreePercent}%)</span>
+              <span class="text-rose-400">🔴 Không: ${st.disagree} (${st.disagreePercent}%)</span>
             </div>
           </div>
         `;
@@ -892,14 +969,21 @@
         let html = '';
         items.forEach(st => {
           html += `
-            <div class="bg-slate-900/70 p-2.5 rounded-xl border border-slate-800/80 space-y-1 text-xs">
+            <div class="bg-slate-900/70 p-3 rounded-xl border border-slate-800/80 space-y-1.5 text-xs">
               <div class="flex items-start justify-between gap-2">
-                <span class="font-bold text-slate-200 leading-tight">#${st.num}. ${st.name}</span>
-                <span class="text-emerald-400 font-bold flex-shrink-0">${st.agreePercent}%</span>
+                <span class="font-bold text-slate-200 leading-snug">#${st.num}. ${st.name}</span>
+                <span class="text-emerald-400 font-bold flex-shrink-0 text-xs">${st.agreePercent}%</span>
               </div>
-              <div class="w-full bg-slate-800 rounded-md h-1.5 flex overflow-hidden">
+              
+              <!-- Thanh Progress kép -->
+              <div class="w-full bg-slate-800 rounded-md h-2 flex overflow-hidden">
                 <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
                 <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
+              </div>
+
+              <div class="flex items-center justify-between text-[11px] pt-0.5 font-bold">
+                <span class="text-emerald-400">🟢 Đồng ý: ${st.agree} (${st.agreePercent}%)</span>
+                <span class="text-rose-400">🔴 Không: ${st.disagree} (${st.disagreePercent}%)</span>
               </div>
             </div>
           `;
@@ -912,7 +996,45 @@
       renderGroupList('listGroupEF', s => s.group === 'e' || s.group === 'f');
     }
 
-    // 5. DANH SÁCH Ý KIẾN ĐÓNG GÓP
+    // 5. BẢNG KIỂM PHIẾU TOÀN DIỆN 37 CHỈ TIÊU (DATA TABLE)
+    function renderFullTable37(stats) {
+      const tbody = document.getElementById('fullTable37Body');
+      let html = '';
+
+      stats.forEach(st => {
+        const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
+        const evalBadge = isUnanimous
+          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50"><i class="fa-solid fa-crown mr-1"></i>100% Đồng thuận</span>`
+          : (st.agreePercent >= 90
+              ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">✅ Đạt mục tiêu</span>`
+              : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-500/40">⚠️ Xem xét</span>`);
+
+        html += `
+          <tr class="hover:bg-slate-800/50 transition">
+            <td class="p-3 text-center font-bold text-cyan-300">#${st.num}</td>
+            <td class="p-3 font-medium text-slate-300">${st.groupName}</td>
+            <td class="p-3 font-bold text-white leading-snug">${st.name}</td>
+            <td class="p-3 text-center font-bold text-emerald-400 bg-emerald-950/20">
+              ${st.agree} phiếu (${st.agreePercent}%)
+            </td>
+            <td class="p-3 text-center font-bold text-rose-400 bg-rose-950/20">
+              ${st.disagree} phiếu (${st.disagreePercent}%)
+            </td>
+            <td class="p-3">
+              <div class="w-full bg-slate-800 rounded-lg h-2.5 flex overflow-hidden border border-slate-700">
+                <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
+                <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
+              </div>
+            </td>
+            <td class="p-3 text-center">${evalBadge}</td>
+          </tr>
+        `;
+      });
+
+      tbody.innerHTML = html;
+    }
+
+    // 6. DANH SÁCH Ý KIẾN ĐÓNG GÓP
     function renderFeedbackList(feedbacks) {
       const container = document.getElementById('feedbackList');
       if (!feedbacks || feedbacks.length === 0) {
@@ -952,6 +1074,7 @@
 
       document.getElementById('viewOverview').classList.add('hidden');
       document.getElementById('viewMatrix').classList.add('hidden');
+      document.getElementById('viewTable37').classList.add('hidden');
       document.getElementById('viewFeedbacks').classList.add('hidden');
 
       if (viewName === 'overview') {
@@ -962,6 +1085,10 @@
         document.getElementById('tabBtnMatrix').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
         document.getElementById('tabBtnMatrix').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
         document.getElementById('viewMatrix').classList.remove('hidden');
+      } else if (viewName === 'table37') {
+        document.getElementById('tabBtnTable37').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
+        document.getElementById('tabBtnTable37').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('viewTable37').classList.remove('hidden');
       } else if (viewName === 'feedbacks') {
         document.getElementById('tabBtnFeedbacks').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
         document.getElementById('tabBtnFeedbacks').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
