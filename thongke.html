@@ -712,27 +712,26 @@
 
     // 1. BIỂU ĐỒ DONUT TỔNG THỂ
     function renderDonutChart(data, avgAgreePercent) {
-      const agreeVotes = data.totalAgreeVotesAll || 0;
-      const disagreeVotes = data.totalDisagreeVotesAll || 0;
-      const totalAllVotes = agreeVotes + disagreeVotes;
+      const totalSub = data.totalSubmissions || 0;
+      const disagreePercent = totalSub > 0 ? Math.round((100 - avgAgreePercent) * 10) / 10 : 0;
 
-      document.getElementById('donutCenterPercent').innerText = data.totalSubmissions > 0 ? `${avgAgreePercent}%` : "0%";
-      document.getElementById('donutAgreeCount').innerText = `${agreeVotes} phiếu`;
-      document.getElementById('donutDisagreeCount').innerText = `${disagreeVotes} phiếu`;
+      document.getElementById('donutCenterPercent').innerText = totalSub > 0 ? `${avgAgreePercent}%` : "0%";
+      document.getElementById('donutAgreeCount').innerText = `${totalSub} phiếu (${avgAgreePercent}%)`;
+      document.getElementById('donutDisagreeCount').innerText = `${totalSub > 0 && disagreePercent > 0 ? Math.round((disagreePercent * totalSub) / 100) : 0} phiếu (${disagreePercent}%)`;
 
       const ctx = document.getElementById('masterDonutChart').getContext('2d');
       if (donutChartInstance) {
         donutChartInstance.destroy();
       }
 
-      const safeAgree = totalAllVotes > 0 ? agreeVotes : 1;
-      const safeDisagree = totalAllVotes > 0 ? disagreeVotes : 0;
-      const bgColors = totalAllVotes > 0 ? ['#10b981', '#f43f5e'] : ['#334155', '#1e293b'];
+      const safeAgree = totalSub > 0 ? avgAgreePercent : 100;
+      const safeDisagree = totalSub > 0 ? disagreePercent : 0;
+      const bgColors = totalSub > 0 ? ['#10b981', '#f43f5e'] : ['#334155', '#1e293b'];
 
       donutChartInstance = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Đồng ý', 'Không đồng ý'],
+          labels: ['Tán thành', 'Không tán thành'],
           datasets: [{
             data: [safeAgree, safeDisagree],
             backgroundColor: bgColors,
@@ -750,7 +749,7 @@
             tooltip: {
               callbacks: {
                 label: function(context) {
-                  return ` ${context.label}: ${context.raw} phiếu`;
+                  return ` ${context.label}: ${context.raw}%`;
                 }
               }
             }
@@ -782,28 +781,28 @@
       document.getElementById('groupRateA').innerText = `${gA.percent}%`;
       document.getElementById('groupBarA_Agree').style.width = `${gA.percent}%`;
       document.getElementById('groupBarA_Disagree').style.width = `${100 - gA.percent}%`;
-      document.getElementById('groupCountA').innerText = totalSub > 0 ? `${gA.agree}/${gA.total} lượt đồng ý` : `Chưa có phiếu`;
+      document.getElementById('groupCountA').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gA.percent}% tán thành)` : `Chưa có phiếu`;
 
       // Nhóm B: 15 Bộ môn
       const gB = calcGroup(s => s.group === 'b');
       document.getElementById('groupRateB').innerText = `${gB.percent}%`;
       document.getElementById('groupBarB_Agree').style.width = `${gB.percent}%`;
       document.getElementById('groupBarB_Disagree').style.width = `${100 - gB.percent}%`;
-      document.getElementById('groupCountB').innerText = totalSub > 0 ? `${gB.agree}/${gB.total} lượt đồng ý` : `Chưa có phiếu`;
+      document.getElementById('groupCountB').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gB.percent}% tán thành)` : `Chưa có phiếu`;
 
       // Nhóm CD: Điểm TN & CB-GV
       const gCD = calcGroup(s => s.group === 'c' || s.group === 'd');
       document.getElementById('groupRateCD').innerText = `${gCD.percent}%`;
       document.getElementById('groupBarCD_Agree').style.width = `${gCD.percent}%`;
       document.getElementById('groupBarCD_Disagree').style.width = `${100 - gCD.percent}%`;
-      document.getElementById('groupCountCD').innerText = totalSub > 0 ? `${gCD.agree}/${gCD.total} lượt đồng ý` : `Chưa có phiếu`;
+      document.getElementById('groupCountCD').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gCD.percent}% tán thành)` : `Chưa có phiếu`;
 
       // Nhóm EF: AI & Tập thể
       const gEF = calcGroup(s => s.group === 'e' || s.group === 'f');
       document.getElementById('groupRateEF').innerText = `${gEF.percent}%`;
       document.getElementById('groupBarEF_Agree').style.width = `${gEF.percent}%`;
       document.getElementById('groupBarEF_Disagree').style.width = `${100 - gEF.percent}%`;
-      document.getElementById('groupCountEF').innerText = totalSub > 0 ? `${gEF.agree}/${gEF.total} lượt đồng ý` : `Chưa có phiếu`;
+      document.getElementById('groupCountEF').innerText = totalSub > 0 ? `Đã nhận ${totalSub} phiếu biểu quyết (${gEF.percent}% tán thành)` : `Chưa có phiếu`;
     }
 
     // 3. MA TRẬN NHIỆT 37 CHỈ TIÊU (37 HEATMAP TILES)
