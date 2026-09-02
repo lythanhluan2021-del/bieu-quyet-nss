@@ -1,16 +1,10 @@
 /**
  * GOOGLE APPS SCRIPT - HỆ THỐNG BIỂU QUYẾT & THỐNG KÊ TRỰC QUAN NGHỊ QUYẾT 2026 - 2027
  * TRƯỜNG THPT NGUYỄN SINH SẮC (SỞ GD&ĐT AN GIANG)
- *
- * TẬP HỢP TẤT CẢ CÁC TÍNH NĂNG:
- * 1. doPost(e) : Nhận phiếu biểu quyết từ Web Form lưu vào Google Sheet.
- * 2. doGet(e)  : Cung cấp API JSON/JSONP cho Web Dashboard.
- * 3. onOpen()  : Tự động tạo Menu "📊 THỐNG KÊ NGHỊ QUYẾT" trên thanh công cụ Google Sheets.
- * 4. taoSheetThongKeVaBieuDo() : Tạo Sheet Thống Kê & Biểu Đồ Tròn tự động 100%.
  */
 
 // =========================================================================
-// 1. TỰ ĐỘNG TẠO MENU TRÊN GOOGLE SHEETS KHI MỞ FILE
+// 1. TỰ ĐỘNG TẠO MENU TRÊN GOOGLE SHEETS
 // =========================================================================
 function onOpen() {
   SpreadsheetApp.getUi()
@@ -20,72 +14,28 @@ function onOpen() {
 }
 
 // =========================================================================
-// 2. XỬ LÝ LƯU PHIẾU BIỂU QUYẾT TỪ WEB FORM (POST)
+// 2. NHẬN PHIẾU TỪ WEB FORM (POST)
 // =========================================================================
 function doPost(e) {
   try {
     var data = JSON.parse(e.postData.contents);
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
     
-    // Khởi tạo hàng tiêu đề nếu bảng tính còn trống
     if (sheet.getLastRow() === 0) {
       setupHeader(sheet);
     }
     
-    // Thêm dòng kết quả biểu quyết vào Google Sheet
     sheet.appendRow([
       data.timestamp || Utilities.formatDate(new Date(), "GMT+7", "dd/MM/yyyy HH:mm:ss"),
-      
-      // Mục a: Học sinh (9 chỉ tiêu)
-      data.hs_si_so || "",
-      data.hs_tot_nghiep || "",
-      data.hs_dh_cd || "",
-      data.hs_len_lop || "",
-      data.hs_hoc_luc || "",
-      data.hs_hanh_kiem || "",
-      data.hs_giai_tinh || "",
-      data.hs_bao_hiem || "",
-      data.hs_an_ninh || "",
-      
-      // Mục b: 15 Bộ môn
-      data.mon_toan || "",
-      data.mon_van || "",
-      data.mon_ly || "",
-      data.mon_hoa || "",
-      data.mon_sinh || "",
-      data.mon_tin || "",
-      data.mon_su || "",
-      data.mon_dia || "",
-      data.mon_anh || "",
-      data.mon_cn || "",
-      data.mon_gdqp || "",
-      data.mon_gdktpl || "",
-      data.mon_thechat || "",
-      data.mon_diaphuong || "",
-      data.mon_hdtn || "",
-      
-      // Mục c: Điểm thi tốt nghiệp THPT
+      data.hs_si_so || "", data.hs_tot_nghiep || "", data.hs_dh_cd || "", data.hs_len_lop || "", data.hs_hoc_luc || "",
+      data.hs_hanh_kiem || "", data.hs_giai_tinh || "", data.hs_bao_hiem || "", data.hs_an_ninh || "",
+      data.mon_toan || "", data.mon_van || "", data.mon_ly || "", data.mon_hoa || "", data.mon_sinh || "",
+      data.mon_tin || "", data.mon_su || "", data.mon_dia || "", data.mon_anh || "", data.mon_cn || "",
+      data.mon_gdqp || "", data.mon_gdktpl || "", data.mon_thechat || "", data.mon_diaphuong || "", data.mon_hdtn || "",
       data.muc_c_tn || "",
-      
-      // Mục d: Cán bộ, viên chức & người lao động (5 chỉ tiêu)
-      data.cb_thi_dua || "",
-      data.cb_xep_loai || "",
-      data.cb_bgh || "",
-      data.cb_skkn || "",
-      data.cb_chuyen_mon || "",
-      
-      // Mục e: Giáo dục Trí tuệ nhân tạo (AI) - 4 chỉ tiêu
-      data.ai_thoi_luong || "",
-      data.ai_tap_huan || "",
-      data.ai_yeu_cau || "",
-      data.ai_danh_gia || "",
-      
-      // Mục f: Tập thể và các đoàn thể (3 chỉ tiêu)
-      data.tt_danh_hieu || "",
-      data.tt_doan_the || "",
-      data.tt_do_dau || "",
-      
-      // Ý kiến đóng góp khác
+      data.cb_thi_dua || "", data.cb_xep_loai || "", data.cb_bgh || "", data.cb_skkn || "", data.cb_chuyen_mon || "",
+      data.ai_thoi_luong || "", data.ai_tap_huan || "", data.ai_yeu_cau || "", data.ai_danh_gia || "",
+      data.tt_danh_hieu || "", data.tt_doan_the || "", data.tt_do_dau || "",
       data.additionalFeedback || ""
     ]);
     
@@ -106,19 +56,25 @@ function doPost(e) {
 }
 
 // =========================================================================
-// 3. TẠO SHEET THỐNG KÊ & BIỂU ĐỒ TRỰC QUAN TRÊN GOOGLE SHEETS
+// 3. TẠO SHEET THỐNG KÊ & BIỂU ĐỒ TRỰC QUAN (SIÊU ỔN ĐỊNH 100%)
 // =========================================================================
 function taoSheetThongKeVaBieuDo() {
   const ss = SpreadsheetApp.getActiveSpreadsheet();
-  const rawSheet = ss.getSheets()[0]; // Lấy sheet dữ liệu nộp đầu tiên
+  const rawSheet = ss.getSheets()[0]; // Sheet chứa dữ liệu nộp đầu tiên
   const rawSheetName = rawSheet.getName();
 
-  // 1. Kiểm tra hoặc tạo mới Sheet "📊 THỐNG KÊ & BIỂU ĐỒ"
+  // 1. Tạo hoặc làm sạch Sheet "📊 THỐNG KÊ & BIỂU ĐỒ"
   let statsSheet = ss.getSheetByName("📊 THỐNG KÊ & BIỂU ĐỒ");
-  if (statsSheet) {
-    ss.deleteSheet(statsSheet);
+  if (!statsSheet) {
+    statsSheet = ss.insertSheet("📊 THỐNG KÊ & BIỂU ĐỒ");
   }
-  statsSheet = ss.insertSheet("📊 THỐNG KÊ & BIỂU ĐỒ");
+  statsSheet.clear(); // Xóa sạch dữ liệu cũ để vẽ mới
+
+  // Xóa các biểu đồ cũ nếu có
+  const oldCharts = statsSheet.getCharts();
+  for (let c = 0; c < oldCharts.length; c++) {
+    statsSheet.removeChart(oldCharts[c]);
+  }
 
   // 2. Danh mục 37 chỉ tiêu chuẩn
   const criteria = [
@@ -161,10 +117,10 @@ function taoSheetThongKeVaBieuDo() {
     [37, "AI & TT", "Công tác nhân văn (Đỡ đầu ≥2 học sinh khó khăn/tổ)", "AL"]
   ];
 
-  // 3. Tiêu đề lớn
+  // 3. Tiêu đề chính
   statsSheet.getRange("A1:G1").merge()
     .setValue("BẢNG TỔNG HỢP & THỐNG KÊ KẾT QUẢ BIỂU QUYẾT NGHỊ QUYẾT NĂM HỌC 2026 - 2027")
-    .setBackground("#1e3a8a").setFontColor("#ffffff").setFontWeight("bold").setFontSize(14).setHorizontalAlignment("center").setVerticalAlignment("middle");
+    .setBackground("#1e3a8a").setFontColor("#ffffff").setFontWeight("bold").setFontSize(13).setHorizontalAlignment("center").setVerticalAlignment("middle");
   statsSheet.setRowHeight(1, 40);
 
   // 4. Thẻ tóm tắt tổng số phiếu
@@ -230,77 +186,24 @@ function taoSheetThongKeVaBieuDo() {
     .build();
   statsSheet.insertChart(chartBuilder);
 
+  // Kích hoạt lại sheet thống kê để người dùng nhìn thấy ngay
+  ss.setActiveSheet(statsSheet);
   SpreadsheetApp.getUi().alert("🎉 Đã tạo thành công Sheet '📊 THỐNG KÊ & BIỂU ĐỒ' với công thức tự động 100%!");
 }
 
 // =========================================================================
-// 4. THIẾT LẬP TIÊU ĐỀ HÀNG ĐẦU TIÊN CỦA BẢNG TÍNH GOOGLE SHEET
+// 4. TIÊU ĐỀ HÀNG 1 NẾU SHEET TRỐNG
 // =========================================================================
 function setupHeader(sheet) {
   var headers = [
     "Thời gian nộp",
-    
-    // Mục a: Học sinh
-    "a.1: Duy trì sĩ số (Giảm ≤2%, bỏ học ≤1%, lưu ban <1%)",
-    "a.2: Đầu ra tốt nghiệp (100% đỗ TN)",
-    "a.3: Đầu ra ĐH-CĐ (≥80% trúng tuyển)",
-    "a.4: Tỷ lệ lên lớp thẳng (≥99%)",
-    "a.5: Kết quả học tập (Tốt ≥45.12%, Khá ≥48.47%)",
-    "a.6: Kết quả rèn luyện (Tốt ≥90.84%, Khá ≥6.64%)",
-    "a.7: Phong trào mũi nhọn (≥1 giải HSG, ≥3 giải PT)",
-    "a.8: Bảo hiểm & Tiện ích (100% BHYT, VNEDU/Wifi)",
-    "a.9: An ninh học đường (Không vi phạm ATGT/TNXH)",
-    
-    // Mục b: 15 Bộ môn
-    "b.1: Môn Toán học",
-    "b.2: Môn Ngữ văn",
-    "b.3: Môn Vật lí",
-    "b.4: Môn Hóa học",
-    "b.5: Môn Sinh học",
-    "b.6: Môn Tin học",
-    "b.7: Môn Lịch sử",
-    "b.8: Môn Địa lí",
-    "b.9: Môn Ngoại ngữ (Tiếng Anh)",
-    "b.10: Môn Công nghệ",
-    "b.11: Môn GDQP & AN",
-    "b.12: Môn GD Kinh tế & Pháp luật",
-    "b.13: Môn GD Thể chất",
-    "b.14: Môn Nội dung GD Địa phương",
-    "b.15: Môn Hoạt động TN-HN",
-    
-    // Mục c: Điểm tốt nghiệp
-    "c: Chỉ tiêu điểm TB thi tốt nghiệp THPT so với tỉnh",
-    
-    // Mục d: Cán bộ GV
-    "d.1: Thi đua cá nhân (100% LĐTT, ≥20% CSTĐCS)",
-    "d.2: Xếp loại viên chức (100% HTNV, ≥80% Tốt, 20% XS)",
-    "d.3: Ban Giám hiệu (100% HT tốt nhiệm vụ trở lên)",
-    "d.4: NCKH & SKKN (≥30% GV tổ, ≥10 cấp cơ sở)",
-    "d.5: Chuyên môn & Đổi mới (Dự giờ, CNTT, STEM, NCKH, trực tuyến)",
-    
-    // Mục e: AI (Kế hoạch 369/KH-THPTNSS)
-    "e.1: Thời lượng & Bảng khung nội dung AI (≥12 tiết/lớp/năm)",
-    "e.2: Tập huấn & Bồi dưỡng GV về AI (100% GV)",
-    "e.3: Đảm bảo yêu cầu cần đạt (100% HS nắm vững nền tảng, đạo đức AI)",
-    "e.4: Kiểm tra, đánh giá & Báo cáo Sở GD&ĐT (Trước 15/6/2027)",
-    
-    // Mục f: Tập thể
-    "f.1: Danh hiệu trường (Tập thể Lao động xuất sắc)",
-    "f.2: Xếp loại đoàn thể (Đảng bộ, Đoàn TNCS HCM)",
-    "f.3: Công tác nhân văn (Đỡ đầu ≥2 HS khó khăn/tổ)",
-    
-    // Ý kiến khác
-    "Ý kiến đóng góp, đề xuất khác"
+    "a.1: Duy trì sĩ số", "a.2: Tốt nghiệp 100%", "a.3: ĐH-CĐ ≥80%", "a.4: Lên lớp ≥99%", "a.5: Học lực", "a.6: Rèn luyện", "a.7: Giải HSG", "a.8: BHYT/Wifi", "a.9: An ninh",
+    "b.1: Toán", "b.2: Ngữ văn", "b.3: Vật lí", "b.4: Hóa học", "b.5: Sinh học", "b.6: Tin học", "b.7: Lịch sử", "b.8: Địa lí", "b.9: Tiếng Anh", "b.10: Công nghệ", "b.11: GDQP", "b.12: GDKTPL", "b.13: Thể chất", "b.14: GD Địa phương", "b.15: Hoạt động TN-HN",
+    "c: Điểm tốt nghiệp so với tỉnh",
+    "d.1: Thi đua", "d.2: Xếp loại VC", "d.3: BGH", "d.4: SKKN", "d.5: Chuyên môn",
+    "e.1: Thời lượng AI", "e.2: Bồi dưỡng GV AI", "e.3: Yêu cầu AI", "e.4: Đánh giá AI",
+    "f.1: Danh hiệu trường", "f.2: Đoàn thể", "f.3: Đỡ đầu HS",
+    "Ý kiến khác"
   ];
-  
   sheet.appendRow(headers);
-  
-  var headerRange = sheet.getRange(1, 1, 1, headers.length);
-  headerRange.setBackground("#0e7490");
-  headerRange.setFontColor("#ffffff");
-  headerRange.setFontWeight("bold");
-  headerRange.setHorizontalAlignment("center");
-  headerRange.setVerticalAlignment("middle");
-  sheet.setRowHeight(1, 44);
-  sheet.setFrozenRows(1);
 }
