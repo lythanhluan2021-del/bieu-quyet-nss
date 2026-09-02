@@ -19,19 +19,117 @@
     * {
       font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
     }
-    body {
+
+    /* GIAO DIỆN SÁNG (LIGHT THEME - MẶC ĐỊNH CHO MÁY CHIẾU HỘI TRƯỜNG) */
+    body.theme-light {
+      background-color: #f1f5f9;
+      color: #0f172a;
+    }
+    body.theme-light .panel-card {
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+    }
+    body.theme-light .kpi-card {
+      background: #ffffff;
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 4px 12px -2px rgba(0, 0, 0, 0.06);
+    }
+    body.theme-light .kpi-title {
+      color: #0369a1;
+    }
+    body.theme-light .kpi-val {
+      color: #0f172a;
+    }
+    body.theme-light .kpi-sub {
+      color: #64748b;
+    }
+    body.theme-light .section-heading {
+      color: #0f172a;
+    }
+    body.theme-light .card-box {
+      background-color: #f8fafc;
+      border: 1px solid #e2e8f0;
+      color: #0f172a;
+    }
+    body.theme-light .item-title {
+      color: #0f172a;
+    }
+    body.theme-light .preview-box {
+      background-color: #f8fafc;
+      border: 1px solid #cbd5e1;
+      color: #0f172a;
+    }
+    body.theme-light .table-head {
+      background-color: #f1f5f9;
+      color: #334155;
+      border-color: #cbd5e1;
+    }
+    body.theme-light .table-row {
+      border-color: #e2e8f0;
+    }
+    body.theme-light .table-row:hover {
+      background-color: #f8fafc;
+    }
+    body.theme-light .table-text {
+      color: #0f172a;
+    }
+
+    /* GIAO DIỆN TỐI (DARK THEME - CHUYÊN NGHIỆP) */
+    body.theme-dark {
       background-color: #0b1329;
       color: #f8fafc;
-      min-height: 100vh;
     }
-    .kpi-card {
-      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-      border: 1px solid #334155;
-    }
-    .panel-card {
+    body.theme-dark .panel-card {
       background: #131d38;
       border: 1px solid #1e294b;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
     }
+    body.theme-dark .kpi-card {
+      background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+      border: 1px solid #334155;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+    }
+    body.theme-dark .kpi-title {
+      color: #67e8f9;
+    }
+    body.theme-dark .kpi-val {
+      color: #ffffff;
+    }
+    body.theme-dark .kpi-sub {
+      color: #94a3b8;
+    }
+    body.theme-dark .section-heading {
+      color: #ffffff;
+    }
+    body.theme-dark .card-box {
+      background-color: rgba(15, 23, 42, 0.8);
+      border: 1px solid #1e293b;
+      color: #f8fafc;
+    }
+    body.theme-dark .item-title {
+      color: #ffffff;
+    }
+    body.theme-dark .preview-box {
+      background-color: rgba(15, 23, 42, 0.95);
+      border: 1px solid #334155;
+      color: #f8fafc;
+    }
+    body.theme-dark .table-head {
+      background-color: #0f172a;
+      color: #cbd5e1;
+      border-color: #334155;
+    }
+    body.theme-dark .table-row {
+      border-color: #1e293b;
+    }
+    body.theme-dark .table-row:hover {
+      background-color: rgba(30, 41, 59, 0.5);
+    }
+    body.theme-dark .table-text {
+      color: #ffffff;
+    }
+
     .pulse-dot {
       animation: pulseAnimation 2s infinite;
     }
@@ -48,6 +146,7 @@
       transform: translateY(-3px) scale(1.05);
       z-index: 20;
     }
+
     /* Chế độ In Ấn Báo Cáo */
     @media print {
       body {
@@ -62,20 +161,22 @@
         border: 1px solid #cbd5e1 !important;
         color: #000000 !important;
         page-break-inside: avoid;
+        box-shadow: none !important;
       }
-      .text-slate-100, .text-slate-200, .text-slate-300, .text-white {
-        color: #0f172a !important;
+      .kpi-title, .kpi-val, .kpi-sub, .section-heading, .item-title, .table-text {
+        color: #000000 !important;
       }
-      .bg-slate-900, .bg-slate-800, .bg-slate-950 {
-        background-color: #f8fafc !important;
+      .card-box, .preview-box {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
       }
     }
   </style>
 </head>
-<body class="pb-12 antialiased">
+<body class="theme-light pb-12 antialiased transition-colors duration-300">
 
   <!-- TOP BAR TRÌNH CHIẾU -->
-  <header class="bg-gradient-to-r from-slate-950 via-cyan-950 to-slate-950 border-b border-cyan-800/60 sticky top-0 z-50 shadow-2xl no-print">
+  <header class="bg-gradient-to-r from-slate-950 via-cyan-950 to-slate-950 border-b border-cyan-800/60 sticky top-0 z-50 shadow-2xl no-print text-white">
     <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
       
       <div class="flex items-center space-x-3">
@@ -90,9 +191,17 @@
 
       <!-- Live Badge & Thanh Điều Khiển Trình Chiếu -->
       <div class="flex items-center space-x-2 sm:space-x-2.5 text-xs">
+        
+        <!-- Nút Chuyển Đổi Sáng / Tối (☀️ / 🌙) -->
+        <button onclick="toggleTheme()" id="themeToggleBtn" title="Chuyển đổi Giao diện Sáng (Máy chiếu) / Tối (Màn hình LED)"
+          class="py-1.5 px-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl transition flex items-center space-x-1.5 shadow-md">
+          <i class="fa-solid fa-moon text-sm" id="themeIcon"></i>
+          <span id="themeText" class="hidden md:inline">Giao diện tối</span>
+        </button>
+
         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-inner">
           <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 pulse-dot"></span>
-          <span>DỮ LIỆU THỜI GIAN THỰC</span>
+          <span>DỮ LIỆU TRỰC TIẾP</span>
         </span>
         
         <button onclick="toggleFullscreen()" title="Chế độ toàn màn hình cho máy chiếu"
@@ -123,7 +232,7 @@
     </div>
   </header>
 
-  <!-- MAIN CONTAINER (RỘNG RÃI PHỤC VỤ MÁY CHIẾU FULL HD / 4K) -->
+  <!-- MAIN CONTAINER -->
   <main class="max-w-[1600px] mx-auto px-3 sm:px-5 pt-3 sm:pt-5 space-y-4 sm:space-y-5">
 
     <!-- HEADER IN ẤN (Chỉ hiển thị khi bấm In Báo Cáo) -->
@@ -138,73 +247,73 @@
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       
       <!-- KPI 1: Tổng số phiếu thu về -->
-      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Phiếu Đã Thu Về</span>
-          <div class="w-7 h-7 rounded-lg bg-cyan-950/80 flex items-center justify-center border border-cyan-800/60">
-            <i class="fa-solid fa-check-to-slot text-cyan-400 text-sm"></i>
+          <span class="text-xs font-bold kpi-title uppercase tracking-wider">Phiếu Đã Thu Về</span>
+          <div class="w-7 h-7 rounded-lg bg-cyan-100 dark:bg-cyan-950/80 flex items-center justify-center border border-cyan-300 dark:border-cyan-800/60">
+            <i class="fa-solid fa-check-to-slot text-cyan-600 dark:text-cyan-400 text-sm"></i>
           </div>
         </div>
         <div class="flex items-baseline space-x-1.5">
-          <span id="kpiTotal" class="text-2xl sm:text-4xl font-bold text-white tracking-tight">0</span>
-          <span class="text-xs sm:text-sm text-slate-400 font-bold">phiếu</span>
+          <span id="kpiTotal" class="text-2xl sm:text-4xl font-bold kpi-val tracking-tight">0</span>
+          <span class="text-xs sm:text-sm kpi-sub font-bold">phiếu</span>
         </div>
-        <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2.5 overflow-hidden">
+        <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-1.5 mt-2.5 overflow-hidden">
           <div id="kpiProgressBar" class="bg-gradient-to-r from-cyan-500 to-teal-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <p class="text-[11px] text-slate-400 mt-1.5 truncate" id="kpiCompletionText">Tự động đồng bộ từ Google Sheets</p>
+        <p class="text-[11px] kpi-sub mt-1.5 truncate" id="kpiCompletionText">Tự động đồng bộ từ Google Sheets</p>
       </div>
 
       <!-- KPI 2: Tỷ lệ tán thành bình quân -->
-      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tán Thành Chung</span>
-          <div class="w-7 h-7 rounded-lg bg-emerald-950/80 flex items-center justify-center border border-emerald-800/60">
-            <i class="fa-solid fa-square-poll-vertical text-emerald-400 text-sm"></i>
+          <span class="text-xs font-bold text-emerald-700 dark:text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tán Thành Chung</span>
+          <div class="w-7 h-7 rounded-lg bg-emerald-100 dark:bg-emerald-950/80 flex items-center justify-center border border-emerald-300 dark:border-emerald-800/60">
+            <i class="fa-solid fa-square-poll-vertical text-emerald-600 dark:text-emerald-400 text-sm"></i>
           </div>
         </div>
         <div class="flex items-baseline space-x-1">
-          <span id="kpiPercent" class="text-2xl sm:text-4xl font-bold text-emerald-400 tracking-tight">0%</span>
+          <span id="kpiPercent" class="text-2xl sm:text-4xl font-bold text-emerald-600 dark:text-emerald-400 tracking-tight">0%</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3 truncate" id="kpiExpectedText">Tính bình quân trên toàn bộ 37 chỉ tiêu</p>
+        <p class="text-[11px] kpi-sub mt-3 truncate" id="kpiExpectedText">Tính bình quân trên toàn bộ 37 chỉ tiêu</p>
       </div>
 
       <!-- KPI 3: Chỉ tiêu 100% Đồng thuận -->
-      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">100% Đồng Thuận</span>
-          <div class="w-7 h-7 rounded-lg bg-amber-950/80 flex items-center justify-center border border-amber-800/60">
-            <i class="fa-solid fa-award text-amber-400 text-sm"></i>
+          <span class="text-xs font-bold text-amber-700 dark:text-amber-300 uppercase tracking-wider">100% Đồng Thuận</span>
+          <div class="w-7 h-7 rounded-lg bg-amber-100 dark:bg-amber-950/80 flex items-center justify-center border border-amber-300 dark:border-amber-800/60">
+            <i class="fa-solid fa-award text-amber-600 dark:text-amber-400 text-sm"></i>
           </div>
         </div>
         <div class="flex items-baseline space-x-1">
-          <span id="kpiUnanimous" class="text-2xl sm:text-4xl font-bold text-amber-400 tracking-tight">0</span>
-          <span class="text-xs sm:text-sm text-slate-400 font-bold">/ 37 chỉ tiêu</span>
+          <span id="kpiUnanimous" class="text-2xl sm:text-4xl font-bold text-amber-600 dark:text-amber-400 tracking-tight">0</span>
+          <span class="text-xs sm:text-sm kpi-sub font-bold">/ 37 chỉ tiêu</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3 truncate">Đạt tỷ lệ đồng thuận tuyệt đối</p>
+        <p class="text-[11px] kpi-sub mt-3 truncate">Đạt tỷ lệ đồng thuận tuyệt đối</p>
       </div>
 
       <!-- KPI 4: Ý kiến đề xuất -->
-      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-rose-300 uppercase tracking-wider">Ý Kiến Đề Xuất</span>
-          <div class="w-7 h-7 rounded-lg bg-rose-950/80 flex items-center justify-center border border-rose-800/60">
-            <i class="fa-solid fa-comments text-rose-400 text-sm"></i>
+          <span class="text-xs font-bold text-rose-700 dark:text-rose-300 uppercase tracking-wider">Ý Kiến Đề Xuất</span>
+          <div class="w-7 h-7 rounded-lg bg-rose-100 dark:bg-rose-950/80 flex items-center justify-center border border-rose-300 dark:border-rose-800/60">
+            <i class="fa-solid fa-comments text-rose-600 dark:text-rose-400 text-sm"></i>
           </div>
         </div>
         <div class="flex items-baseline space-x-1">
-          <span id="kpiFeedbackCount" class="text-2xl sm:text-4xl font-bold text-rose-400 tracking-tight">0</span>
-          <span class="text-xs sm:text-sm text-slate-400 font-bold">ý kiến</span>
+          <span id="kpiFeedbackCount" class="text-2xl sm:text-4xl font-bold text-rose-600 dark:text-rose-400 tracking-tight">0</span>
+          <span class="text-xs sm:text-sm kpi-sub font-bold">ý kiến</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3 truncate" id="kpiLastUpdated">Cập nhật: --:--</p>
+        <p class="text-[11px] kpi-sub mt-3 truncate" id="kpiLastUpdated">Cập nhật: --:--</p>
       </div>
 
     </section>
 
     <!-- THANH CHUYỂN ĐỔI CHẾ ĐỘ XEM TRÌNH CHIẾU -->
-    <div class="flex items-center justify-between flex-wrap gap-2.5 no-print border-b border-slate-800 pb-3">
+    <div class="flex items-center justify-between flex-wrap gap-2.5 no-print border-b border-slate-300 dark:border-slate-800 pb-3">
       
-      <!-- 3 Chế độ xem chính -->
+      <!-- 4 Chế độ xem chính -->
       <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm">
         <button onclick="switchView('overview')" id="tabBtnOverview"
           class="view-tab-btn active py-1.5 px-3.5 rounded-xl bg-cyan-700 text-white font-bold border border-cyan-500 shadow-md flex items-center space-x-1.5">
@@ -213,30 +322,30 @@
         </button>
 
         <button onclick="switchView('matrix')" id="tabBtnMatrix"
-          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
+          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold border border-slate-300 dark:border-slate-700 transition flex items-center space-x-1.5 shadow-sm">
           <i class="fa-solid fa-table-cells"></i>
           <span>2. Thống Kê % Chi Tiết 15 Bộ Môn & 4 Nhóm</span>
         </button>
 
         <button onclick="switchView('table37')" id="tabBtnTable37"
-          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
+          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold border border-slate-300 dark:border-slate-700 transition flex items-center space-x-1.5 shadow-sm">
           <i class="fa-solid fa-list-check"></i>
           <span>3. Bảng Kiểm Phiếu Toàn Diện 37 Chỉ Tiêu</span>
         </button>
 
         <button onclick="switchView('feedbacks')" id="tabBtnFeedbacks"
-          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
+          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 font-bold border border-slate-300 dark:border-slate-700 transition flex items-center space-x-1.5 shadow-sm">
           <i class="fa-solid fa-comments"></i>
           <span>4. Ý Kiến Đóng Góp (<span id="fbBadgeCount">0</span>)</span>
         </button>
       </div>
 
       <!-- Công tắc tự động cập nhật -->
-      <div class="flex items-center space-x-2 text-xs text-slate-400">
+      <div class="flex items-center space-x-2 text-xs text-slate-500 dark:text-slate-400">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" id="autoRefreshToggle" checked class="sr-only peer">
-          <div class="w-9 h-5 bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-600"></div>
-          <span class="ml-2 font-medium text-slate-300">Tự động cập nhật (5s)</span>
+          <div class="w-9 h-5 bg-slate-300 dark:bg-slate-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-cyan-600"></div>
+          <span class="ml-2 font-medium text-slate-700 dark:text-slate-300">Tự động cập nhật (5s)</span>
         </label>
       </div>
 
@@ -251,129 +360,129 @@
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
         
         <!-- BIỂU ĐỒ TRÒN DONUT TỔNG THỂ (4 Cột) -->
-        <div class="lg:col-span-4 panel-card p-4 sm:p-5 rounded-2xl shadow-xl flex flex-col justify-between">
-          <div class="flex items-center justify-between border-b border-slate-700/60 pb-2.5 mb-3">
-            <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center">
-              <i class="fa-solid fa-chart-donut mr-2 text-cyan-400"></i>
+        <div class="lg:col-span-4 panel-card p-4 sm:p-5 rounded-2xl flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700/60 pb-2.5 mb-3">
+            <h3 class="text-xs sm:text-sm font-bold text-cyan-800 dark:text-cyan-300 uppercase flex items-center">
+              <i class="fa-solid fa-chart-donut mr-2 text-cyan-600 dark:text-cyan-400"></i>
               TỔNG THỂ BIỂU QUYẾT
             </h3>
-            <span class="text-[11px] font-bold text-slate-400">Hội Nghị 2026 - 2027</span>
+            <span class="text-[11px] font-bold text-slate-500 dark:text-slate-400">Hội Nghị 2026 - 2027</span>
           </div>
 
           <!-- Chart Canvas Box -->
           <div class="relative flex items-center justify-center my-auto py-2" style="height: 220px;">
             <canvas id="masterDonutChart"></canvas>
             <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
-              <span id="donutCenterPercent" class="text-3xl sm:text-4xl font-bold text-white tracking-tight">0%</span>
-              <span class="text-[11px] uppercase font-bold text-emerald-400 tracking-wider">Tán thành</span>
+              <span id="donutCenterPercent" class="text-3xl sm:text-4xl font-bold text-slate-900 dark:text-white tracking-tight">0%</span>
+              <span class="text-[11px] uppercase font-bold text-emerald-600 dark:text-emerald-400 tracking-wider">Tán thành</span>
             </div>
           </div>
 
           <!-- Chú giải Donut -->
-          <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-700/60 text-center text-xs">
-            <div class="bg-emerald-950/60 p-2.5 rounded-xl border border-emerald-800/40">
-              <p class="text-emerald-400 font-bold flex items-center justify-center text-[11px]">
-                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> TÁN THÀNH
+          <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-200 dark:border-slate-700/60 text-center text-xs">
+            <div class="bg-emerald-50 dark:bg-emerald-950/60 p-2.5 rounded-xl border border-emerald-200 dark:border-emerald-800/40">
+              <p class="text-emerald-700 dark:text-emerald-400 font-bold flex items-center justify-center text-[11px]">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 mr-1.5"></span> TÁN THÀNH
               </p>
-              <p class="text-base sm:text-lg font-bold text-emerald-300 mt-0.5" id="donutAgreeCount">0%</p>
-              <p class="text-[10px] text-slate-400 mt-0.5">Bình quân 37 chỉ tiêu</p>
+              <p class="text-base sm:text-lg font-bold text-emerald-700 dark:text-emerald-300 mt-0.5" id="donutAgreeCount">0%</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Bình quân 37 chỉ tiêu</p>
             </div>
-            <div class="bg-rose-950/60 p-2.5 rounded-xl border border-rose-800/40">
-              <p class="text-rose-400 font-bold flex items-center justify-center text-[11px]">
-                <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span> KHÔNG TÁN THÀNH
+            <div class="bg-rose-50 dark:bg-rose-950/60 p-2.5 rounded-xl border border-rose-200 dark:border-rose-800/40">
+              <p class="text-rose-700 dark:text-rose-400 font-bold flex items-center justify-center text-[11px]">
+                <span class="w-2 h-2 rounded-full bg-rose-500 mr-1.5"></span> KHÔNG TÁN THÀNH
               </p>
-              <p class="text-base sm:text-lg font-bold text-rose-300 mt-0.5" id="donutDisagreeCount">0%</p>
-              <p class="text-[10px] text-slate-400 mt-0.5">Ý kiến bảo lưu/chưa đạt</p>
+              <p class="text-base sm:text-lg font-bold text-rose-700 dark:text-rose-300 mt-0.5" id="donutDisagreeCount">0%</p>
+              <p class="text-[10px] text-slate-500 dark:text-slate-400 mt-0.5">Ý kiến bảo lưu/chưa đạt</p>
             </div>
           </div>
         </div>
 
         <!-- BIỂU ĐỒ 4 NHÓM TRỌNG TÂM (8 Cột) -->
-        <div class="lg:col-span-8 panel-card p-4 sm:p-5 rounded-2xl shadow-xl flex flex-col justify-between">
-          <div class="flex items-center justify-between border-b border-slate-700/60 pb-2.5 mb-3">
-            <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center">
-              <i class="fa-solid fa-layer-group mr-2 text-cyan-400"></i>
+        <div class="lg:col-span-8 panel-card p-4 sm:p-5 rounded-2xl flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-700/60 pb-2.5 mb-3">
+            <h3 class="text-xs sm:text-sm font-bold text-cyan-800 dark:text-cyan-300 uppercase flex items-center">
+              <i class="fa-solid fa-layer-group mr-2 text-cyan-600 dark:text-cyan-400"></i>
               MỨC ĐỘ ĐỒNG THUẬN THEO 4 NHÓM CHỈ TIÊU
             </h3>
-            <span class="text-[11px] font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Đạt mục tiêu</span>
+            <span class="text-[11px] font-bold text-emerald-600 dark:text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Đạt mục tiêu</span>
           </div>
 
           <!-- 4 Khối Tiến Độ Nhóm Trọng Tâm -->
           <div class="space-y-3 my-auto" id="categoryProgressBars">
             
             <!-- Nhóm 1: Học sinh -->
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="card-box p-3 rounded-xl space-y-1.5">
               <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
-                <span class="text-white flex items-center">
-                  <i class="fa-solid fa-graduation-cap text-cyan-400 mr-2 text-sm"></i>
+                <span class="item-title flex items-center">
+                  <i class="fa-solid fa-graduation-cap text-cyan-600 dark:text-cyan-400 mr-2 text-sm"></i>
                   1. Nhóm Chỉ tiêu Học sinh (9 chỉ tiêu)
                 </span>
-                <span id="groupRateA" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+                <span id="groupRateA" class="text-emerald-600 dark:text-emerald-400 font-bold text-sm sm:text-base">100%</span>
               </div>
-              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+              <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
                 <div id="groupBarA_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
                 <div id="groupBarA_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
               </div>
-              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
                 <span>Duy trì sĩ số, Tốt nghiệp 100%, ĐH-CĐ ≥80%, Lên lớp ≥99%, BHYT...</span>
-                <span id="groupCountA" class="text-slate-300 font-medium">0 phiếu</span>
+                <span id="groupCountA" class="font-medium text-slate-700 dark:text-slate-300">0 phiếu</span>
               </div>
             </div>
 
             <!-- Nhóm 2: 15 Bộ môn -->
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="card-box p-3 rounded-xl space-y-1.5">
               <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
-                <span class="text-white flex items-center">
-                  <i class="fa-solid fa-book-bookmark text-amber-400 mr-2 text-sm"></i>
+                <span class="item-title flex items-center">
+                  <i class="fa-solid fa-book-bookmark text-amber-600 dark:text-amber-400 mr-2 text-sm"></i>
                   2. Nhóm Chỉ tiêu 15 Bộ môn (15 môn học)
                 </span>
-                <span id="groupRateB" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+                <span id="groupRateB" class="text-emerald-600 dark:text-emerald-400 font-bold text-sm sm:text-base">100%</span>
               </div>
-              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+              <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
                 <div id="groupBarB_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
                 <div id="groupBarB_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
               </div>
-              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
                 <span>Toán, Văn, Lý, Hóa, Sinh, Tin, Sử, Địa, Ngoại ngữ, Công nghệ, GDQP...</span>
-                <span id="groupCountB" class="text-slate-300 font-medium">0 phiếu</span>
+                <span id="groupCountB" class="font-medium text-slate-700 dark:text-slate-300">0 phiếu</span>
               </div>
             </div>
 
             <!-- Nhóm 3: Điểm TN & CB-GV -->
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="card-box p-3 rounded-xl space-y-1.5">
               <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
-                <span class="text-white flex items-center">
-                  <i class="fa-solid fa-chalkboard-user text-indigo-400 mr-2 text-sm"></i>
+                <span class="item-title flex items-center">
+                  <i class="fa-solid fa-chalkboard-user text-indigo-600 dark:text-indigo-400 mr-2 text-sm"></i>
                   3. Điểm Thi Tốt Nghiệp & Cán Bộ, Giáo Viên (6 chỉ tiêu)
                 </span>
-                <span id="groupRateCD" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+                <span id="groupRateCD" class="text-emerald-600 dark:text-emerald-400 font-bold text-sm sm:text-base">100%</span>
               </div>
-              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+              <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
                 <div id="groupBarCD_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
                 <div id="groupBarCD_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
               </div>
-              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
                 <span>Điểm TB thi TN so với tỉnh, Thi đua cá nhân, Xếp loại VC, SKKN...</span>
-                <span id="groupCountCD" class="text-slate-300 font-medium">0 phiếu</span>
+                <span id="groupCountCD" class="font-medium text-slate-700 dark:text-slate-300">0 phiếu</span>
               </div>
             </div>
 
             <!-- Nhóm 4: Giáo dục AI & Tập thể -->
-            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+            <div class="card-box p-3 rounded-xl space-y-1.5">
               <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
-                <span class="text-white flex items-center">
-                  <i class="fa-solid fa-robot text-teal-400 mr-2 text-sm"></i>
+                <span class="item-title flex items-center">
+                  <i class="fa-solid fa-robot text-teal-600 dark:text-teal-400 mr-2 text-sm"></i>
                   4. Giáo Dục Trí Tuệ Nhân Tạo (AI) & Tập Thể (7 chỉ tiêu)
                 </span>
-                <span id="groupRateEF" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+                <span id="groupRateEF" class="text-emerald-600 dark:text-emerald-400 font-bold text-sm sm:text-base">100%</span>
               </div>
-              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+              <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
                 <div id="groupBarEF_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
                 <div id="groupBarEF_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
               </div>
-              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+              <div class="flex items-center justify-between text-[11px] text-slate-500 dark:text-slate-400 pt-0.5">
                 <span>KH 369 AI (12 tiết/năm, 100% GV-HS), TTLĐ xuất sắc, Đỡ đầu 2 HS...</span>
-                <span id="groupCountEF" class="text-slate-300 font-medium">0 phiếu</span>
+                <span id="groupCountEF" class="font-medium text-slate-700 dark:text-slate-300">0 phiếu</span>
               </div>
             </div>
 
@@ -383,24 +492,24 @@
       </div>
 
       <!-- MA TRẬN NHIỆT 37 CHỈ TIÊU (37 INDICATOR HEATMAP TILES) -->
-      <div class="panel-card p-4 sm:p-5 rounded-2xl shadow-xl">
-        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-700/60 pb-2.5 mb-3.5">
+      <div class="panel-card p-4 sm:p-5 rounded-2xl">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700/60 pb-2.5 mb-3.5">
           <div class="flex items-center space-x-2">
-            <i class="fa-solid fa-table-cells text-amber-400 text-sm"></i>
-            <h3 class="text-xs sm:text-sm font-bold text-white uppercase">
+            <i class="fa-solid fa-table-cells text-amber-600 dark:text-amber-400 text-sm"></i>
+            <h3 class="text-xs sm:text-sm font-bold section-heading uppercase">
               MA TRẬN ĐỒNG THUẬN 37 CHỈ TIÊU NGHỊ QUYẾT (QUAN SÁT TỨC THÌ TRÊN TOÀN HỘI NGHỊ)
             </h3>
           </div>
           
           <!-- Chú giải màu sắc -->
           <div class="flex items-center space-x-3 text-[11px]">
-            <span class="inline-flex items-center text-emerald-400">
+            <span class="inline-flex items-center text-emerald-700 dark:text-emerald-400 font-medium">
               <span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 mr-1"></span> 100% Đồng ý
             </span>
-            <span class="inline-flex items-center text-teal-400">
+            <span class="inline-flex items-center text-teal-700 dark:text-teal-400 font-medium">
               <span class="w-2.5 h-2.5 rounded-sm bg-teal-500 mr-1"></span> ≥ 90% Tán thành
             </span>
-            <span class="inline-flex items-center text-rose-400">
+            <span class="inline-flex items-center text-rose-700 dark:text-rose-400 font-medium">
               <span class="w-2.5 h-2.5 rounded-sm bg-rose-500 mr-1"></span> &lt; 90%
             </span>
           </div>
@@ -412,24 +521,24 @@
         </div>
 
         <!-- Khung xem trước chi tiết khi rê/bấm vào ô -->
-        <div id="heatmapPreviewBox" class="mt-3.5 p-3.5 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs space-y-2">
+        <div id="heatmapPreviewBox" class="preview-box mt-3.5 p-3.5 rounded-xl text-xs space-y-2">
           <div class="flex items-center justify-between flex-wrap gap-2">
             <div class="flex items-center space-x-2">
-              <span class="px-2 py-0.5 rounded bg-cyan-900 text-cyan-300 font-bold text-[11px]" id="previewBadge">#1</span>
-              <span class="font-bold text-white text-xs sm:text-sm" id="previewTitle">Rê chuột hoặc bấm vào ô bất kỳ ở trên để xem chi tiết chỉ tiêu</span>
+              <span class="px-2 py-0.5 rounded bg-cyan-100 dark:bg-cyan-900 text-cyan-800 dark:text-cyan-300 font-bold text-[11px]" id="previewBadge">#1</span>
+              <span class="font-bold item-title text-xs sm:text-sm" id="previewTitle">Rê chuột hoặc bấm vào ô bất kỳ ở trên để xem chi tiết chỉ tiêu</span>
             </div>
-            <span id="previewStatusBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">100% Đồng thuận</span>
+            <span id="previewStatusBadge" class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">100% Đồng thuận</span>
           </div>
 
           <!-- Thanh tiến độ kép xem trước -->
-          <div class="w-full bg-slate-800 rounded-lg h-2.5 flex overflow-hidden">
+          <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-lg h-2.5 flex overflow-hidden">
             <div id="previewBarAgree" class="bg-emerald-500 h-full transition-all duration-300" style="width: 100%"></div>
             <div id="previewBarDisagree" class="bg-rose-500 h-full transition-all duration-300" style="width: 0%"></div>
           </div>
 
           <div class="flex items-center justify-between text-xs pt-0.5 font-bold">
-            <span class="text-emerald-400" id="previewAgree">🟢 Đồng ý: --</span>
-            <span class="text-rose-400" id="previewDisagree">🔴 Không đồng ý: --</span>
+            <span class="text-emerald-600 dark:text-emerald-400" id="previewAgree">🟢 Đồng ý: --</span>
+            <span class="text-rose-600 dark:text-rose-400" id="previewDisagree">🔴 Không đồng ý: --</span>
           </div>
         </div>
 
@@ -443,13 +552,13 @@
     <div id="viewMatrix" class="hidden space-y-5">
       
       <!-- PHẦN 1: 15 BỘ MÔN (LƯỚI 3 CỘT GỌN GÀNG VỚI % CHI TIẾT) -->
-      <div class="panel-card p-4 sm:p-5 rounded-2xl shadow-xl space-y-3.5">
-        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-700/60 pb-2.5">
-          <h3 class="text-xs sm:text-sm font-bold text-amber-300 uppercase flex items-center">
-            <i class="fa-solid fa-book-bookmark mr-2 text-amber-400"></i>
+      <div class="panel-card p-4 sm:p-5 rounded-2xl space-y-3.5">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700/60 pb-2.5">
+          <h3 class="text-xs sm:text-sm font-bold text-amber-700 dark:text-amber-300 uppercase flex items-center">
+            <i class="fa-solid fa-book-bookmark mr-2 text-amber-600 dark:text-amber-400"></i>
             KẾT QUẢ BIỂU QUYẾT 15 BỘ MÔN NĂM HỌC 2026 - 2027 (% ĐỒNG Ý & % KHÔNG ĐỒNG Ý)
           </h3>
-          <span class="text-xs text-slate-400">Tất cả 15 môn học</span>
+          <span class="text-xs text-slate-500 dark:text-slate-400">Tất cả 15 môn học</span>
         </div>
 
         <div id="subjectGrid3Col" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
@@ -461,27 +570,27 @@
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         
         <!-- Nhóm Học sinh -->
-        <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
-          <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
-            <i class="fa-solid fa-graduation-cap mr-2 text-cyan-400"></i>
+        <div class="panel-card p-4 rounded-2xl space-y-3">
+          <h3 class="text-xs sm:text-sm font-bold text-cyan-800 dark:text-cyan-300 uppercase flex items-center border-b border-slate-200 dark:border-slate-700/60 pb-2">
+            <i class="fa-solid fa-graduation-cap mr-2 text-cyan-600 dark:text-cyan-400"></i>
             Chỉ Tiêu Học Sinh (9 mục)
           </h3>
           <div id="listGroupA" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
         </div>
 
         <!-- Nhóm CB-GV & Điểm TN -->
-        <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
-          <h3 class="text-xs sm:text-sm font-bold text-indigo-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
-            <i class="fa-solid fa-chalkboard-user mr-2 text-indigo-400"></i>
+        <div class="panel-card p-4 rounded-2xl space-y-3">
+          <h3 class="text-xs sm:text-sm font-bold text-indigo-800 dark:text-indigo-300 uppercase flex items-center border-b border-slate-200 dark:border-slate-700/60 pb-2">
+            <i class="fa-solid fa-chalkboard-user mr-2 text-indigo-600 dark:text-indigo-400"></i>
             Điểm TN & Cán Bộ GV (6 mục)
           </h3>
           <div id="listGroupCD" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
         </div>
 
         <!-- Nhóm AI & Tập thể -->
-        <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
-          <h3 class="text-xs sm:text-sm font-bold text-teal-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
-            <i class="fa-solid fa-robot mr-2 text-teal-400"></i>
+        <div class="panel-card p-4 rounded-2xl space-y-3">
+          <h3 class="text-xs sm:text-sm font-bold text-teal-800 dark:text-teal-300 uppercase flex items-center border-b border-slate-200 dark:border-slate-700/60 pb-2">
+            <i class="fa-solid fa-robot mr-2 text-teal-600 dark:text-teal-400"></i>
             Giáo Dục AI & Tập Thể (7 mục)
           </h3>
           <div id="listGroupEF" class="space-y-3 max-h-[600px] overflow-y-auto pr-1"></div>
@@ -495,14 +604,14 @@
     <!-- VIEW 3: BẢNG KIỂM PHIẾU TOÀN DIỆN 37 CHỈ TIÊU (FULL STATISTICAL DATA TABLE) -->
     <!-- ========================================================================= -->
     <div id="viewTable37" class="hidden space-y-4">
-      <div class="panel-card p-4 sm:p-6 rounded-2xl shadow-xl space-y-4">
-        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-700/60 pb-3">
+      <div class="panel-card p-4 sm:p-6 rounded-2xl space-y-4">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-200 dark:border-slate-700/60 pb-3">
           <div>
-            <h3 class="text-sm sm:text-base font-bold text-amber-300 uppercase flex items-center">
-              <i class="fa-solid fa-list-check mr-2 text-amber-400"></i>
+            <h3 class="text-sm sm:text-base font-bold text-amber-700 dark:text-amber-300 uppercase flex items-center">
+              <i class="fa-solid fa-list-check mr-2 text-amber-600 dark:text-amber-400"></i>
               BẢNG KIỂM PHIẾU & THỐNG KÊ CHI TIẾT TOÀN BỘ 37 CHỈ TIÊU NGHỊ QUYẾT
             </h3>
-            <p class="text-xs text-slate-400 mt-0.5">Bảng kê chi tiết số phiếu, tỷ lệ % đồng ý và % không đồng ý từng mục</p>
+            <p class="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Bảng kê chi tiết số phiếu, tỷ lệ % đồng ý và % không đồng ý từng mục</p>
           </div>
           <button onclick="window.print()" class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl text-xs border border-slate-700 shadow flex items-center space-x-1.5">
             <i class="fa-solid fa-print"></i>
@@ -511,20 +620,20 @@
         </div>
 
         <!-- Table Container -->
-        <div class="overflow-x-auto rounded-xl border border-slate-700/80">
+        <div class="overflow-x-auto rounded-xl border border-slate-300 dark:border-slate-700/80 shadow-sm">
           <table class="w-full text-left text-xs border-collapse">
-            <thead class="bg-slate-900 text-slate-300 font-bold uppercase tracking-wider text-[11px] border-b border-slate-700">
+            <thead class="table-head font-bold uppercase tracking-wider text-[11px] border-b">
               <tr>
                 <th class="p-3 text-center w-12">STT</th>
                 <th class="p-3 w-32">Nhóm</th>
                 <th class="p-3 min-w-[280px]">Nội Dung Chỉ Tiêu</th>
-                <th class="p-3 text-center w-36 text-emerald-400">Phiếu Đồng Ý (%)</th>
-                <th class="p-3 text-center w-36 text-rose-400">Phiếu Không Đồng Ý (%)</th>
+                <th class="p-3 text-center w-36 text-emerald-600 dark:text-emerald-400">Phiếu Đồng Ý (%)</th>
+                <th class="p-3 text-center w-36 text-rose-600 dark:text-rose-400">Phiếu Không Đồng Ý (%)</th>
                 <th class="p-3 text-center w-48">Thanh Trực Quan</th>
                 <th class="p-3 text-center w-28">Đánh Giá</th>
               </tr>
             </thead>
-            <tbody id="fullTable37Body" class="divide-y divide-slate-800 text-slate-200">
+            <tbody id="fullTable37Body" class="divide-y text-slate-700 dark:text-slate-200">
               <!-- Render động 37 hàng -->
             </tbody>
           </table>
@@ -536,13 +645,13 @@
     <!-- VIEW 4: Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA GIÁO VIÊN -->
     <!-- ========================================================================= -->
     <div id="viewFeedbacks" class="hidden space-y-4">
-      <div class="panel-card p-4 sm:p-6 rounded-2xl shadow-xl">
-        <h3 class="text-base sm:text-lg font-bold text-amber-300 uppercase flex items-center mb-4 border-b border-slate-700/60 pb-3">
-          <i class="fa-solid fa-comments mr-2 text-amber-400"></i>
+      <div class="panel-card p-4 sm:p-6 rounded-2xl">
+        <h3 class="text-base sm:text-lg font-bold text-amber-700 dark:text-amber-300 uppercase flex items-center mb-4 border-b border-slate-200 dark:border-slate-700/60 pb-3">
+          <i class="fa-solid fa-comments mr-2 text-amber-600 dark:text-amber-400"></i>
           TỔNG HỢP Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA ĐẠI BIỂU HỘI NGHỊ
         </h3>
-        <div id="feedbackList" class="space-y-3 divide-y divide-slate-700/60">
-          <p class="text-sm text-slate-400 italic py-6 text-center">Chưa có ý kiến đóng góp nào được ghi nhận.</p>
+        <div id="feedbackList" class="space-y-3 divide-y divide-slate-200 dark:divide-slate-700/60">
+          <p class="text-sm text-slate-500 dark:text-slate-400 italic py-6 text-center">Chưa có ý kiến đóng góp nào được ghi nhận.</p>
         </div>
       </div>
     </div>
@@ -570,6 +679,48 @@
     let autoRefreshTimer = null;
     let donutChartInstance = null;
     let currentView = 'overview';
+    let currentTheme = 'light'; // Mặc định Giao diện Sáng
+
+    // CHUYỂN ĐỔI GIAO DIỆN SÁNG / TỐI (☀️ / 🌙)
+    function toggleTheme() {
+      if (currentTheme === 'light') {
+        setTheme('dark');
+      } else {
+        setTheme('light');
+      }
+    }
+
+    function setTheme(theme) {
+      currentTheme = theme;
+      const body = document.body;
+      const icon = document.getElementById('themeIcon');
+      const text = document.getElementById('themeText');
+      const btn = document.getElementById('themeToggleBtn');
+
+      if (theme === 'dark') {
+        body.classList.remove('theme-light');
+        body.classList.add('theme-dark');
+        icon.className = 'fa-solid fa-sun text-sm text-amber-300';
+        text.innerText = 'Giao diện sáng';
+        btn.className = 'py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-amber-300 font-bold rounded-xl transition flex items-center space-x-1.5 border border-slate-700 shadow-md';
+      } else {
+        body.classList.remove('theme-dark');
+        body.classList.add('theme-light');
+        icon.className = 'fa-solid fa-moon text-sm text-slate-950';
+        text.innerText = 'Giao diện tối';
+        btn.className = 'py-1.5 px-3 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold rounded-xl transition flex items-center space-x-1.5 shadow-md';
+      }
+
+      // Re-render Donut Chart với viền màu phù hợp
+      if (globalData) {
+        let avgAgree = 0;
+        if (globalData.stats && globalData.stats.length > 0 && globalData.totalSubmissions > 0) {
+          const sumAgree = globalData.stats.reduce((acc, st) => acc + (st.agreePercent || 0), 0);
+          avgAgree = Math.round((sumAgree / globalData.stats.length) * 10) / 10;
+        }
+        renderDonutChart(globalData, avgAgree);
+      }
+    }
 
     // DANH MỤC 37 CHỈ TIÊU CHUẨN
     const fieldMeta = [
@@ -780,7 +931,8 @@
 
       const safeAgree = totalSub > 0 ? avgAgreePercent : 100;
       const safeDisagree = totalSub > 0 ? disagreePercent : 0;
-      const bgColors = totalSub > 0 ? ['#10b981', '#f43f5e'] : ['#334155', '#1e293b'];
+      const bgColors = totalSub > 0 ? ['#10b981', '#f43f5e'] : ['#cbd5e1', '#e2e8f0'];
+      const borderColor = currentTheme === 'light' ? '#ffffff' : '#0b1329';
 
       donutChartInstance = new Chart(ctx, {
         type: 'doughnut',
@@ -789,7 +941,7 @@
           datasets: [{
             data: [safeAgree, safeDisagree],
             backgroundColor: bgColors,
-            borderColor: '#0b1329',
+            borderColor: borderColor,
             borderWidth: 3,
             hoverOffset: 6
           }]
@@ -866,16 +1018,16 @@
 
       stats.forEach((st) => {
         const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
-        let colorClass = "bg-emerald-600/90 text-white border-emerald-400/50 shadow-emerald-950";
+        let colorClass = "bg-emerald-600 text-white border-emerald-500 shadow-sm";
         let iconHtml = '<i class="fa-solid fa-crown text-amber-300 text-[10px] ml-0.5"></i>';
 
         if (!isUnanimous) {
           if (st.agreePercent >= 90) {
-            colorClass = "bg-teal-600/80 text-white border-teal-400/50";
+            colorClass = "bg-teal-600 text-white border-teal-500 shadow-sm";
             iconHtml = '';
           } else {
-            colorClass = "bg-rose-600/80 text-white border-rose-400/50";
-            iconHtml = '<i class="fa-solid fa-circle-exclamation text-amber-300 text-[10px] ml-0.5"></i>';
+            colorClass = "bg-rose-600 text-white border-rose-500 shadow-sm";
+            iconHtml = '<i class="fa-solid fa-circle-exclamation text-amber-200 text-[10px] ml-0.5"></i>';
           }
         }
 
@@ -883,12 +1035,12 @@
           <div class="matrix-cell p-2 rounded-xl border flex flex-col items-center justify-center text-center shadow-md ${colorClass}"
                onmouseenter="showHeatmapPreview(${st.num})"
                onclick="showHeatmapPreview(${st.num})">
-            <span class="text-[10px] uppercase tracking-wider opacity-80">Mục #${st.num}</span>
+            <span class="text-[10px] uppercase tracking-wider opacity-90">Mục #${st.num}</span>
             <div class="flex items-center justify-center font-bold text-xs sm:text-sm mt-0.5">
               <span>${st.agreePercent}%</span>
               ${iconHtml}
             </div>
-            <span class="text-[9px] truncate max-w-full opacity-75 mt-0.5">${st.groupName}</span>
+            <span class="text-[9px] truncate max-w-full opacity-85 mt-0.5">${st.groupName}</span>
           </div>
         `;
       });
@@ -918,18 +1070,18 @@
 
       const statusBadge = document.getElementById('previewStatusBadge');
       if (isUnanimous) {
-        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50";
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/50";
         statusBadge.innerHTML = `<i class="fa-solid fa-crown mr-1"></i>100% Đồng thuận`;
       } else if (item.agreePercent >= 90) {
-        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40";
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40";
         statusBadge.innerHTML = `✅ Đạt ${item.agreePercent}% Tán thành`;
       } else {
-        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-500/40";
+        statusBadge.className = "px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/40";
         statusBadge.innerHTML = `⚠️ ${item.agreePercent}% Tán thành`;
       }
     }
 
-    // 4. BẢNG 15 BỘ MÔN (3 CỘT) & CHI TIẾT 4 NHÓM (% ĐỒNG Ý VS % KHÔNG ĐỒNG Ý)
+    // 4. BẢNG 15 BỘ MÔN (3 CỘT) & CHI TIẾT 4 NHÓM
     function renderDetailedTables(stats) {
       // 15 Bộ môn (Grid 3 Cột)
       const subjectContainer = document.getElementById('subjectGrid3Col');
@@ -939,25 +1091,25 @@
       subjects.forEach(st => {
         const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
         const badge = isUnanimous 
-          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50 flex-shrink-0"><i class="fa-solid fa-crown mr-1"></i>100%</span>`
-          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex-shrink-0">${st.agreePercent}%</span>`;
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/50 flex-shrink-0"><i class="fa-solid fa-crown mr-1"></i>100%</span>`
+          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40 flex-shrink-0">${st.agreePercent}%</span>`;
 
         subHtml += `
-          <div class="bg-slate-900/80 p-3.5 rounded-xl border border-slate-800 space-y-2 shadow-sm">
+          <div class="card-box p-3.5 rounded-xl space-y-2 shadow-sm">
             <div class="flex items-start justify-between gap-2">
-              <span class="font-bold text-xs sm:text-sm text-white leading-snug">${st.num}. ${st.name}</span>
+              <span class="font-bold text-xs sm:text-sm item-title leading-snug">${st.num}. ${st.name}</span>
               ${badge}
             </div>
             
             <!-- Thanh Progress kép -->
-            <div class="w-full bg-slate-800 rounded-lg h-2.5 flex overflow-hidden p-0.5 border border-slate-700/60">
+            <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-lg h-2.5 flex overflow-hidden p-0.5 border border-slate-300 dark:border-slate-700/60">
               <div class="bg-emerald-500 h-full rounded-sm transition-all duration-300" style="width: ${st.agreePercent}%"></div>
               <div class="bg-rose-500 h-full rounded-sm transition-all duration-300" style="width: ${st.disagreePercent}%"></div>
             </div>
 
             <div class="flex items-center justify-between text-[11px] pt-0.5 font-bold">
-              <span class="text-emerald-400">🟢 Đồng ý: ${st.agree} (${st.agreePercent}%)</span>
-              <span class="text-rose-400">🔴 Không: ${st.disagree} (${st.disagreePercent}%)</span>
+              <span class="text-emerald-600 dark:text-emerald-400">🟢 Đồng ý: ${st.agree} (${st.agreePercent}%)</span>
+              <span class="text-rose-600 dark:text-rose-400">🔴 Không: ${st.disagree} (${st.disagreePercent}%)</span>
             </div>
           </div>
         `;
@@ -971,21 +1123,21 @@
         let html = '';
         items.forEach(st => {
           html += `
-            <div class="bg-slate-900/70 p-3 rounded-xl border border-slate-800/80 space-y-1.5 text-xs">
+            <div class="card-box p-3 rounded-xl space-y-1.5 text-xs shadow-sm">
               <div class="flex items-start justify-between gap-2">
-                <span class="font-bold text-slate-200 leading-snug">#${st.num}. ${st.name}</span>
-                <span class="text-emerald-400 font-bold flex-shrink-0 text-xs">${st.agreePercent}%</span>
+                <span class="font-bold item-title leading-snug">#${st.num}. ${st.name}</span>
+                <span class="text-emerald-600 dark:text-emerald-400 font-bold flex-shrink-0 text-xs">${st.agreePercent}%</span>
               </div>
               
               <!-- Thanh Progress kép -->
-              <div class="w-full bg-slate-800 rounded-md h-2 flex overflow-hidden">
+              <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-md h-2 flex overflow-hidden">
                 <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
                 <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
               </div>
 
               <div class="flex items-center justify-between text-[11px] pt-0.5 font-bold">
-                <span class="text-emerald-400">🟢 Đồng ý: ${st.agree} (${st.agreePercent}%)</span>
-                <span class="text-rose-400">🔴 Không: ${st.disagree} (${st.disagreePercent}%)</span>
+                <span class="text-emerald-600 dark:text-emerald-400">🟢 Đồng ý: ${st.agree} (${st.agreePercent}%)</span>
+                <span class="text-rose-600 dark:text-rose-400">🔴 Không: ${st.disagree} (${st.disagreePercent}%)</span>
               </div>
             </div>
           `;
@@ -1006,24 +1158,24 @@
       stats.forEach(st => {
         const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
         const evalBadge = isUnanimous
-          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50"><i class="fa-solid fa-crown mr-1"></i>100% Đồng thuận</span>`
+          ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 dark:bg-amber-950 text-amber-800 dark:text-amber-300 border border-amber-300 dark:border-amber-500/50"><i class="fa-solid fa-crown mr-1"></i>100% Đồng thuận</span>`
           : (st.agreePercent >= 90
-              ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">✅ Đạt mục tiêu</span>`
-              : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-950 text-rose-300 border border-rose-500/40">⚠️ Xem xét</span>`);
+              ? `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-100 dark:bg-emerald-950 text-emerald-800 dark:text-emerald-300 border border-emerald-300 dark:border-emerald-500/40">✅ Đạt mục tiêu</span>`
+              : `<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[11px] font-bold bg-rose-100 dark:bg-rose-950 text-rose-800 dark:text-rose-300 border border-rose-300 dark:border-rose-500/40">⚠️ Xem xét</span>`);
 
         html += `
-          <tr class="hover:bg-slate-800/50 transition">
-            <td class="p-3 text-center font-bold text-cyan-300">#${st.num}</td>
-            <td class="p-3 font-medium text-slate-300">${st.groupName}</td>
-            <td class="p-3 font-bold text-white leading-snug">${st.name}</td>
-            <td class="p-3 text-center font-bold text-emerald-400 bg-emerald-950/20">
+          <tr class="table-row hover:bg-slate-100 dark:hover:bg-slate-800/50 transition">
+            <td class="p-3 text-center font-bold text-cyan-700 dark:text-cyan-300">#${st.num}</td>
+            <td class="p-3 font-medium text-slate-600 dark:text-slate-300">${st.groupName}</td>
+            <td class="p-3 font-bold table-text leading-snug">${st.name}</td>
+            <td class="p-3 text-center font-bold text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/20">
               ${st.agree} phiếu (${st.agreePercent}%)
             </td>
-            <td class="p-3 text-center font-bold text-rose-400 bg-rose-950/20">
+            <td class="p-3 text-center font-bold text-rose-600 dark:text-rose-400 bg-rose-50 dark:bg-rose-950/20">
               ${st.disagree} phiếu (${st.disagreePercent}%)
             </td>
             <td class="p-3">
-              <div class="w-full bg-slate-800 rounded-lg h-2.5 flex overflow-hidden border border-slate-700">
+              <div class="w-full bg-slate-200 dark:bg-slate-800 rounded-lg h-2.5 flex overflow-hidden border border-slate-300 dark:border-slate-700">
                 <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
                 <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
               </div>
@@ -1041,8 +1193,8 @@
       const container = document.getElementById('feedbackList');
       if (!feedbacks || feedbacks.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-10 text-slate-400 text-xs sm:text-sm italic">
-            <i class="fa-regular fa-comment-dots text-3xl mb-2 text-slate-500"></i>
+          <div class="text-center py-10 text-slate-500 dark:text-slate-400 text-xs sm:text-sm italic">
+            <i class="fa-regular fa-comment-dots text-3xl mb-2 text-slate-400 dark:text-slate-500"></i>
             <p>Hiện tại chưa có ý kiến đóng góp hoặc đề xuất bổ sung nào.</p>
           </div>
         `;
@@ -1053,11 +1205,11 @@
       feedbacks.forEach((fb, idx) => {
         html += `
           <div class="pt-3.5 first:pt-0 space-y-1">
-            <div class="flex items-center justify-between text-xs text-slate-400">
-              <span class="font-bold text-cyan-300">Ý kiến #${idx + 1}</span>
+            <div class="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
+              <span class="font-bold text-cyan-700 dark:text-cyan-300">Ý kiến #${idx + 1}</span>
               <span><i class="fa-regular fa-clock mr-1"></i>${fb.time || 'Vừa xong'}</span>
             </div>
-            <p class="text-xs sm:text-sm text-slate-100 bg-slate-900/80 p-3 rounded-xl border border-slate-700/60 leading-relaxed">
+            <p class="text-xs sm:text-sm item-title card-box p-3 rounded-xl leading-relaxed">
               "${fb.content}"
             </p>
           </div>
@@ -1071,7 +1223,7 @@
       currentView = viewName;
       document.querySelectorAll('.view-tab-btn').forEach(btn => {
         btn.classList.remove('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
-        btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        btn.classList.add('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-300', 'dark:border-slate-700');
       });
 
       document.getElementById('viewOverview').classList.add('hidden');
@@ -1081,19 +1233,19 @@
 
       if (viewName === 'overview') {
         document.getElementById('tabBtnOverview').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
-        document.getElementById('tabBtnOverview').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('tabBtnOverview').classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-300', 'dark:border-slate-700');
         document.getElementById('viewOverview').classList.remove('hidden');
       } else if (viewName === 'matrix') {
         document.getElementById('tabBtnMatrix').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
-        document.getElementById('tabBtnMatrix').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('tabBtnMatrix').classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-300', 'dark:border-slate-700');
         document.getElementById('viewMatrix').classList.remove('hidden');
       } else if (viewName === 'table37') {
         document.getElementById('tabBtnTable37').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
-        document.getElementById('tabBtnTable37').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('tabBtnTable37').classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-300', 'dark:border-slate-700');
         document.getElementById('viewTable37').classList.remove('hidden');
       } else if (viewName === 'feedbacks') {
         document.getElementById('tabBtnFeedbacks').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
-        document.getElementById('tabBtnFeedbacks').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('tabBtnFeedbacks').classList.remove('bg-white', 'dark:bg-slate-800', 'text-slate-700', 'dark:text-slate-300', 'border-slate-300', 'dark:border-slate-700');
         document.getElementById('viewFeedbacks').classList.remove('hidden');
       }
     }
