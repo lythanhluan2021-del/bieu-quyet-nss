@@ -130,26 +130,26 @@
           <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Phiếu Đã Nộp</span>
           <i class="fa-solid fa-check-to-slot text-cyan-400 text-base"></i>
         </div>
-        <div class="flex items-baseline space-x-2">
+        <div class="flex items-baseline space-x-1.5">
           <span id="kpiTotal" class="text-2xl sm:text-4xl font-bold text-white tracking-tight">0</span>
-          <span class="text-xs sm:text-sm text-slate-400 font-bold">/ 80 GV</span>
+          <span class="text-xs sm:text-sm text-slate-400 font-bold">phiếu</span>
         </div>
         <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2.5 overflow-hidden">
           <div id="kpiProgressBar" class="bg-cyan-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <p class="text-[11px] text-slate-400 mt-1.5" id="kpiCompletionText">Đang tải dữ liệu...</p>
+        <p class="text-[11px] text-slate-400 mt-1.5" id="kpiCompletionText">Tự động lấy dữ liệu từ Google Sheets</p>
       </div>
 
-      <!-- KPI 2: Tỷ lệ hoàn thành -->
+      <!-- KPI 2: Tỷ lệ tán thành chung -->
       <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tham Gia</span>
-          <i class="fa-solid fa-chart-pie text-emerald-400 text-base"></i>
+          <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tán Thành</span>
+          <i class="fa-solid fa-square-poll-vertical text-emerald-400 text-base"></i>
         </div>
         <div class="flex items-baseline space-x-1">
           <span id="kpiPercent" class="text-2xl sm:text-4xl font-bold text-emerald-400 tracking-tight">0%</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3" id="kpiExpectedText">Chỉ tiêu quy mô: 80 Đại biểu</p>
+        <p class="text-[11px] text-slate-400 mt-3" id="kpiExpectedText">Tỷ lệ tán thành bình quân 37 chỉ tiêu</p>
       </div>
 
       <!-- KPI 3: Chỉ tiêu 100% Đồng ý -->
@@ -416,13 +416,18 @@
 
       // 1. Cập nhật các thẻ KPI
       const total = data.totalSubmissions || 0;
-      const expected = data.expectedTotal || 80;
-      const percent = Math.round((total / expected) * 1000) / 10;
+      
+      // Tính tỷ lệ tán thành bình quân của tất cả 37 chỉ tiêu
+      let avgAgreePercent = 0;
+      if (data.stats && data.stats.length > 0 && total > 0) {
+        const sumAgree = data.stats.reduce((acc, st) => acc + (st.agreePercent || 0), 0);
+        avgAgreePercent = Math.round((sumAgree / data.stats.length) * 10) / 10;
+      }
 
       document.getElementById('kpiTotal').innerText = total;
-      document.getElementById('kpiProgressBar').style.width = `${Math.min(percent, 100)}%`;
-      document.getElementById('kpiCompletionText').innerText = `Đã hoàn thành ${percent}% tổng số giáo viên`;
-      document.getElementById('kpiPercent').innerText = `${percent}%`;
+      document.getElementById('kpiProgressBar').style.width = total > 0 ? "100%" : "0%";
+      document.getElementById('kpiCompletionText').innerText = total > 0 ? `Đã thu về ${total} phiếu biểu quyết hợp lệ` : "Đang chờ giáo viên nộp phiếu...";
+      document.getElementById('kpiPercent').innerText = total > 0 ? `${avgAgreePercent}%` : "0%";
 
       // Đếm số chỉ tiêu đạt 100% Đồng ý
       let unanimousCount = 0;
