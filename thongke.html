@@ -253,7 +253,6 @@
 
   <!-- JAVASCRIPT XỬ LÝ DỮ LIỆU & RENDER DASHBOARD -->
   <script>
-    // 1. Cấu hình nguồn dữ liệu Google Sheets & Apps Script
     const SPREADSHEET_ID = "1z6ODucOvR1tdE5iYdJF7mLjeK2YV1Qqqdb47hHxNoJQ";
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZVPc2KGoVfOjxw_0zihIg-RINlXF5mhy2EWpsrvjWNmzAbj4LWyoHSgqtUJIznI7XFg/exec";
 
@@ -306,57 +305,60 @@
     let globalData = null;
     let autoRefreshTimer = null;
 
-    // HÀM LẤY DỮ LIỆU ĐA TẦNG (GViz API Siêu Tốc + Apps Script Fallback)
-    async function fetchData() {
+    // ĐĂNG KÝ GOOGLE VISUALIZATION CALLBACK TRỰC TIẾP
+    window.google = window.google || {};
+    window.google.visualization = window.google.visualization || {};
+    window.google.visualization.Query = window.google.visualization.Query || {};
+    window.google.visualization.Query.setResponse = function(response) {
+      const refreshIcon = document.getElementById('refreshIcon');
+      if (response && response.status === 'ok' && response.table) {
+        const parsedData = processGvizData(response.table);
+        globalData = parsedData;
+        renderDashboard(parsedData);
+      }
+      if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 300);
+    };
+
+    function fetchData() {
       const refreshIcon = document.getElementById('refreshIcon');
       if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-      // CHIẾN LƯỢC 1: Sử dụng Google Visualization API (Siêu tốc < 0.1s, hỗ trợ JSONP trực tiếp từ Google)
-      try {
-        const gvizUrl = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
-        const res = await fetch(gvizUrl);
-        const text = await res.text();
-        
-        // Phân tích cú pháp phản hồi GViz: /*O_o*/ google.visualization.Query.setResponse({...});
-        const jsonMatch = text.match(/google\.visualization\.Query\.setResponse\(([\s\S]*)\);/);
-        if (jsonMatch && jsonMatch[1]) {
-          const gvizData = JSON.parse(jsonMatch[1]);
-          if (gvizData && gvizData.table) {
-            const parsedData = processGvizData(gvizData.table);
-            globalData = parsedData;
-            renderDashboard(parsedData);
-            if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 300);
-            return;
-          }
-        }
-      } catch (err) {
-        console.warn("GViz fetch thử nghiệm tiếp Apps Script:", err);
-      }
+      // Tải trực tiếp script từ Google Sheet GViz API (Không bị CORS, cực nhanh)
+      const existingScript = document.getElementById('gviz-script-loader');
+      if (existingScript) existingScript.remove();
 
-      // CHIẾN LƯỢC 2: Gọi qua Apps Script bằng JSONP
-      fetchAppsScriptJSONP();
+      const script = document.createElement('script');
+      script.id = 'gviz-script-loader';
+      script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
+      
+      script.onerror = function() {
+        console.warn("GViz script error, thử tải Apps Script...");
+        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      };
+
+      document.head.appendChild(script);
     }
 
-    // Xử lý dữ liệu từ bảng Google Sheet GViz Table
+    // XỬ LÝ BẢNG TÍNH GOOGLE SHEET
     function processGvizData(table) {
       const rows = table.rows || [];
-      const totalSubmissions = rows.length;
+      // Dòng 0 là Tiêu đề, các dòng từ index 1 trở đi là các phiếu bầu
+      const numVotes = Math.max(0, rows.length - 1);
       const stats = [];
       const feedbacks = [];
       let lastSubmitted = "";
 
-      if (totalSubmissions > 0) {
-        const lastRow = rows[totalSubmissions - 1];
+      if (numVotes > 0) {
+        const lastRow = rows[rows.length - 1];
         lastSubmitted = lastRow.c && lastRow.c[0] ? (lastRow.c[0].f || lastRow.c[0].v || "") : "";
       }
 
-      // Duyệt qua 37 chỉ tiêu
       for (let i = 0; i < fieldMeta.length; i++) {
-        const colIndex = i + 1; // Cột 0: Thời gian, Cột 1..37: Chỉ tiêu
+        const colIndex = i + 1; // Cột 0: Thời gian, Cột 1..37: 37 chỉ tiêu
         let agreeCount = 0;
         let disagreeCount = 0;
 
-        for (let r = 0; r < totalSubmissions; r++) {
+        for (let r = 1; r < rows.length; r++) {
           const row = rows[r];
           if (row.c && row.c[colIndex]) {
             const val = String(row.c[colIndex].v || row.c[colIndex].f || "").trim().toLowerCase();
@@ -368,8 +370,8 @@
           }
         }
 
-        const agreePercent = totalSubmissions > 0 ? Math.round((agreeCount / totalSubmissions) * 1000) / 10 : 0;
-        const disagreePercent = totalSubmissions > 0 ? Math.round((disagreeCount / totalSubmissions) * 1000) / 10 : 0;
+        const agreePercent = numVotes > 0 ? Math.round((agreeCount / numVotes) * 1000) / 10 : 0;
+        const disagreePercent = numVotes > 0 ? Math.round((disagreeCount / numVotes) * 1000) / 10 : 0;
 
         stats.push({
           id: fieldMeta[i].id,
@@ -383,13 +385,13 @@
         });
       }
 
-      // Ý kiến đóng góp khác (Cột index 37)
-      for (let r = 0; r < totalSubmissions; r++) {
+      // Trích xuất ý kiến đóng góp khác (Cột index 38)
+      for (let r = 1; r < rows.length; r++) {
         const row = rows[r];
-        if (row.c && row.c[37]) {
-          const fb = String(row.c[37].v || row.c[37].f || "").trim();
+        if (row.c && row.c.length > 38 && row.c[38]) {
+          const fb = String(row.c[38].v || row.c[38].f || "").trim();
           const time = row.c[0] ? String(row.c[0].f || row.c[0].v || "") : "";
-          if (fb && fb !== "" && fb !== "null" && fb !== "undefined") {
+          if (fb && fb !== "" && fb !== "null" && fb !== "undefined" && fb.toLowerCase() !== "đồng ý") {
             feedbacks.push({ time: time, content: fb });
           }
         }
@@ -397,49 +399,14 @@
 
       return {
         status: "success",
-        totalSubmissions: totalSubmissions,
+        totalSubmissions: numVotes,
         expectedTotal: 80,
-        completionRate: Math.round((totalSubmissions / 80) * 1000) / 10,
+        completionRate: Math.round((numVotes / 80) * 1000) / 10,
         lastSubmitted: lastSubmitted,
         lastUpdated: new Date().toLocaleTimeString('vi-VN') + " " + new Date().toLocaleDateString('vi-VN'),
         stats: stats,
         feedbacks: feedbacks
       };
-    }
-
-    function fetchAppsScriptJSONP() {
-      const refreshIcon = document.getElementById('refreshIcon');
-      const callbackName = 'cb_' + Date.now();
-      const script = document.createElement('script');
-      
-      const timeoutId = setTimeout(() => {
-        if (window[callbackName]) {
-          delete window[callbackName];
-          script.remove();
-          if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-        }
-      }, 8000);
-
-      window[callbackName] = function(data) {
-        clearTimeout(timeoutId);
-        if (data && data.status === 'success') {
-          globalData = data;
-          renderDashboard(data);
-        }
-        delete window[callbackName];
-        script.remove();
-        if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 300);
-      };
-
-      script.onerror = function() {
-        clearTimeout(timeoutId);
-        delete window[callbackName];
-        script.remove();
-        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
-      };
-
-      script.src = `${GOOGLE_SCRIPT_URL}?callback=${callbackName}&t=${Date.now()}`;
-      document.head.appendChild(script);
     }
 
     function renderDashboard(data) {
