@@ -12,13 +12,15 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <!-- Chart.js 4 -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
   <style>
     * {
       font-family: 'Times New Roman', Times, 'Liberation Serif', serif;
     }
     body {
-      background-color: #0f172a;
+      background-color: #0b1329;
       color: #f8fafc;
       min-height: 100vh;
     }
@@ -26,14 +28,9 @@
       background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
       border: 1px solid #334155;
     }
-    .stat-card {
-      background: #1e293b;
-      border: 1px solid #334155;
-      transition: all 0.2s ease;
-    }
-    .stat-card:hover {
-      border-color: #06b6d4;
-      transform: translateY(-2px);
+    .panel-card {
+      background: #131d38;
+      border: 1px solid #1e294b;
     }
     .pulse-dot {
       animation: pulseAnimation 2s infinite;
@@ -42,6 +39,14 @@
       0% { transform: scale(0.95); opacity: 0.8; }
       50% { transform: scale(1.15); opacity: 1; }
       100% { transform: scale(0.95); opacity: 0.8; }
+    }
+    .matrix-cell {
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .matrix-cell:hover {
+      transform: translateY(-3px) scale(1.05);
+      z-index: 20;
     }
     /* Chế độ In Ấn Báo Cáo */
     @media print {
@@ -52,7 +57,7 @@
       .no-print {
         display: none !important;
       }
-      .stat-card, .kpi-card {
+      .panel-card, .kpi-card {
         background: #ffffff !important;
         border: 1px solid #cbd5e1 !important;
         color: #000000 !important;
@@ -61,59 +66,67 @@
       .text-slate-100, .text-slate-200, .text-slate-300, .text-white {
         color: #0f172a !important;
       }
-      .bg-slate-900, .bg-slate-800 {
+      .bg-slate-900, .bg-slate-800, .bg-slate-950 {
         background-color: #f8fafc !important;
       }
     }
   </style>
 </head>
-<body class="pb-16 antialiased">
+<body class="pb-12 antialiased">
 
   <!-- TOP BAR TRÌNH CHIẾU -->
-  <header class="bg-gradient-to-r from-slate-950 via-cyan-950 to-slate-950 border-b border-cyan-800/60 sticky top-0 z-50 shadow-xl no-print">
-    <div class="max-w-7xl mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+  <header class="bg-gradient-to-r from-slate-950 via-cyan-950 to-slate-950 border-b border-cyan-800/60 sticky top-0 z-50 shadow-2xl no-print">
+    <div class="max-w-[1600px] mx-auto px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      
       <div class="flex items-center space-x-3">
         <img src="logo.jpg" alt="Logo THPT NSS" class="w-10 h-10 rounded-full object-cover border-2 border-amber-400 shadow-md bg-white flex-shrink-0" />
         <div>
-          <p class="text-[11px] uppercase tracking-wider text-cyan-300 font-bold leading-tight">SỞ GD-ĐT AN GIANG — THPT NGUYỄN SINH SẮC</p>
+          <p class="text-[11px] uppercase tracking-wider text-cyan-300 font-bold leading-tight">SỞ GD-ĐT AN GIANG — TRƯỜNG THPT NGUYỄN SINH SẮC</p>
           <h1 class="text-xs sm:text-base font-bold text-white tracking-wide uppercase">
-            BẢNG THỐNG KÊ KẾT QUẢ BIỂU QUYẾT CHỈ TIÊU NGHỊ QUYẾT 2026 - 2027
+            BẢNG THỐNG KÊ KẾT QUẢ BIỂU QUYẾT CHỈ TIÊU NGHỊ QUYẾT NĂM HỌC 2026 - 2027
           </h1>
         </div>
       </div>
 
-      <!-- Live Badge & Điều khiển -->
-      <div class="flex items-center space-x-2 sm:space-x-3 text-xs">
+      <!-- Live Badge & Thanh Điều Khiển Trình Chiếu -->
+      <div class="flex items-center space-x-2 sm:space-x-2.5 text-xs">
         <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/50 shadow-inner">
           <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5 pulse-dot"></span>
-          <span>DỮ LIỆU TRỰC TIẾP</span>
+          <span>DỮ LIỆU THỜI GIAN THỰC</span>
         </span>
         
-        <button onclick="fetchData()" id="refreshBtn"
-          class="py-1.5 px-3 bg-cyan-800 hover:bg-cyan-700 text-white font-bold rounded-lg transition flex items-center space-x-1.5 shadow">
+        <button onclick="toggleFullscreen()" title="Chế độ toàn màn hình cho máy chiếu"
+          class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-cyan-300 font-bold rounded-xl transition flex items-center space-x-1.5 border border-slate-700 shadow">
+          <i class="fa-solid fa-expand"></i>
+          <span class="hidden md:inline">Toàn màn hình</span>
+        </button>
+
+        <button onclick="fetchData()" id="refreshBtn" title="Làm mới dữ liệu từ Google Sheets"
+          class="py-1.5 px-3 bg-cyan-800 hover:bg-cyan-700 text-white font-bold rounded-xl transition flex items-center space-x-1.5 shadow">
           <i class="fa-solid fa-arrows-rotate" id="refreshIcon"></i>
-          <span class="hidden sm:inline">Làm mới</span>
+          <span class="hidden md:inline">Làm mới</span>
         </button>
 
-        <button onclick="window.print()"
-          class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-lg transition flex items-center space-x-1.5 border border-slate-600 shadow">
+        <button onclick="window.print()" title="In biên bản kết quả biểu quyết"
+          class="py-1.5 px-3 bg-slate-800 hover:bg-slate-700 text-white font-bold rounded-xl transition flex items-center space-x-1.5 border border-slate-700 shadow">
           <i class="fa-solid fa-print"></i>
-          <span class="hidden sm:inline">In báo cáo</span>
+          <span class="hidden md:inline">In báo cáo</span>
         </button>
 
-        <a href="index.html" target="_blank"
-          class="py-1.5 px-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-lg transition flex items-center space-x-1.5 shadow">
-          <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-          <span class="hidden sm:inline">Trang biểu quyết</span>
+        <a href="index.html" target="_blank" title="Mở trang biểu quyết"
+          class="py-1.5 px-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold rounded-xl transition flex items-center space-x-1.5 shadow">
+          <i class="fa-solid fa-check-to-slot text-xs"></i>
+          <span class="hidden md:inline">Trang biểu quyết</span>
         </a>
       </div>
+
     </div>
   </header>
 
-  <!-- MAIN CONTAINER -->
-  <main class="max-w-7xl mx-auto px-3 sm:px-4 pt-4 sm:pt-6 space-y-6">
+  <!-- MAIN CONTAINER (RỘNG RÃI PHỤC VỤ MÁY CHIẾU FULL HD / 4K) -->
+  <main class="max-w-[1600px] mx-auto px-3 sm:px-5 pt-3 sm:pt-5 space-y-4 sm:space-y-5">
 
-    <!-- HEADER IN ẤN (Chỉ hiển thị khi bấm Print) -->
+    <!-- HEADER IN ẤN (Chỉ hiển thị khi bấm In Báo Cáo) -->
     <div class="hidden print:block text-center border-b pb-4 mb-4">
       <p class="text-xs uppercase font-bold text-slate-600">SỞ GD&ĐT AN GIANG — TRƯỜNG THPT NGUYỄN SINH SẮC</p>
       <h2 class="text-lg font-bold uppercase text-slate-900 mt-1">BÁO CÁO TỔNG HỢP KẾT QUẢ BIỂU QUYẾT CHỈ TIÊU NGHỊ QUYẾT</h2>
@@ -121,88 +134,98 @@
       <p class="text-xs italic text-slate-600 mt-0.5" id="printTimestamp"></p>
     </div>
 
-    <!-- 4 THẺ KPI TỔNG QUAN -->
+    <!-- 4 THẺ KPI TỔNG QUÁT (BIG METRICS) -->
     <section class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
       
-      <!-- KPI 1: Tổng số phiếu -->
-      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+      <!-- KPI 1: Tổng số phiếu thu về -->
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Phiếu Đã Nộp</span>
-          <i class="fa-solid fa-check-to-slot text-cyan-400 text-base"></i>
+          <span class="text-xs font-bold text-cyan-300 uppercase tracking-wider">Phiếu Đã Thu Về</span>
+          <div class="w-7 h-7 rounded-lg bg-cyan-950/80 flex items-center justify-center border border-cyan-800/60">
+            <i class="fa-solid fa-check-to-slot text-cyan-400 text-sm"></i>
+          </div>
         </div>
         <div class="flex items-baseline space-x-1.5">
           <span id="kpiTotal" class="text-2xl sm:text-4xl font-bold text-white tracking-tight">0</span>
           <span class="text-xs sm:text-sm text-slate-400 font-bold">phiếu</span>
         </div>
         <div class="w-full bg-slate-800 rounded-full h-1.5 mt-2.5 overflow-hidden">
-          <div id="kpiProgressBar" class="bg-cyan-500 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
+          <div id="kpiProgressBar" class="bg-gradient-to-r from-cyan-500 to-teal-400 h-1.5 rounded-full transition-all duration-500" style="width: 0%"></div>
         </div>
-        <p class="text-[11px] text-slate-400 mt-1.5" id="kpiCompletionText">Tự động lấy dữ liệu từ Google Sheets</p>
+        <p class="text-[11px] text-slate-400 mt-1.5 truncate" id="kpiCompletionText">Tự động đồng bộ từ Google Sheets</p>
       </div>
 
-      <!-- KPI 2: Tỷ lệ tán thành chung -->
-      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+      <!-- KPI 2: Tỷ lệ tán thành bình quân -->
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
-          <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tán Thành</span>
-          <i class="fa-solid fa-square-poll-vertical text-emerald-400 text-base"></i>
+          <span class="text-xs font-bold text-emerald-300 uppercase tracking-wider">Tỷ Lệ Tán Thành Chung</span>
+          <div class="w-7 h-7 rounded-lg bg-emerald-950/80 flex items-center justify-center border border-emerald-800/60">
+            <i class="fa-solid fa-square-poll-vertical text-emerald-400 text-sm"></i>
+          </div>
         </div>
         <div class="flex items-baseline space-x-1">
           <span id="kpiPercent" class="text-2xl sm:text-4xl font-bold text-emerald-400 tracking-tight">0%</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3" id="kpiExpectedText">Tỷ lệ tán thành bình quân 37 chỉ tiêu</p>
+        <p class="text-[11px] text-slate-400 mt-3 truncate" id="kpiExpectedText">Tính bình quân trên toàn bộ 37 chỉ tiêu</p>
       </div>
 
-      <!-- KPI 3: Chỉ tiêu 100% Đồng ý -->
-      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+      <!-- KPI 3: Chỉ tiêu 100% Đồng thuận -->
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
           <span class="text-xs font-bold text-amber-300 uppercase tracking-wider">100% Đồng Thuận</span>
-          <i class="fa-solid fa-award text-amber-400 text-base"></i>
+          <div class="w-7 h-7 rounded-lg bg-amber-950/80 flex items-center justify-center border border-amber-800/60">
+            <i class="fa-solid fa-award text-amber-400 text-sm"></i>
+          </div>
         </div>
         <div class="flex items-baseline space-x-1">
           <span id="kpiUnanimous" class="text-2xl sm:text-4xl font-bold text-amber-400 tracking-tight">0</span>
           <span class="text-xs sm:text-sm text-slate-400 font-bold">/ 37 chỉ tiêu</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3">Đạt tỷ lệ đồng thuận tuyệt đối</p>
+        <p class="text-[11px] text-slate-400 mt-3 truncate">Đạt tỷ lệ đồng thuận tuyệt đối</p>
       </div>
 
-      <!-- KPI 4: Ý kiến đóng góp -->
-      <div class="kpi-card p-4 rounded-2xl shadow-lg relative overflow-hidden">
+      <!-- KPI 4: Ý kiến đề xuất -->
+      <div class="kpi-card p-3.5 sm:p-4 rounded-2xl shadow-xl relative overflow-hidden">
         <div class="flex items-center justify-between mb-1">
           <span class="text-xs font-bold text-rose-300 uppercase tracking-wider">Ý Kiến Đề Xuất</span>
-          <i class="fa-solid fa-comments text-rose-400 text-base"></i>
+          <div class="w-7 h-7 rounded-lg bg-rose-950/80 flex items-center justify-center border border-rose-800/60">
+            <i class="fa-solid fa-comments text-rose-400 text-sm"></i>
+          </div>
         </div>
         <div class="flex items-baseline space-x-1">
           <span id="kpiFeedbackCount" class="text-2xl sm:text-4xl font-bold text-rose-400 tracking-tight">0</span>
           <span class="text-xs sm:text-sm text-slate-400 font-bold">ý kiến</span>
         </div>
-        <p class="text-[11px] text-slate-400 mt-3" id="kpiLastUpdated">Cập nhật lúc: --:--</p>
+        <p class="text-[11px] text-slate-400 mt-3 truncate" id="kpiLastUpdated">Cập nhật: --:--</p>
       </div>
 
     </section>
 
-    <!-- THANH ĐIỀU HƯỚNG BỘ LỌC TỔ / NHÓM CHỈ TIÊU -->
-    <div class="flex items-center justify-between flex-wrap gap-2 no-print border-b border-slate-700 pb-3">
-      <div class="flex items-center flex-wrap gap-1.5 text-xs sm:text-sm">
-        <button onclick="filterGroup('all')" id="btnFilterAll" class="filter-btn active py-1.5 px-3 rounded-xl bg-cyan-700 text-white font-bold border border-cyan-500 shadow">
-          Tất cả (37 Chỉ tiêu)
+    <!-- THANH CHUYỂN ĐỔI CHẾ ĐỘ XEM TRÌNH CHIẾU -->
+    <div class="flex items-center justify-between flex-wrap gap-2.5 no-print border-b border-slate-800 pb-3">
+      
+      <!-- 3 Chế độ xem chính -->
+      <div class="flex items-center flex-wrap gap-2 text-xs sm:text-sm">
+        <button onclick="switchView('overview')" id="tabBtnOverview"
+          class="view-tab-btn active py-1.5 px-3.5 rounded-xl bg-cyan-700 text-white font-bold border border-cyan-500 shadow-md flex items-center space-x-1.5">
+          <i class="fa-solid fa-chart-pie"></i>
+          <span>1. Toàn Cảnh Trình Chiếu (Màn Hình Hội Trường)</span>
         </button>
-        <button onclick="filterGroup('a')" id="btnFilterA" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
-          1. Học sinh (9)
+
+        <button onclick="switchView('matrix')" id="tabBtnMatrix"
+          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-table-cells"></i>
+          <span>2. Bảng Chi Tiết 15 Bộ Môn & 4 Nhóm</span>
         </button>
-        <button onclick="filterGroup('b')" id="btnFilterB" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
-          2. 15 Bộ môn (15)
-        </button>
-        <button onclick="filterGroup('cd')" id="btnFilterCD" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
-          3. Điểm TN & CB-GV (6)
-        </button>
-        <button onclick="filterGroup('ef')" id="btnFilterEF" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
-          4. AI & Tập thể (7)
-        </button>
-        <button onclick="filterGroup('feedbacks')" id="btnFilterFB" class="filter-btn py-1.5 px-3 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition">
-          💬 Ý kiến đóng góp (<span id="fbTabCount">0</span>)
+
+        <button onclick="switchView('feedbacks')" id="tabBtnFeedbacks"
+          class="view-tab-btn py-1.5 px-3.5 rounded-xl bg-slate-800 text-slate-300 hover:bg-slate-700 font-bold border border-slate-700 transition flex items-center space-x-1.5">
+          <i class="fa-solid fa-comments"></i>
+          <span>3. Ý Kiến Đóng Góp (<span id="fbBadgeCount">0</span>)</span>
         </button>
       </div>
 
+      <!-- Công tắc tự động cập nhật -->
       <div class="flex items-center space-x-2 text-xs text-slate-400">
         <label class="inline-flex items-center cursor-pointer">
           <input type="checkbox" id="autoRefreshToggle" checked class="sr-only peer">
@@ -210,27 +233,257 @@
           <span class="ml-2 font-medium text-slate-300">Tự động cập nhật (5s)</span>
         </label>
       </div>
+
     </div>
 
-    <!-- KHUNG HIỂN THỊ DANH SÁCH CHỈ TIÊU & TIẾN ĐỘ -->
-    <div id="statsContainer" class="space-y-4">
-      <!-- Loading Skeleton -->
-      <div class="text-center py-16 stat-card rounded-2xl" id="loadingBox">
-        <i class="fa-solid fa-spinner fa-spin text-4xl text-cyan-400 mb-3"></i>
-        <h3 class="text-lg font-bold text-white">Đang tải kết quả biểu quyết thời gian thực...</h3>
-        <p class="text-sm text-slate-400 mt-1">Đang kết nối cơ sở dữ liệu Google Sheets...</p>
+    <!-- ========================================================================= -->
+    <!-- VIEW 1: TOÀN CẢNH TRÌNH CHIẾU (EXECUTIVE SINGLE-SCREEN VIEW) -->
+    <!-- ========================================================================= -->
+    <div id="viewOverview" class="space-y-4">
+      
+      <!-- HÀNG BIỂU ĐỒ TRUNG TÂM (DONUT + 4 NHÓM CỘT) -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        
+        <!-- BIỂU ĐỒ TRÒN DONUT TỔNG THỂ (4 Cột) -->
+        <div class="lg:col-span-4 panel-card p-4 sm:p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-700/60 pb-2.5 mb-3">
+            <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center">
+              <i class="fa-solid fa-chart-donut mr-2 text-cyan-400"></i>
+              TỔNG THỂ BIỂU QUYẾT
+            </h3>
+            <span class="text-[11px] font-bold text-slate-400">Hội Nghị 2026 - 2027</span>
+          </div>
+
+          <!-- Chart Canvas Box -->
+          <div class="relative flex items-center justify-center my-auto py-2" style="height: 220px;">
+            <canvas id="masterDonutChart"></canvas>
+            <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
+              <span id="donutCenterPercent" class="text-3xl sm:text-4xl font-bold text-white tracking-tight">0%</span>
+              <span class="text-[11px] uppercase font-bold text-emerald-400 tracking-wider">Tán thành</span>
+            </div>
+          </div>
+
+          <!-- Chú giải Donut -->
+          <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-700/60 text-center text-xs">
+            <div class="bg-emerald-950/60 p-2 rounded-xl border border-emerald-800/40">
+              <p class="text-emerald-400 font-bold flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-emerald-400 mr-1.5"></span> Đồng Ý
+              </p>
+              <p class="text-sm font-bold text-white mt-0.5" id="donutAgreeCount">0 lượt</p>
+            </div>
+            <div class="bg-rose-950/60 p-2 rounded-xl border border-rose-800/40">
+              <p class="text-rose-400 font-bold flex items-center justify-center">
+                <span class="w-2 h-2 rounded-full bg-rose-400 mr-1.5"></span> Không Đồng Ý
+              </p>
+              <p class="text-sm font-bold text-white mt-0.5" id="donutDisagreeCount">0 lượt</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- BIỂU ĐỒ 4 NHÓM TRỌNG TÂM (8 Cột) -->
+        <div class="lg:col-span-8 panel-card p-4 sm:p-5 rounded-2xl shadow-xl flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-slate-700/60 pb-2.5 mb-3">
+            <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center">
+              <i class="fa-solid fa-layer-group mr-2 text-cyan-400"></i>
+              MỨC ĐỘ ĐỒNG THUẬN THEO 4 NHÓM CHỈ TIÊU
+            </h3>
+            <span class="text-[11px] font-bold text-emerald-400"><i class="fa-solid fa-circle-check mr-1"></i>Đạt mục tiêu</span>
+          </div>
+
+          <!-- 4 Khối Tiến Độ Nhóm Trọng Tâm -->
+          <div class="space-y-3.5 my-auto" id="categoryProgressBars">
+            
+            <!-- Nhóm 1: Học sinh -->
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+                <span class="text-white flex items-center">
+                  <i class="fa-solid fa-graduation-cap text-cyan-400 mr-2 text-sm"></i>
+                  1. Nhóm Chỉ tiêu Học sinh (9 chỉ tiêu)
+                </span>
+                <span id="groupRateA" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+                <div id="groupBarA_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
+                <div id="groupBarA_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+                <span>Duy trì sĩ số, Tốt nghiệp 100%, ĐH-CĐ ≥80%, Lên lớp ≥99%, BHYT...</span>
+                <span id="groupCountA" class="text-slate-300 font-medium">0/0 đồng ý</span>
+              </div>
+            </div>
+
+            <!-- Nhóm 2: 15 Bộ môn -->
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+                <span class="text-white flex items-center">
+                  <i class="fa-solid fa-book-bookmark text-amber-400 mr-2 text-sm"></i>
+                  2. Nhóm Chỉ tiêu 15 Bộ môn (15 môn học)
+                </span>
+                <span id="groupRateB" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+                <div id="groupBarB_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
+                <div id="groupBarB_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+                <span>Toán, Văn, Lý, Hóa, Sinh, Tin, Sử, Địa, Ngoại ngữ, Công nghệ, GDQP...</span>
+                <span id="groupCountB" class="text-slate-300 font-medium">0/0 đồng ý</span>
+              </div>
+            </div>
+
+            <!-- Nhóm 3: Điểm TN & CB-GV -->
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+                <span class="text-white flex items-center">
+                  <i class="fa-solid fa-chalkboard-user text-indigo-400 mr-2 text-sm"></i>
+                  3. Điểm Thi Tốt Nghiệp & Cán Bộ, Giáo Viên (6 chỉ tiêu)
+                </span>
+                <span id="groupRateCD" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+                <div id="groupBarCD_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
+                <div id="groupBarCD_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+                <span>Điểm TB thi TN so với tỉnh, Thi đua cá nhân, Xếp loại VC, SKKN...</span>
+                <span id="groupCountCD" class="text-slate-300 font-medium">0/0 đồng ý</span>
+              </div>
+            </div>
+
+            <!-- Nhóm 4: Giáo dục AI & Tập thể -->
+            <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5">
+              <div class="flex items-center justify-between text-xs sm:text-sm font-bold">
+                <span class="text-white flex items-center">
+                  <i class="fa-solid fa-robot text-teal-400 mr-2 text-sm"></i>
+                  4. Giáo Dục Trí Tuệ Nhân Tạo (AI) & Tập Thể (7 chỉ tiêu)
+                </span>
+                <span id="groupRateEF" class="text-emerald-400 font-bold text-sm sm:text-base">100%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-full h-2.5 overflow-hidden flex">
+                <div id="groupBarEF_Agree" class="bg-emerald-500 h-full transition-all duration-500" style="width: 100%"></div>
+                <div id="groupBarEF_Disagree" class="bg-rose-500 h-full transition-all duration-500" style="width: 0%"></div>
+              </div>
+              <div class="flex items-center justify-between text-[11px] text-slate-400 pt-0.5">
+                <span>KH 369 AI (12 tiết/năm, 100% GV-HS), TTLĐ xuất sắc, Đỡ đầu 2 HS...</span>
+                <span id="groupCountEF" class="text-slate-300 font-medium">0/0 đồng ý</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
       </div>
+
+      <!-- MA TRẬN NHIỆT 37 CHỈ TIÊU (37 INDICATOR HEATMAP TILES) -->
+      <div class="panel-card p-4 sm:p-5 rounded-2xl shadow-xl">
+        <div class="flex items-center justify-between flex-wrap gap-2 border-b border-slate-700/60 pb-2.5 mb-3.5">
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-table-cells text-amber-400 text-sm"></i>
+            <h3 class="text-xs sm:text-sm font-bold text-white uppercase">
+              MA TRẬN ĐỒNG THUẬN 37 CHỈ TIÊU NGHỊ QUYẾT (QUAN SÁT TỨC THÌ TRÊN TOÀN HỘI NGHỊ)
+            </h3>
+          </div>
+          
+          <!-- Chú giải màu sắc -->
+          <div class="flex items-center space-x-3 text-[11px]">
+            <span class="inline-flex items-center text-emerald-400">
+              <span class="w-2.5 h-2.5 rounded-sm bg-emerald-500 mr-1"></span> 100% Đồng ý
+            </span>
+            <span class="inline-flex items-center text-teal-400">
+              <span class="w-2.5 h-2.5 rounded-sm bg-teal-500 mr-1"></span> ≥ 90% Tán thành
+            </span>
+            <span class="inline-flex items-center text-rose-400">
+              <span class="w-2.5 h-2.5 rounded-sm bg-rose-500 mr-1"></span> &lt; 90%
+            </span>
+          </div>
+        </div>
+
+        <!-- 37 Ô LƯỚI MA TRẬN (Tự động dàn đều 1 hàng hoặc nhiều cột) -->
+        <div id="heatmapGrid" class="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-9 lg:grid-cols-12 xl:grid-cols-19 gap-2">
+          <!-- Render động 37 ô -->
+        </div>
+
+        <!-- Khung xem trước chi tiết khi rê/bấm vào ô -->
+        <div id="heatmapPreviewBox" class="mt-3.5 p-3 rounded-xl bg-slate-900/90 border border-slate-700/80 text-xs flex items-center justify-between flex-wrap gap-2">
+          <div class="flex items-center space-x-2">
+            <span class="px-2 py-0.5 rounded bg-cyan-900 text-cyan-300 font-bold text-[11px]" id="previewBadge">#1</span>
+            <span class="font-bold text-white" id="previewTitle">Rê chuột hoặc bấm vào ô bất kỳ ở trên để xem chi tiết chỉ tiêu</span>
+          </div>
+          <div class="flex items-center space-x-3 text-xs" id="previewStats">
+            <span class="text-emerald-400 font-bold" id="previewAgree">--</span>
+            <span class="text-rose-400 font-bold" id="previewDisagree">--</span>
+          </div>
+        </div>
+
+      </div>
+
     </div>
 
-    <!-- KHUNG HIỂN THỊ DANH SÁCH Ý KIẾN ĐÓNG GÓP KHÁC -->
-    <div id="feedbacksContainer" class="hidden space-y-4">
-      <div class="stat-card p-4 sm:p-6 rounded-2xl shadow-xl">
-        <h3 class="text-base sm:text-lg font-bold text-amber-300 uppercase flex items-center mb-4">
+    <!-- ========================================================================= -->
+    <!-- VIEW 2: BẢNG SO SÁNH 15 BỘ MÔN & CHI TIẾT 4 NHÓM (DETAILED MATRIX) -->
+    <!-- ========================================================================= -->
+    <div id="viewMatrix" class="hidden space-y-5">
+      
+      <!-- PHẦN 1: 15 BỘ MÔN (LƯỚI 3 CỘT GỌN GÀNG) -->
+      <div class="panel-card p-4 sm:p-5 rounded-2xl shadow-xl space-y-3.5">
+        <div class="flex items-center justify-between border-b border-slate-700/60 pb-2.5">
+          <h3 class="text-xs sm:text-sm font-bold text-amber-300 uppercase flex items-center">
+            <i class="fa-solid fa-book-bookmark mr-2 text-amber-400"></i>
+            KẾT QUẢ BIỂU QUYẾT 15 BỘ MÔN NĂM HỌC 2026 - 2027
+          </h3>
+          <span class="text-xs text-slate-400">Bảng tra cứu trực quan 15 môn</span>
+        </div>
+
+        <div id="subjectGrid3Col" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          <!-- Render động 15 môn -->
+        </div>
+      </div>
+
+      <!-- PHẦN 2: 3 NHÓM CÒN LẠI (HỌC SINH, CB-GV, AI & TẬP THỂ) -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        
+        <!-- Nhóm Học sinh -->
+        <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
+          <h3 class="text-xs sm:text-sm font-bold text-cyan-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
+            <i class="fa-solid fa-graduation-cap mr-2 text-cyan-400"></i>
+            Chỉ Tiêu Học Sinh (9)
+          </h3>
+          <div id="listGroupA" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- Nhóm CB-GV & Điểm TN -->
+        <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
+          <h3 class="text-xs sm:text-sm font-bold text-indigo-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
+            <i class="fa-solid fa-chalkboard-user mr-2 text-indigo-400"></i>
+            Điểm TN & Cán Bộ GV (6)
+          </h3>
+          <div id="listGroupCD" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
+        </div>
+
+        <!-- Nhóm AI & Tập thể -->
+        <div class="panel-card p-4 rounded-2xl shadow-xl space-y-3">
+          <h3 class="text-xs sm:text-sm font-bold text-teal-300 uppercase flex items-center border-b border-slate-700/60 pb-2">
+            <i class="fa-solid fa-robot mr-2 text-teal-400"></i>
+            Giáo Dục AI & Tập Thể (7)
+          </h3>
+          <div id="listGroupEF" class="space-y-2.5 max-h-[500px] overflow-y-auto pr-1"></div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- VIEW 3: Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA GIÁO VIÊN -->
+    <!-- ========================================================================= -->
+    <div id="viewFeedbacks" class="hidden space-y-4">
+      <div class="panel-card p-4 sm:p-6 rounded-2xl shadow-xl">
+        <h3 class="text-base sm:text-lg font-bold text-amber-300 uppercase flex items-center mb-4 border-b border-slate-700/60 pb-3">
           <i class="fa-solid fa-comments mr-2 text-amber-400"></i>
           TỔNG HỢP Ý KIẾN ĐÓNG GÓP & ĐỀ XUẤT CỦA ĐẠI BIỂU HỘI NGHỊ
         </h3>
         <div id="feedbackList" class="space-y-3 divide-y divide-slate-700/60">
-          <p class="text-sm text-slate-400 italic py-4 text-center">Chưa có ý kiến đóng góp nào được gửi về.</p>
+          <p class="text-sm text-slate-400 italic py-6 text-center">Chưa có ý kiến đóng góp nào được ghi nhận.</p>
         </div>
       </div>
     </div>
@@ -251,61 +504,59 @@
 
   </main>
 
-  <!-- JAVASCRIPT XỬ LÝ DỮ LIỆU & RENDER DASHBOARD -->
+  <!-- JAVASCRIPT XỬ LÝ DỮ LIỆU & RENDER EXECUTIVE DASHBOARD -->
   <script>
     const SPREADSHEET_ID = "1z6ODucOvR1tdE5iYdJF7mLjeK2YV1Qqqdb47hHxNoJQ";
-    const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZVPc2KGoVfOjxw_0zihIg-RINlXF5mhy2EWpsrvjWNmzAbj4LWyoHSgqtUJIznI7XFg/exec";
-
-    const fieldMeta = [
-      { id: "hs_si_so", name: "1. Duy trì sĩ số (Giảm ≤2%, bỏ học ≤1%, lưu ban <1%)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_tot_nghiep", name: "2. Đầu ra tốt nghiệp (100% đỗ tốt nghiệp THPT)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_dh_cd", name: "3. Đầu ra ĐH - CĐ (≥80% trúng tuyển ĐH, CĐ)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_len_lop", name: "4. Tỷ lệ lên lớp thẳng (≥99% trở lên)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_hoc_luc", name: "5. Kết quả học tập (Tốt ≥45.12%, Khá ≥48.47%)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_hanh_kiem", name: "6. Kết quả rèn luyện (Tốt ≥90.84%, Khá ≥6.64%)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_giai_tinh", name: "7. Phong trào mũi nhọn (≥1 giải HSG, ≥3 giải PT)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_bao_hiem", name: "8. Bảo hiểm & Tiện ích (100% BHYT, VNEDU, Wifi)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-      { id: "hs_an_ninh", name: "9. An ninh học đường (An toàn ATGT, không TNXH)", group: "a", groupName: "Chỉ tiêu Học sinh" },
-
-      { id: "mon_toan", name: "Toán học (Yếu <2.0%, Giỏi ≥31.30%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_van", name: "Ngữ văn (Yếu <1.0%, Giỏi ≥50.31%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_ly", name: "Vật lí (Yếu <1.0%, Giỏi ≥48.01%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_hoa", name: "Hóa học (Yếu <2.0%, Giỏi ≥21.83%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_sinh", name: "Sinh học (Yếu <1.0%, Giỏi ≥40.44%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_tin", name: "Tin học (Yếu <1.0%, Giỏi ≥58.51%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_su", name: "Lịch sử (Yếu <1.0%, Giỏi ≥90.00%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_dia", name: "Địa lí (Yếu <1.0%, Giỏi ≥83.29%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_anh", name: "Ngoại ngữ - Tiếng Anh (Yếu <1.0%, Giỏi ≥27.94%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_cn", name: "Công nghệ (Yếu <1.0%, Giỏi ≥78.57%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_gdqp", name: "GDQP & AN (Yếu 0.0%, Giỏi ≥87.48%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_gdktpl", name: "GD Kinh tế & Pháp luật (Yếu <1.0%, Giỏi ≥64.95%)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_thechat", name: "GD Thể chất (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_diaphuong", name: "Nội dung GD Địa phương (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
-      { id: "mon_hdtn", name: "Hoạt động TN - HN (100% Đạt, 0% Yếu)", group: "b", groupName: "15 Bộ môn" },
-
-      { id: "muc_c_tn", name: "Điểm TB thi tốt nghiệp THPT so với tỉnh", group: "c", groupName: "Điểm thi & Cán bộ GV" },
-
-      { id: "cb_thi_dua", name: "1. Danh hiệu thi đua cá nhân (100% LĐTT, ≥20% CSTĐCS)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
-      { id: "cb_xep_loai", name: "2. Xếp loại chất lượng viên chức (100% HTNV, ≥80% Tốt)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
-      { id: "cb_bgh", name: "3. Ban Giám hiệu (100% Hoàn thành tốt NV trở lên)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
-      { id: "cb_skkn", name: "4. Nghiên cứu KH & SKKN (≥30% GV tổ, ≥10 cấp cơ sở)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
-      { id: "cb_chuyen_mon", name: "5. Chuyên môn & Đổi mới (Dự giờ, CNTT, STEM, trực tuyến)", group: "d", groupName: "Điểm thi & Cán bộ GV" },
-
-      { id: "ai_thoi_luong", name: "1. Thời lượng giáo dục AI (100% HS, ≥12 tiết/lớp/năm)", group: "e", groupName: "Giáo dục AI & Tập thể" },
-      { id: "ai_tap_huan", name: "2. Tập huấn & Bồi dưỡng GV về AI (100% GV tham gia)", group: "e", groupName: "Giáo dục AI & Tập thể" },
-      { id: "ai_yeu_cau", name: "3. Yêu cầu cần đạt về AI (100% HS nắm vững nền tảng, đạo đức)", group: "e", groupName: "Giáo dục AI & Tập thể" },
-      { id: "ai_danh_gia", name: "4. Kiểm tra, đánh giá & Báo cáo Sở GD&ĐT (trước 15/6/2027)", group: "e", groupName: "Giáo dục AI & Tập thể" },
-
-      { id: "tt_danh_hieu", name: "1. Danh hiệu thi đua trường (Tập thể Lao động xuất sắc)", group: "f", groupName: "Giáo dục AI & Tập thể" },
-      { id: "tt_doan_the", name: "2. Xếp loại đoàn thể (Đảng bộ, Đoàn Thanh niên)", group: "f", groupName: "Giáo dục AI & Tập thể" },
-      { id: "tt_do_dau", name: "3. Công tác nhân văn (Nhận đỡ đầu ≥2 học sinh khó khăn/tổ)", group: "f", groupName: "Giáo dục AI & Tập thể" }
-    ];
-
-    let currentFilter = 'all';
     let globalData = null;
     let autoRefreshTimer = null;
+    let donutChartInstance = null;
+    let currentView = 'overview';
 
-    // ĐĂNG KÝ GOOGLE VISUALIZATION CALLBACK TRỰC TIẾP
+    // DANH MỤC 37 CHỈ TIÊU CHUẨN
+    const fieldMeta = [
+      { id: "hs_si_so", num: 1, name: "Duy trì sĩ số (Giảm ≤2%, bỏ học ≤1%, lưu ban <1%)", group: "a", groupName: "Học sinh" },
+      { id: "hs_tot_nghiep", num: 2, name: "Đầu ra tốt nghiệp (100% đỗ tốt nghiệp THPT)", group: "a", groupName: "Học sinh" },
+      { id: "hs_dh_cd", num: 3, name: "Đầu ra ĐH - CĐ (≥80% trúng tuyển ĐH, CĐ)", group: "a", groupName: "Học sinh" },
+      { id: "hs_len_lop", num: 4, name: "Tỷ lệ lên lớp thẳng (≥99% trở lên)", group: "a", groupName: "Học sinh" },
+      { id: "hs_hoc_luc", num: 5, name: "Kết quả học tập (Tốt ≥45.12%, Khá ≥48.47%)", group: "a", groupName: "Học sinh" },
+      { id: "hs_hanh_kiem", num: 6, name: "Kết quả rèn luyện (Tốt ≥90.84%, Khá ≥6.64%)", group: "a", groupName: "Học sinh" },
+      { id: "hs_giai_tinh", num: 7, name: "Phong trào mũi nhọn (≥1 giải HSG, ≥3 giải PT)", group: "a", groupName: "Học sinh" },
+      { id: "hs_bao_hiem", num: 8, name: "Bảo hiểm & Tiện ích (100% BHYT, VNEDU, Wifi)", group: "a", groupName: "Học sinh" },
+      { id: "hs_an_ninh", num: 9, name: "An ninh học đường (An toàn ATGT, không TNXH)", group: "a", groupName: "Học sinh" },
+
+      { id: "mon_toan", num: 10, name: "Toán học (Yếu <2.0%, Giỏi ≥31.30%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_van", num: 11, name: "Ngữ văn (Yếu <1.0%, Giỏi ≥50.31%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_ly", num: 12, name: "Vật lí (Yếu <1.0%, Giỏi ≥48.01%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_hoa", num: 13, name: "Hóa học (Yếu <2.0%, Giỏi ≥21.83%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_sinh", num: 14, name: "Sinh học (Yếu <1.0%, Giỏi ≥40.44%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_tin", num: 15, name: "Tin học (Yếu <1.0%, Giỏi ≥58.51%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_su", num: 16, name: "Lịch sử (Yếu <1.0%, Giỏi ≥90.00%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_dia", num: 17, name: "Địa lí (Yếu <1.0%, Giỏi ≥83.29%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_anh", num: 18, name: "Ngoại ngữ - Tiếng Anh (Yếu <1.0%, Giỏi ≥27.94%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_cn", num: 19, name: "Công nghệ (Yếu <1.0%, Giỏi ≥78.57%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_gdqp", num: 20, name: "GDQP & AN (Yếu 0.0%, Giỏi ≥87.48%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_gdktpl", num: 21, name: "GD Kinh tế & Pháp luật (Yếu <1.0%, Giỏi ≥64.95%)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_thechat", num: 22, name: "GD Thể chất (100% Đạt, 0% Yếu)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_diaphuong", num: 23, name: "Nội dung GD Địa phương (100% Đạt, 0% Yếu)", group: "b", groupName: "Bộ môn" },
+      { id: "mon_hdtn", num: 24, name: "Hoạt động TN - HN (100% Đạt, 0% Yếu)", group: "b", groupName: "Bộ môn" },
+
+      { id: "muc_c_tn", num: 25, name: "Điểm TB thi tốt nghiệp THPT so với tỉnh", group: "c", groupName: "Điểm TN & CB-GV" },
+      { id: "cb_thi_dua", num: 26, name: "Danh hiệu thi đua cá nhân (100% LĐTT, ≥20% CSTĐCS)", group: "d", groupName: "Điểm TN & CB-GV" },
+      { id: "cb_xep_loai", num: 27, name: "Xếp loại chất lượng viên chức (100% HTNV, ≥80% Tốt)", group: "d", groupName: "Điểm TN & CB-GV" },
+      { id: "cb_bgh", num: 28, name: "Ban Giám hiệu (100% Hoàn thành tốt NV trở lên)", group: "d", groupName: "Điểm TN & CB-GV" },
+      { id: "cb_skkn", num: 29, name: "Nghiên cứu KH & SKKN (≥30% GV tổ, ≥10 cấp cơ sở)", group: "d", groupName: "Điểm TN & CB-GV" },
+      { id: "cb_chuyen_mon", num: 30, name: "Chuyên môn & Đổi mới (Dự giờ, CNTT, STEM, trực tuyến)", group: "d", groupName: "Điểm TN & CB-GV" },
+
+      { id: "ai_thoi_luong", num: 31, name: "Thời lượng giáo dục AI (100% HS, ≥12 tiết/lớp/năm)", group: "e", groupName: "AI & Tập thể" },
+      { id: "ai_tap_huan", num: 32, name: "Tập huấn & Bồi dưỡng GV về AI (100% GV tham gia)", group: "e", groupName: "AI & Tập thể" },
+      { id: "ai_yeu_cau", num: 33, name: "Yêu cầu cần đạt về AI (100% HS nắm vững nền tảng, đạo đức)", group: "e", groupName: "AI & Tập thể" },
+      { id: "ai_danh_gia", num: 34, name: "Kiểm tra, đánh giá & Báo cáo Sở GD&ĐT (trước 15/6/2027)", group: "e", groupName: "AI & Tập thể" },
+      { id: "tt_danh_hieu", num: 35, name: "Danh hiệu thi đua trường (Tập thể Lao động xuất sắc)", group: "f", groupName: "AI & Tập thể" },
+      { id: "tt_doan_the", num: 36, name: "Xếp loại đoàn thể (Đảng bộ, Đoàn Thanh niên)", group: "f", groupName: "AI & Tập thể" },
+      { id: "tt_do_dau", num: 37, name: "Công tác nhân văn (Nhận đỡ đầu ≥2 học sinh khó khăn/tổ)", group: "f", groupName: "AI & Tập thể" }
+    ];
+
+    // ĐĂNG KÝ CALLBACK GOOGLE VISUALIZATION
     window.google = window.google || {};
     window.google.visualization = window.google.visualization || {};
     window.google.visualization.Query = window.google.visualization.Query || {};
@@ -314,7 +565,7 @@
       if (response && response.status === 'ok' && response.table) {
         const parsedData = processGvizData(response.table);
         globalData = parsedData;
-        renderDashboard(parsedData);
+        renderExecutiveDashboard(parsedData);
       }
       if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 300);
     };
@@ -323,7 +574,6 @@
       const refreshIcon = document.getElementById('refreshIcon');
       if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-      // Tải trực tiếp script từ Google Sheet GViz API (Không bị CORS, cực nhanh)
       const existingScript = document.getElementById('gviz-script-loader');
       if (existingScript) existingScript.remove();
 
@@ -332,17 +582,15 @@
       script.src = `https://docs.google.com/spreadsheets/d/${SPREADSHEET_ID}/gviz/tq?tqx=out:json&t=${Date.now()}`;
       
       script.onerror = function() {
-        console.warn("GViz script error, thử tải Apps Script...");
+        console.warn("Lỗi nạp script Google Sheet.");
         if (refreshIcon) refreshIcon.classList.remove('fa-spin');
       };
 
       document.head.appendChild(script);
     }
 
-    // XỬ LÝ BẢNG TÍNH GOOGLE SHEET
     function processGvizData(table) {
       const rows = table.rows || [];
-      // Dòng 0 là Tiêu đề, các dòng từ index 1 trở đi là các phiếu bầu
       const numVotes = Math.max(0, rows.length - 1);
       const stats = [];
       const feedbacks = [];
@@ -353,8 +601,11 @@
         lastSubmitted = lastRow.c && lastRow.c[0] ? (lastRow.c[0].f || lastRow.c[0].v || "") : "";
       }
 
+      let totalAgreeVotesAll = 0;
+      let totalDisagreeVotesAll = 0;
+
       for (let i = 0; i < fieldMeta.length; i++) {
-        const colIndex = i + 1; // Cột 0: Thời gian, Cột 1..37: 37 chỉ tiêu
+        const colIndex = i + 1;
         let agreeCount = 0;
         let disagreeCount = 0;
 
@@ -370,11 +621,15 @@
           }
         }
 
+        totalAgreeVotesAll += agreeCount;
+        totalDisagreeVotesAll += disagreeCount;
+
         const agreePercent = numVotes > 0 ? Math.round((agreeCount / numVotes) * 1000) / 10 : 0;
         const disagreePercent = numVotes > 0 ? Math.round((disagreeCount / numVotes) * 1000) / 10 : 0;
 
         stats.push({
           id: fieldMeta[i].id,
+          num: fieldMeta[i].num,
           name: fieldMeta[i].name,
           group: fieldMeta[i].group,
           groupName: fieldMeta[i].groupName,
@@ -385,7 +640,7 @@
         });
       }
 
-      // Trích xuất ý kiến đóng góp khác (Cột index 38)
+      // Trích xuất ý kiến đóng góp khác (Cột 38)
       for (let r = 1; r < rows.length; r++) {
         const row = rows[r];
         if (row.c && row.c.length > 38 && row.c[38]) {
@@ -400,8 +655,8 @@
       return {
         status: "success",
         totalSubmissions: numVotes,
-        expectedTotal: 80,
-        completionRate: Math.round((numVotes / 80) * 1000) / 10,
+        totalAgreeVotesAll: totalAgreeVotesAll,
+        totalDisagreeVotesAll: totalDisagreeVotesAll,
         lastSubmitted: lastSubmitted,
         lastUpdated: new Date().toLocaleTimeString('vi-VN') + " " + new Date().toLocaleDateString('vi-VN'),
         stats: stats,
@@ -409,15 +664,11 @@
       };
     }
 
-    function renderDashboard(data) {
-      // Ẩn loading box
-      const loading = document.getElementById('loadingBox');
-      if (loading) loading.style.display = 'none';
-
-      // 1. Cập nhật các thẻ KPI
+    // RENDER TOÀN BỘ DASHBOARD EXECUTIVE
+    function renderExecutiveDashboard(data) {
       const total = data.totalSubmissions || 0;
       
-      // Tính tỷ lệ tán thành bình quân của tất cả 37 chỉ tiêu
+      // 1. Cập nhật KPI
       let avgAgreePercent = 0;
       if (data.stats && data.stats.length > 0 && total > 0) {
         const sumAgree = data.stats.reduce((acc, st) => acc + (st.agreePercent || 0), 0);
@@ -429,7 +680,6 @@
       document.getElementById('kpiCompletionText').innerText = total > 0 ? `Đã thu về ${total} phiếu biểu quyết hợp lệ` : "Đang chờ giáo viên nộp phiếu...";
       document.getElementById('kpiPercent').innerText = total > 0 ? `${avgAgreePercent}%` : "0%";
 
-      // Đếm số chỉ tiêu đạt 100% Đồng ý
       let unanimousCount = 0;
       if (data.stats && data.stats.length > 0) {
         data.stats.forEach(st => {
@@ -438,108 +688,154 @@
       }
       document.getElementById('kpiUnanimous').innerText = unanimousCount;
       document.getElementById('kpiFeedbackCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
-      document.getElementById('fbTabCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
+      document.getElementById('fbBadgeCount').innerText = data.feedbacks ? data.feedbacks.length : 0;
       document.getElementById('kpiLastUpdated').innerText = `Cập nhật: ${data.lastUpdated || new Date().toLocaleTimeString('vi-VN')}`;
       
       const printTime = document.getElementById('printTimestamp');
       if (printTime) printTime.innerText = `Thời điểm lập báo cáo: ${data.lastUpdated || new Date().toLocaleString('vi-VN')}`;
 
-      // 2. Render danh sách các chỉ tiêu theo bộ lọc
-      renderStatsList(data.stats || []);
+      // 2. Render Biểu đồ Tròn Donut
+      renderDonutChart(data, avgAgreePercent);
 
-      // 3. Render danh sách ý kiến đóng góp
+      // 3. Render Thanh Tiến Độ 4 Nhóm Trọng Tâm
+      renderCategoryProgress(data);
+
+      // 4. Render Ma Trận Nhiệt 37 Chỉ Tiêu
+      renderHeatmapGrid(data.stats || []);
+
+      // 5. Render Bảng 15 Bộ Môn (3 Cột) & 3 Nhóm Chi Tiết
+      renderDetailedTables(data.stats || []);
+
+      // 6. Render Danh Sách Ý Kiến
       renderFeedbackList(data.feedbacks || []);
     }
 
-    function renderStatsList(stats) {
-      const container = document.getElementById('statsContainer');
-      if (currentFilter === 'feedbacks') {
-        container.classList.add('hidden');
-        document.getElementById('feedbacksContainer').classList.remove('hidden');
-        return;
+    // 1. BIỂU ĐỒ DONUT TỔNG THỂ
+    function renderDonutChart(data, avgAgreePercent) {
+      const agreeVotes = data.totalAgreeVotesAll || 0;
+      const disagreeVotes = data.totalDisagreeVotesAll || 0;
+      const totalAllVotes = agreeVotes + disagreeVotes;
+
+      document.getElementById('donutCenterPercent').innerText = data.totalSubmissions > 0 ? `${avgAgreePercent}%` : "0%";
+      document.getElementById('donutAgreeCount').innerText = `${agreeVotes} phiếu`;
+      document.getElementById('donutDisagreeCount').innerText = `${disagreeVotes} phiếu`;
+
+      const ctx = document.getElementById('masterDonutChart').getContext('2d');
+      if (donutChartInstance) {
+        donutChartInstance.destroy();
       }
 
-      container.classList.remove('hidden');
-      document.getElementById('feedbacksContainer').classList.add('hidden');
+      const safeAgree = totalAllVotes > 0 ? agreeVotes : 1;
+      const safeDisagree = totalAllVotes > 0 ? disagreeVotes : 0;
+      const bgColors = totalAllVotes > 0 ? ['#10b981', '#f43f5e'] : ['#334155', '#1e293b'];
 
-      let filtered = stats;
-      if (currentFilter === 'a') {
-        filtered = stats.filter(s => s.group === 'a');
-      } else if (currentFilter === 'b') {
-        filtered = stats.filter(s => s.group === 'b');
-      } else if (currentFilter === 'cd') {
-        filtered = stats.filter(s => s.group === 'c' || s.group === 'd');
-      } else if (currentFilter === 'ef') {
-        filtered = stats.filter(s => s.group === 'e' || s.group === 'f');
-      }
+      donutChartInstance = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Đồng ý', 'Không đồng ý'],
+          datasets: [{
+            data: [safeAgree, safeDisagree],
+            backgroundColor: bgColors,
+            borderColor: '#0b1329',
+            borderWidth: 3,
+            hoverOffset: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          cutout: '72%',
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  return ` ${context.label}: ${context.raw} phiếu`;
+                }
+              }
+            }
+          }
+        }
+      });
+    }
 
-      if (filtered.length === 0) {
-        container.innerHTML = `
-          <div class="text-center py-12 stat-card rounded-2xl text-slate-400">
-            <i class="fa-solid fa-inbox text-3xl mb-2 text-slate-500"></i>
-            <p>Chưa có dữ liệu biểu quyết nào được ghi nhận.</p>
-          </div>
-        `;
-        return;
-      }
+    // 2. TIẾN ĐỘ 4 NHÓM TRỌNG TÂM
+    function renderCategoryProgress(data) {
+      const stats = data.stats || [];
+      const totalSub = data.totalSubmissions || 0;
 
+      const calcGroup = (filterFn) => {
+        const items = stats.filter(filterFn);
+        if (items.length === 0 || totalSub === 0) return { percent: 100, agree: 0, total: 0 };
+        const sumPercent = items.reduce((acc, it) => acc + it.agreePercent, 0);
+        const sumAgree = items.reduce((acc, it) => acc + it.agree, 0);
+        const sumTotal = items.length * totalSub;
+        return {
+          percent: Math.round((sumPercent / items.length) * 10) / 10,
+          agree: sumAgree,
+          total: sumTotal
+        };
+      };
+
+      // Nhóm A: Học sinh
+      const gA = calcGroup(s => s.group === 'a');
+      document.getElementById('groupRateA').innerText = `${gA.percent}%`;
+      document.getElementById('groupBarA_Agree').style.width = `${gA.percent}%`;
+      document.getElementById('groupBarA_Disagree').style.width = `${100 - gA.percent}%`;
+      document.getElementById('groupCountA').innerText = totalSub > 0 ? `${gA.agree}/${gA.total} lượt đồng ý` : `Chưa có phiếu`;
+
+      // Nhóm B: 15 Bộ môn
+      const gB = calcGroup(s => s.group === 'b');
+      document.getElementById('groupRateB').innerText = `${gB.percent}%`;
+      document.getElementById('groupBarB_Agree').style.width = `${gB.percent}%`;
+      document.getElementById('groupBarB_Disagree').style.width = `${100 - gB.percent}%`;
+      document.getElementById('groupCountB').innerText = totalSub > 0 ? `${gB.agree}/${gB.total} lượt đồng ý` : `Chưa có phiếu`;
+
+      // Nhóm CD: Điểm TN & CB-GV
+      const gCD = calcGroup(s => s.group === 'c' || s.group === 'd');
+      document.getElementById('groupRateCD').innerText = `${gCD.percent}%`;
+      document.getElementById('groupBarCD_Agree').style.width = `${gCD.percent}%`;
+      document.getElementById('groupBarCD_Disagree').style.width = `${100 - gCD.percent}%`;
+      document.getElementById('groupCountCD').innerText = totalSub > 0 ? `${gCD.agree}/${gCD.total} lượt đồng ý` : `Chưa có phiếu`;
+
+      // Nhóm EF: AI & Tập thể
+      const gEF = calcGroup(s => s.group === 'e' || s.group === 'f');
+      document.getElementById('groupRateEF').innerText = `${gEF.percent}%`;
+      document.getElementById('groupBarEF_Agree').style.width = `${gEF.percent}%`;
+      document.getElementById('groupBarEF_Disagree').style.width = `${100 - gEF.percent}%`;
+      document.getElementById('groupCountEF').innerText = totalSub > 0 ? `${gEF.agree}/${gEF.total} lượt đồng ý` : `Chưa có phiếu`;
+    }
+
+    // 3. MA TRẬN NHIỆT 37 CHỈ TIÊU (37 HEATMAP TILES)
+    function renderHeatmapGrid(stats) {
+      const container = document.getElementById('heatmapGrid');
       let html = '';
-      let currentGroup = '';
-      const totalSub = globalData ? (globalData.totalSubmissions || 0) : 0;
 
-      filtered.forEach((st, idx) => {
-        // Nhóm tiêu đề phụ
-        if (currentFilter === 'all' && st.groupName !== currentGroup) {
-          currentGroup = st.groupName;
-          html += `
-            <div class="pt-4 first:pt-0">
-              <h3 class="text-sm sm:text-base font-bold text-cyan-300 uppercase tracking-wider flex items-center border-b border-cyan-800/60 pb-2">
-                <i class="fa-solid fa-layer-group mr-2 text-cyan-400"></i>
-                ${currentGroup}
-              </h3>
-            </div>
-          `;
+      stats.forEach((st) => {
+        const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
+        let colorClass = "bg-emerald-600/90 text-white border-emerald-400/50 shadow-emerald-950";
+        let iconHtml = '<i class="fa-solid fa-crown text-amber-300 text-[10px] ml-0.5"></i>';
+
+        if (!isUnanimous) {
+          if (st.agreePercent >= 90) {
+            colorClass = "bg-teal-600/80 text-white border-teal-400/50";
+            iconHtml = '';
+          } else {
+            colorClass = "bg-rose-600/80 text-white border-rose-400/50";
+            iconHtml = '<i class="fa-solid fa-circle-exclamation text-amber-300 text-[10px] ml-0.5"></i>';
+          }
         }
 
-        const isUnanimous = totalSub > 0 && st.agree === totalSub;
-        const badge = isUnanimous 
-          ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50 flex-shrink-0">
-              <i class="fa-solid fa-crown mr-1"></i> 100% Đồng ý
-             </span>`
-          : (st.agreePercent >= 90 
-              ? `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40 flex-shrink-0">
-                  <i class="fa-solid fa-circle-check mr-1"></i> ${st.agreePercent}% Tán thành
-                 </span>`
-              : `<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-cyan-950 text-cyan-300 border border-cyan-500/40 flex-shrink-0">
-                  ${st.agreePercent}% Tán thành
-                 </span>`);
-
         html += `
-          <div class="stat-card p-4 rounded-2xl shadow-md space-y-2.5">
-            <div class="flex items-start justify-between gap-3">
-              <h4 class="text-xs sm:text-sm font-bold text-white leading-snug">
-                ${st.name}
-              </h4>
-              ${badge}
+          <div class="matrix-cell p-2 rounded-xl border flex flex-col items-center justify-center text-center shadow-md ${colorClass}"
+               onmouseenter="showHeatmapPreview(${st.num})"
+               onclick="showHeatmapPreview(${st.num})">
+            <span class="text-[10px] uppercase tracking-wider opacity-80">Mục #${st.num}</span>
+            <div class="flex items-center justify-center font-bold text-xs sm:text-sm mt-0.5">
+              <span>${st.agreePercent}%</span>
+              ${iconHtml}
             </div>
-
-            <!-- Thanh Progress Song Song (Đồng ý vs Không đồng ý) -->
-            <div class="w-full bg-slate-800 rounded-xl h-3.5 flex overflow-hidden p-0.5 border border-slate-700">
-              <div class="bg-gradient-to-r from-emerald-600 to-teal-500 h-full rounded-lg transition-all duration-500" style="width: ${st.agreePercent}%"></div>
-              <div class="bg-gradient-to-r from-rose-600 to-red-600 h-full rounded-lg transition-all duration-500" style="width: ${st.disagreePercent}%"></div>
-            </div>
-
-            <!-- Số lượng chi tiết -->
-            <div class="flex items-center justify-between text-xs pt-0.5">
-              <div class="flex items-center space-x-1 text-emerald-400 font-bold">
-                <i class="fa-solid fa-check text-[10px]"></i>
-                <span>Đồng ý: <b>${st.agree}</b> phiếu (${st.agreePercent}%)</span>
-              </div>
-              <div class="flex items-center space-x-1 text-rose-400 font-bold">
-                <i class="fa-solid fa-xmark text-[10px]"></i>
-                <span>Không đồng ý: <b>${st.disagree}</b> phiếu (${st.disagreePercent}%)</span>
-              </div>
-            </div>
+            <span class="text-[9px] truncate max-w-full opacity-75 mt-0.5">${st.groupName}</span>
           </div>
         `;
       });
@@ -547,12 +843,83 @@
       container.innerHTML = html;
     }
 
+    function showHeatmapPreview(num) {
+      if (!globalData || !globalData.stats) return;
+      const item = globalData.stats.find(s => s.num === num);
+      if (!item) return;
+
+      document.getElementById('previewBadge').innerText = `Chỉ tiêu #${item.num} (${item.groupName})`;
+      document.getElementById('previewTitle').innerText = item.name;
+      document.getElementById('previewAgree').innerText = `✓ Đồng ý: ${item.agree} phiếu (${item.agreePercent}%)`;
+      document.getElementById('previewDisagree').innerText = `✗ Không đồng ý: ${item.disagree} phiếu (${item.disagreePercent}%)`;
+    }
+
+    // 4. BẢNG 15 BỘ MÔN (3 CỘT) & CHI TIẾT 4 NHÓM
+    function renderDetailedTables(stats) {
+      // 15 Bộ môn (Grid 3 Cột)
+      const subjectContainer = document.getElementById('subjectGrid3Col');
+      const subjects = stats.filter(s => s.group === 'b');
+      let subHtml = '';
+
+      subjects.forEach(st => {
+        const isUnanimous = globalData && globalData.totalSubmissions > 0 && st.agree === globalData.totalSubmissions;
+        const badge = isUnanimous 
+          ? `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-950 text-amber-300 border border-amber-500/50"><i class="fa-solid fa-crown mr-1"></i>100%</span>`
+          : `<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-950 text-emerald-300 border border-emerald-500/40">${st.agreePercent}%</span>`;
+
+        subHtml += `
+          <div class="bg-slate-900/80 p-3 rounded-xl border border-slate-800 space-y-1.5 shadow-sm">
+            <div class="flex items-start justify-between gap-2">
+              <span class="font-bold text-xs sm:text-sm text-white leading-snug truncate">${st.name}</span>
+              ${badge}
+            </div>
+            <div class="w-full bg-slate-800 rounded-lg h-2 flex overflow-hidden">
+              <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
+              <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
+            </div>
+            <div class="flex items-center justify-between text-[11px] pt-0.5">
+              <span class="text-emerald-400 font-bold">✓ ${st.agree} phiếu</span>
+              <span class="text-rose-400 font-bold">✗ ${st.disagree} phiếu</span>
+            </div>
+          </div>
+        `;
+      });
+      subjectContainer.innerHTML = subHtml;
+
+      // 3 Nhóm danh sách
+      const renderGroupList = (targetId, filterFn) => {
+        const container = document.getElementById(targetId);
+        const items = stats.filter(filterFn);
+        let html = '';
+        items.forEach(st => {
+          html += `
+            <div class="bg-slate-900/70 p-2.5 rounded-xl border border-slate-800/80 space-y-1 text-xs">
+              <div class="flex items-start justify-between gap-2">
+                <span class="font-bold text-slate-200 leading-tight">#${st.num}. ${st.name}</span>
+                <span class="text-emerald-400 font-bold flex-shrink-0">${st.agreePercent}%</span>
+              </div>
+              <div class="w-full bg-slate-800 rounded-md h-1.5 flex overflow-hidden">
+                <div class="bg-emerald-500 h-full" style="width: ${st.agreePercent}%"></div>
+                <div class="bg-rose-500 h-full" style="width: ${st.disagreePercent}%"></div>
+              </div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      };
+
+      renderGroupList('listGroupA', s => s.group === 'a');
+      renderGroupList('listGroupCD', s => s.group === 'c' || s.group === 'd');
+      renderGroupList('listGroupEF', s => s.group === 'e' || s.group === 'f');
+    }
+
+    // 5. DANH SÁCH Ý KIẾN ĐÓNG GÓP
     function renderFeedbackList(feedbacks) {
       const container = document.getElementById('feedbackList');
       if (!feedbacks || feedbacks.length === 0) {
         container.innerHTML = `
-          <div class="text-center py-8 text-slate-400 text-xs sm:text-sm italic">
-            <i class="fa-regular fa-comment-dots text-2xl mb-2 text-slate-500"></i>
+          <div class="text-center py-10 text-slate-400 text-xs sm:text-sm italic">
+            <i class="fa-regular fa-comment-dots text-3xl mb-2 text-slate-500"></i>
             <p>Hiện tại chưa có ý kiến đóng góp hoặc đề xuất bổ sung nào.</p>
           </div>
         `;
@@ -576,33 +943,47 @@
       container.innerHTML = html;
     }
 
-    function filterGroup(group) {
-      currentFilter = group;
-      document.querySelectorAll('.filter-btn').forEach(btn => {
+    // CHUYỂN ĐỔI CHẾ ĐỘ XEM
+    function switchView(viewName) {
+      currentView = viewName;
+      document.querySelectorAll('.view-tab-btn').forEach(btn => {
         btn.classList.remove('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
         btn.classList.add('bg-slate-800', 'text-slate-300', 'border-slate-700');
       });
 
-      const activeMap = {
-        'all': 'btnFilterAll',
-        'a': 'btnFilterA',
-        'b': 'btnFilterB',
-        'cd': 'btnFilterCD',
-        'ef': 'btnFilterEF',
-        'feedbacks': 'btnFilterFB'
-      };
-      const activeBtn = document.getElementById(activeMap[group]);
-      if (activeBtn) {
-        activeBtn.classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
-        activeBtn.classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
-      }
+      document.getElementById('viewOverview').classList.add('hidden');
+      document.getElementById('viewMatrix').classList.add('hidden');
+      document.getElementById('viewFeedbacks').classList.add('hidden');
 
-      if (globalData) {
-        renderDashboard(globalData);
+      if (viewName === 'overview') {
+        document.getElementById('tabBtnOverview').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
+        document.getElementById('tabBtnOverview').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('viewOverview').classList.remove('hidden');
+      } else if (viewName === 'matrix') {
+        document.getElementById('tabBtnMatrix').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
+        document.getElementById('tabBtnMatrix').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('viewMatrix').classList.remove('hidden');
+      } else if (viewName === 'feedbacks') {
+        document.getElementById('tabBtnFeedbacks').classList.add('active', 'bg-cyan-700', 'text-white', 'border-cyan-500');
+        document.getElementById('tabBtnFeedbacks').classList.remove('bg-slate-800', 'text-slate-300', 'border-slate-700');
+        document.getElementById('viewFeedbacks').classList.remove('hidden');
       }
     }
 
-    // Thiết lập tự động cập nhật mỗi 5 giây
+    // TOÀN MÀN HÌNH TRÌNH CHIẾU
+    function toggleFullscreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn("Lỗi fullscreen:", err);
+        });
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+
+    // THIẾT LẬP TỰ ĐỘNG CẬP NHẬT 5s
     function setupAutoRefresh() {
       const toggle = document.getElementById('autoRefreshToggle');
       toggle.addEventListener('change', () => {
@@ -624,7 +1005,7 @@
       if (autoRefreshTimer) clearInterval(autoRefreshTimer);
     }
 
-    // Khởi động
+    // KHỞI ĐỘNG
     document.addEventListener('DOMContentLoaded', () => {
       fetchData();
       setupAutoRefresh();
