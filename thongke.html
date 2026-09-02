@@ -258,42 +258,43 @@
     let globalData = null;
     let autoRefreshTimer = null;
 
-    async function fetchData() {
+    function fetchData() {
       const refreshIcon = document.getElementById('refreshIcon');
-      refreshIcon.classList.add('fa-spin');
+      if (refreshIcon) refreshIcon.classList.add('fa-spin');
 
-      try {
-        // Gọi API Google Apps Script
-        const response = await fetch(GOOGLE_SCRIPT_URL);
-        const data = await response.json();
+      const callbackName = 'cb_' + Date.now();
+      const script = document.createElement('script');
+      
+      const timeoutId = setTimeout(() => {
+        if (window[callbackName]) {
+          delete window[callbackName];
+          script.remove();
+          if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+        }
+      }, 10000);
 
-        if (data.status === 'success') {
+      window[callbackName] = function(data) {
+        clearTimeout(timeoutId);
+        if (data && data.status === 'success') {
           globalData = data;
           renderDashboard(data);
         } else {
-          console.error("Lỗi từ Apps Script:", data.message);
+          console.error("Dữ liệu lỗi:", data);
         }
-      } catch (err) {
-        console.warn("Thử phương thức dự phòng hoặc kết nối:", err);
-        // Nếu fetch trực tiếp bị CORS, hỗ trợ JSONP
-        fetchJSONP();
-      } finally {
-        setTimeout(() => refreshIcon.classList.remove('fa-spin'), 600);
-      }
-    }
-
-    // Dự phòng JSONP nếu trình duyệt chặn CORS
-    function fetchJSONP() {
-      const script = document.createElement('script');
-      const callbackName = 'handleDataCallback_' + Math.floor(Math.random() * 10000);
-      window[callbackName] = function(data) {
-        globalData = data;
-        renderDashboard(data);
         delete window[callbackName];
         script.remove();
+        if (refreshIcon) setTimeout(() => refreshIcon.classList.remove('fa-spin'), 400);
       };
-      script.src = `${GOOGLE_SCRIPT_URL}?callback=${callbackName}`;
-      document.body.appendChild(script);
+
+      script.onerror = function() {
+        clearTimeout(timeoutId);
+        delete window[callbackName];
+        script.remove();
+        if (refreshIcon) refreshIcon.classList.remove('fa-spin');
+      };
+
+      script.src = `${GOOGLE_SCRIPT_URL}?callback=${callbackName}&t=${Date.now()}`;
+      document.head.appendChild(script);
     }
 
     function renderDashboard(data) {
