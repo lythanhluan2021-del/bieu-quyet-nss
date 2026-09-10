@@ -1,0 +1,494 @@
+﻿{
+    "12":  [
+               {
+                   "stt":  1,
+                   "name":  "Ngữ văn 12, tập một",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  2,
+                   "name":  "Ngữ văn 12, tập hai",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  3,
+                   "name":  "Chuyên đề học tập Ngữ văn 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  4,
+                   "name":  "Toán 12, tập một",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  5,
+                   "name":  "Toán 12, tập hai",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  6,
+                   "name":  "Chuyên đề học tập Toán 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  7,
+                   "name":  "Tiếng Anh 12 Global Success",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  8,
+                   "name":  "Lịch sử 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  9,
+                   "name":  "Chuyên đề học tập Lịch sử 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  10,
+                   "name":  "Địa lí 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  11,
+                   "name":  "Chuyên đề học tập Địa lí 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  12,
+                   "name":  "Giáo dục Kinh tế và Pháp luật 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  13,
+                   "name":  "Vật lí 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  14,
+                   "name":  "Chuyên đề học tập Vật lí 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  15,
+                   "name":  "Hoá học 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  16,
+                   "name":  "Chuyên đề học tập Hoá học 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  17,
+                   "name":  "Sinh học 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  18,
+                   "name":  "Chuyên đề học tập Sinh học 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  19,
+                   "name":  "Công nghệ công nghiệp 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  20,
+                   "name":  "Chuyên đề học tập Công nghệ công nghiệp 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  21,
+                   "name":  "Công nghệ nông nghiệp 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  22,
+                   "name":  "Chuyên đề học tập Công nghệ nông nghiệp 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  23,
+                   "name":  "Tin học 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  24,
+                   "name":  "Chuyên đề học tập Tin học 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  25,
+                   "name":  "Giáo dục thể chất 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  26,
+                   "name":  "Giáo dục Quốc phòng và An ninh 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  27,
+                   "name":  "Hoạt động trải nghiệm, hướng nghiệp 12",
+                   "grade":  "12",
+                   "isChuyenDe":  false
+               }
+           ],
+    "10":  [
+               {
+                   "stt":  1,
+                   "name":  "Ngữ văn 10, tập một",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  2,
+                   "name":  "Ngữ văn 10, tập hai",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  3,
+                   "name":  "Chuyên đề học tập Ngữ văn 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  4,
+                   "name":  "Toán 10, tập một",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  5,
+                   "name":  "Toán 10, tập hai",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  6,
+                   "name":  "Chuyên đề học tập Toán 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  7,
+                   "name":  "Tiếng Anh 10 Global Success",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  8,
+                   "name":  "Lịch sử 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  9,
+                   "name":  "Chuyên đề học tập Lịch sử 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  10,
+                   "name":  "Địa lí 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  11,
+                   "name":  "Chuyên đề học tập Địa lí 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  12,
+                   "name":  "Giáo dục Kinh tế và Pháp luật 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  13,
+                   "name":  "Vật lí 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  14,
+                   "name":  "Chuyên đề học tập Vật lí 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  15,
+                   "name":  "Hoá học 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  16,
+                   "name":  "Chuyên đề học tập Hoá học 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  17,
+                   "name":  "Sinh học 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  18,
+                   "name":  "Chuyên đề học tập Sinh học 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  19,
+                   "name":  "Công nghệ 10 (Thiết kế)",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  20,
+                   "name":  "Chuyên đề học tập Công nghệ 10 (Thiết kế)",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  21,
+                   "name":  "Công nghệ 10 (Trồng trọt)",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  22,
+                   "name":  "Chuyên đề học tập Công nghệ 10 (Trồng trọt)",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  23,
+                   "name":  "Tin học 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  24,
+                   "name":  "Chuyên đề học tập Tin học 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  25,
+                   "name":  "Giáo dục thể chất 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  26,
+                   "name":  "Giáo dục Quốc phòng và An ninh 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  27,
+                   "name":  "Hoạt động trải nghiệm, hướng nghiệp 10",
+                   "grade":  "10",
+                   "isChuyenDe":  false
+               }
+           ],
+    "11":  [
+               {
+                   "stt":  1,
+                   "name":  "Ngữ văn 11, tập một",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  2,
+                   "name":  "Ngữ văn 11, tập hai",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  3,
+                   "name":  "Chuyên đề học tập Ngữ văn 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  4,
+                   "name":  "Toán 11, tập một",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  5,
+                   "name":  "Toán 11, tập hai",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  6,
+                   "name":  "Chuyên đề học tập Toán 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  7,
+                   "name":  "Tiếng Anh 11 Global Success",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  8,
+                   "name":  "Lịch sử 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  9,
+                   "name":  "Chuyên đề học tập Lịch sử 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  10,
+                   "name":  "Địa lí 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  11,
+                   "name":  "Chuyên đề học tập Địa lí 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  12,
+                   "name":  "Giáo dục Kinh tế và Pháp luật 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  13,
+                   "name":  "Vật lí 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  14,
+                   "name":  "Chuyên đề học tập Vật lí 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  15,
+                   "name":  "Hoá học 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  16,
+                   "name":  "Chuyên đề học tập Hoá học 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  17,
+                   "name":  "Sinh học 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  18,
+                   "name":  "Chuyên đề học tập Sinh học 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  19,
+                   "name":  "Công nghệ công nghiệp 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  20,
+                   "name":  "Chuyên đề học tập Công nghệ công nghiệp 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  21,
+                   "name":  "Công nghệ nông nghiệp 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  22,
+                   "name":  "Chuyên đề học tập Công nghệ nông nghiệp 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  23,
+                   "name":  "Tin học 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  24,
+                   "name":  "Chuyên đề học tập Tin học 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  25,
+                   "name":  "Giáo dục thể chất 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  26,
+                   "name":  "Giáo dục Quốc phòng và An ninh 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               },
+               {
+                   "stt":  27,
+                   "name":  "Hoạt động trải nghiệm, hướng nghiệp 11",
+                   "grade":  "11",
+                   "isChuyenDe":  false
+               }
+           ]
+}
