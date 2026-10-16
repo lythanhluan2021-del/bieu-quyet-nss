@@ -4,6 +4,11 @@
  */
 
 // =========================================================================
+// CẤU HÌNH KHÓA TIẾP NHẬN PHIẾU: Đặt true để khóa máy chủ, false để mở lại
+// =========================================================================
+const IS_VOTING_CLOSED = true;
+
+// =========================================================================
 // 1. TỰ ĐỘNG TẠO MENU TRÊN GOOGLE SHEETS
 // =========================================================================
 function onOpen() {
@@ -18,6 +23,14 @@ function onOpen() {
 // =========================================================================
 function doPost(e) {
   try {
+    // NẾU HỆ THỐNG ĐÃ KHÓA: Từ chối ghi phiếu vào Sheet
+    if (IS_VOTING_CLOSED) {
+      return ContentService.createTextOutput(JSON.stringify({
+        status: "closed",
+        message: "Hệ thống biểu quyết đã chính thức kết thúc thời gian tiếp nhận phiếu!"
+      })).setMimeType(ContentService.MimeType.JSON);
+    }
+
     var data = JSON.parse(e.postData.contents);
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
     

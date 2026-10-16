@@ -131,11 +131,48 @@
         <p class="text-xs text-slate-500 italic mt-1">
           (Quy mô: 1.310 học sinh — Khối 10: 452 HS, Khối 11: 421 HS, Khối 12: 437 HS)
         </p>
+    <!-- THÔNG BÁO KHÓA CỔNG BIỂU QUYẾT (HIỂN THỊ KHI IS_VOTING_CLOSED = true) -->
+    <div id="votingClosedNotice" class="form-card p-6 sm:p-8 text-center space-y-5 border-amber-300 shadow-xl bg-gradient-to-b from-white via-amber-50/40 to-slate-50 hidden">
+      <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center text-white text-3xl shadow-lg ring-8 ring-amber-100">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      
+      <div class="space-y-2">
+        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-800 border border-rose-200">
+          <i class="fa-solid fa-circle-xmark mr-1.5"></i> Cổng tiếp nhận đã đóng
+        </span>
+        <h2 class="text-xl sm:text-2xl font-extrabold text-slate-900 uppercase tracking-tight">
+          HỆ THỐNG BIỂU QUYẾT ĐÃ KHÓA
+        </h2>
+        <p class="text-xs sm:text-sm font-bold text-cyan-950 uppercase">
+          Hội nghị Viên chức – Người lao động năm học 2026 – 2027
+        </p>
+      </div>
+
+      <div class="p-4 sm:p-5 rounded-2xl bg-white border border-slate-200 text-xs sm:text-sm text-slate-700 leading-relaxed text-justify sm:text-center space-y-3 shadow-sm">
+        <p>
+          🌸 <b class="text-cyan-950 font-bold">Kính gửi Quý Thầy/Cô và Quý Đại biểu:</b>
+        </p>
+        <p>
+          Thời gian tiếp nhận ý kiến biểu quyết đối với 37 chỉ tiêu Nghị quyết năm học 2026 – 2027 đã chính thức khép lại. Hệ thống hiện đã khóa toàn bộ chức năng nộp phiếu để đảm bảo tính minh bạch và nguyên vẹn của dữ liệu.
+        </p>
+        <div class="h-px bg-slate-200 w-full"></div>
+        <p class="italic text-slate-600">
+          ✨ Ban Giám hiệu cùng Ban Tổ chức xin trân trọng cảm ơn tinh thần trách nhiệm, dân chủ và sự đồng thuận cao của toàn thể Viên chức – Người lao động trường <b>THPT Nguyễn Sinh Sắc</b>!
+        </p>
+      </div>
+
+      <div class="pt-2">
+        <a href="thongke.html" class="inline-flex items-center justify-center w-full sm:w-auto px-6 py-3.5 bg-gradient-to-r from-cyan-900 via-slate-900 to-slate-950 hover:from-cyan-950 hover:to-black text-white text-sm font-bold rounded-2xl shadow-xl hover:shadow-2xl transition space-x-2 border border-cyan-700/50">
+          <i class="fa-solid fa-chart-pie text-amber-400"></i>
+          <span>Xem Báo Cáo Thống Kê Kết Quả (Bảo mật PIN)</span>
+          <i class="fa-solid fa-arrow-right text-xs ml-1"></i>
+        </a>
       </div>
     </div>
 
     <!-- THANH TIẾN TRÌNH VÀ BƯỚC PHÂN TRANG (MULTI-STEP BAR) -->
-    <div class="form-card p-3 sm:p-4 shadow-md sticky top-14 z-30 bg-white/95 backdrop-blur-md border-cyan-200">
+    <div id="stepProgressBarCard" class="form-card p-3 sm:p-4 shadow-md sticky top-14 z-30 bg-white/95 backdrop-blur-md border-cyan-200">
       
       <!-- Thanh % tiến độ -->
       <div class="flex items-center justify-between mb-2">
@@ -1240,6 +1277,11 @@
 
   <!-- JAVASCRIPT ĐIỀU HƯỚNG PHÂN TRANG & RÀNG BUỘC BIỂU QUYẾT -->
   <script>
+    // =========================================================================
+    // CẤU HÌNH KHÓA BIỂU QUYẾT: Đặt true để khóa hoàn toàn, false để mở lại
+    // =========================================================================
+    const IS_VOTING_CLOSED = true;
+
     const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyZVPc2KGoVfOjxw_0zihIg-RINlXF5mhy2EWpsrvjWNmzAbj4LWyoHSgqtUJIznI7XFg/exec";
     
     function goToStats(e) {
@@ -1315,21 +1357,42 @@
       return true;
     }
 
-    // Tự động xóa viền đỏ cảnh báo ngay khi Thầy/Cô tích chọn
+    // Tự động kiểm tra trạng thái đóng/mở và xử lý khi người dùng tương tác
     document.addEventListener('DOMContentLoaded', () => {
-      const form = document.getElementById('votingForm');
-      form.addEventListener('change', (e) => {
-        if (e.target.type === 'radio') {
-          const container = e.target.closest('tr') || e.target.closest('.pt-3') || e.target.closest('div');
-          if (container) {
-            container.classList.remove('ring-2', 'ring-rose-500', 'bg-rose-50/70', 'bg-amber-50');
-            const warnMsg = container.querySelector('.validation-warning');
-            if (warnMsg) warnMsg.remove();
-          }
-          checkStepStatus();
+      // 1. ÁP DỤNG TRẠNG THÁI KHÓA BIỂU QUYẾT
+      if (IS_VOTING_CLOSED) {
+        const notice = document.getElementById('votingClosedNotice');
+        const progressCard = document.getElementById('stepProgressBarCard');
+        const form = document.getElementById('votingForm');
+        const headerBtn = document.getElementById('btnBieuQuyetHeader');
+        
+        if (notice) notice.classList.remove('hidden');
+        if (progressCard) progressCard.classList.add('hidden');
+        if (form) form.classList.add('hidden');
+        if (headerBtn) {
+          headerBtn.innerHTML = '<i class="fa-solid fa-lock text-rose-500 mr-1"></i> Biểu Quyết Đã Khóa';
+          headerBtn.className = 'inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-rose-100 hover:bg-rose-200 text-rose-800 shadow-sm transition cursor-pointer select-none border border-rose-300';
+          headerBtn.title = 'Hệ thống đã khóa tiếp nhận phiếu mới - Nhấn để xem Báo cáo Thống kê';
         }
-      });
-      checkStepStatus();
+        return; // Dừng lại không cần đăng ký event form
+      }
+
+      // 2. NẾU ĐANG MỞ: Tự động xóa viền đỏ cảnh báo ngay khi Thầy/Cô tích chọn
+      const form = document.getElementById('votingForm');
+      if (form) {
+        form.addEventListener('change', (e) => {
+          if (e.target.type === 'radio') {
+            const container = e.target.closest('tr') || e.target.closest('.pt-3') || e.target.closest('div');
+            if (container) {
+              container.classList.remove('ring-2', 'ring-rose-500', 'bg-rose-50/70', 'bg-amber-50');
+              const warnMsg = container.querySelector('.validation-warning');
+              if (warnMsg) warnMsg.remove();
+            }
+            checkStepStatus();
+          }
+        });
+        checkStepStatus();
+      }
     });
 
     // Cập nhật trạng thái hoàn thành trên các tab
@@ -1403,6 +1466,11 @@
 
     async function handleFormSubmit(event) {
       event.preventDefault();
+
+      if (IS_VOTING_CLOSED) {
+        alert("Hệ thống biểu quyết đã chính thức kết thúc thời gian tiếp nhận phiếu!");
+        return;
+      }
 
       // RÀNG BUỘC TOÀN DIỆN: Kiểm tra cả 4 bước trước khi gửi
       for (let s = 1; s <= totalSteps; s++) {
